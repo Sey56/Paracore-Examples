@@ -9,8 +9,9 @@ This library is organized into specialized folders. Each folder represents a **S
 - **`01_Getting_Started/`**: The "Twisting Tower" verification script from the Getting Started guide.
 - **`02_Showcase_Demos/`**: Advanced integrations (Excel, API, Image Processing).
 - **`03_Tutorials/`**: Scripts matching the step-by-step help guides.
-- **`04_Reference/`**: UI control and Revit element cheat sheets.
-- **`05_Advanced/`**: Complex algorithms and fully-featured automation tools.
+- **`04_Advanced/`**: Complex algorithms and fully-featured automation tools.
+- **`05_Reference/`**: UI control and Revit element cheat sheets.
+
 
 ## ⚡ How to Use
 
