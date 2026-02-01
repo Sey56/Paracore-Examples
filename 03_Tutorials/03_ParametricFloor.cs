@@ -1,12 +1,11 @@
 /*
 DocumentType: Project
-DisplayName: Parametric Floor
 Categories: Tutorial, Geometry
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine
 
 Description: 
-Tutorial 2: Parametric Floor.
+Tutorial 3: Parametric Floor.
 Demonstrates creating a rectangular floor based on simple Width/Depth inputs.
 Introduces CurveLoops, Lists, and simple Transactions.
 */

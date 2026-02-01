@@ -1,12 +1,11 @@
 /*
 DocumentType: Project
-DisplayName: Element Selection
 Categories: Tutorial, Selection, Data
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine
 
 Description: 
-Tutorial 3: Element Selection.
+Tutorial 4: Element Selection.
 Teaches how to use the [Select] attribute to pick an element from the model
 and modify its parameters (in this case, the Comments field).
 */

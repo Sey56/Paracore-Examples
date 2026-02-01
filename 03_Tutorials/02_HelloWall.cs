@@ -1,14 +1,13 @@
 /*
 DocumentType: Project
-DisplayName: HelloWall
 Categories: Tutorial, Getting Started
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine
 
 Description: 
-Tutorial 1: Hello Wall.
-This is the simple script referenced in the "Hello Revit" tutorial.
-It creates a single linear wall based on coordinates.
+Tutorial 2: Hello Wall.
+This is the simple script referenced that 
+creates a single linear wall based on coordinates.
 */
 
 // Instantiate Parameters

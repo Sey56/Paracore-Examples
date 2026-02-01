@@ -2,7 +2,9 @@
 DocumentType: Any
 Categories: Basics, Tutorials, Multi-File
 Author: Paracore Team
-Description: A multi-file version of the Hello Revit tutorial. 
+Description: 
+Tutorial 5: 
+A multi-file version of the Hello Revit tutorial. 
 This file (Main.cs) contains the execution logic, while Params.cs contains the settings.
 */
 
