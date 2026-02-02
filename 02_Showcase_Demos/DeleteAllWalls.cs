@@ -1,3 +1,8 @@
+using Autodesk.Revit.DB;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
 /*
 DocumentType: Project
 Categories: Architectural, Cleanup
@@ -9,15 +14,6 @@ Deletes all wall elements in the active document. Useful for prototyping resets,
 batch cleanup, or preparing a fresh layout canvas. Requires confirmation.
 */
 
-using Autodesk.Revit.DB;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-
-/*
-Testing
-
-*/
 var p = new Params();
 
 // Filter Walls

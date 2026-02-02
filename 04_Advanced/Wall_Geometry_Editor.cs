@@ -1,3 +1,8 @@
+using Autodesk.Revit.DB;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 /*
 DocumentType: Project
 Categories: Advanced, Architectural, Structural
@@ -8,8 +13,6 @@ Description:
 Edit wall geometry by adding sweeps or reveals to selected or all walls.
 Supports vertical and horizontal placement with offset control.
 */
-
-using Autodesk.Revit.DB;
 
 var p = new Params();
 

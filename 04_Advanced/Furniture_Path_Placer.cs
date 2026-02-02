@@ -1,3 +1,5 @@
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Project
 Categories: Advanced, Placement
@@ -8,8 +10,6 @@ Description:
 Places furniture instances along a selected model line path at regular intervals.
 Demonstrates Reference selection, FamilySymbol lookup, and instance placement.
 */
-
-using Autodesk.Revit.DB;
 
 var p = new Params();
 

@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using RestSharp;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Project
 Categories: Showcase, API, Web
@@ -8,13 +15,6 @@ Description:
 Connects to a live weather API to fetch site data based on the project's location.
 Demonstrates RestSharp integration within Revit scripts.
 */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using RestSharp;
-using Autodesk.Revit.DB;
 
 // 1. Setup
 var p = new Params();

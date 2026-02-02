@@ -1,3 +1,10 @@
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 /*
 DocumentType: Project
 Categories: Advanced, Data, Import/Export
@@ -8,9 +15,6 @@ Description:
 Demonstrates File Picker usage for both INPUT and OUTPUT to sync room finishes.
 Reads data from CSV and applies updates to Revit room parameters.
 */
-
-using Autodesk.Revit.DB;
-
 
 var p = new Params();
 

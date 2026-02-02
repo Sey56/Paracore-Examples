@@ -1,3 +1,8 @@
+using Autodesk.Revit.DB;
+using System;
+using System.Linq;
+using System.Collections.Generic;
+
 /*
 DocumentType: Project
 Categories: Showcase, Analysis, Dashboard
@@ -8,11 +13,6 @@ Description:
 Demonstrates ALL Data Visualization features. Renders bar, pie, and line charts
 along with interactive tables for a comprehensive project overview.
 */
-
-using Autodesk.Revit.DB;
-using System;
-using System.Linq;
-using System.Collections.Generic;
 
 Println("📊 Generating Project Dashboard...");
 

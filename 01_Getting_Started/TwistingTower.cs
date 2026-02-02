@@ -1,3 +1,8 @@
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Project
 Categories: Getting Started, Geometry
@@ -8,11 +13,6 @@ Description:
 Demonstrates how to create a "Twisting House" by generating walls on multiple levels with a rotational offset.
 A perfect introduction to working with Levels, Geometry, and Transactions in Paracore.
 */
-
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
 
 // Initialize Parameters
 var p = new Params();

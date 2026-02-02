@@ -1,3 +1,9 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using MathNet.Numerics.Statistics;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Project
 Categories: Showcase, Math, Structural, Audit
@@ -8,12 +14,6 @@ Description:
 Performs a statistical audit of wall lengths in the project using MathNet.Numerics.
 Calculates Mean, Median, and Standard Deviation to identify geometric variations.
 */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using MathNet.Numerics.Statistics;
-using Autodesk.Revit.DB;
 
 // 1. Setup
 var p = new Params();
@@ -44,7 +44,7 @@ else
     // 4. Output Findings
     Println($"--- Wall Length Audit (Total: {walls.Count}) ---");
     Println($"Average Length: {mean:F2} m");
-    Println($"Median Length:  {median:F2} m");
+    Println($"Median Length:  {median:  F2} m");
     Println($"Standard Dev:   {stdDev:F2} m");
     Println($"Longest Wall:   {max:F2} m");
     

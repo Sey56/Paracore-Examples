@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Any
 Categories: Reference, Parameters, UI
@@ -8,8 +13,6 @@ Description:
 A comprehensive "Kitchen Sink" reference for the Paracore Parameter Engine.
 Demonstrates all supported C# types, attributes, and UI generation conventions.
 */
-
-using System;
 
 // 1. Instantiate Params at the top of your script
 var p = new Params();

@@ -1,3 +1,8 @@
+using System.Globalization;
+using System.Collections.Generic;
+using System.Linq;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Project
 Categories: Advanced, Documentation, Management
@@ -8,8 +13,6 @@ Description:
 Standardizes naming cases for Rooms, Views, Sheets, and Text Notes.
 Supports UPPERCASE, lowercase, and Title Case conversions.
 */
-
-using System.Globalization;
 
 // 1. Setup & Safety Check
 var p = new Params();

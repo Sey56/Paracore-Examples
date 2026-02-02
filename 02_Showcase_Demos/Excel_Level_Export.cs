@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using MiniExcelLibs;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Project
 Categories: Showcase, Excel, Export
@@ -8,13 +15,6 @@ Description:
 High-performance, zero-COM export of project Levels to Excel.
 Demonstrates MiniExcel integration for rapid data export.
 */
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.IO;
-using MiniExcelLibs;
-using Autodesk.Revit.DB;
 
 // 1. Setup
 var p = new Params();

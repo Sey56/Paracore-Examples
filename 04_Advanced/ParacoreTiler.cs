@@ -1,3 +1,6 @@
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+
 /*
 DocumentType: Project
 Categories: Advanced, Interiors, Analysis
@@ -10,7 +13,6 @@ Supports multiple tiling modes including Checkered, Alternating Rows, and Random
 Features include custom rotation angles, adjustable grout widths, and gap-filling logic.
 */
 
-using Autodesk.Revit.DB;
 // 1. Instantiate Parameters
 var p = new Params();
 
@@ -32,7 +34,7 @@ if (p.PatternType != "Single Tile" && ft2 == null) throw new Exception($"🚫 Ti
 
 // Retrieve Filler Type
 var ft3 = new FilteredElementCollector(Doc).OfClass(typeof(FloorType)).Cast<FloorType>().FirstOrDefault(x => x.Name == p.Tile3_Type);
-if (p.FillEmptySpaces && ft3 == null) throw new Exception($"🚫 Filler Tile Type '{p.Tile3_Type}' not found.");
+if (p.FillEmptySpaces && ft3 == null) throw new Exception($"🚫 Filler Tile Type '{p.Tile3_Type}' not found.");        
 
 // Get Boundary and Bounding Box
 var opt = new SpatialElementBoundaryOptions { SpatialElementBoundaryLocation = SpatialElementBoundaryLocation.Finish };
@@ -53,13 +55,13 @@ if (boundarySegments.Count > 0 && boundarySegments[0].Count > 0)
 {
     // Use the Z level of the actual boundary curves to ensure intersection alignment
     zLevel = boundarySegments[0][0].GetCurve().GetEndPoint(0).Z;
-    
-    foreach (var segList in boundarySegments)
-    {
-        List<Curve> curves = new List<Curve>();
-        foreach (var seg in segList) curves.Add(seg.GetCurve());
-        roomLoops.Add(CurveLoop.Create(curves));
-    }
+}
+
+foreach (var segList in boundarySegments)
+{
+    List<Curve> curves = new List<Curve>();
+    foreach (var seg in segList) curves.Add(seg.GetCurve());
+    roomLoops.Add(CurveLoop.Create(curves));
 }
 
 // Create a solid representing the room volume (extruded up slightly)
@@ -71,7 +73,7 @@ double cos = Math.Cos(rotationRad);
 double sin = Math.Sin(rotationRad);
 
 // Calculate a search radius large enough to cover the room at any rotation angle
-double radius = bbox.Min.DistanceTo(bbox.Max); 
+double radius = bbox.Min.DistanceTo(bbox.Max);
 double minU = -radius;
 double minV = -radius;
 double maxU = radius;
@@ -86,7 +88,7 @@ int countT2 = 0;
 int countT3 = 0;
 
 // Helper Action to create a tile (avoids code duplication)
-Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h, fType, typeIdx) => 
+Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h, fType, typeIdx) =>
 {
     // Grout Logic: Shrink geometry, keep grid center
     double gw = p.GroutWidth;
@@ -117,7 +119,7 @@ Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h,
     profile.Add(Line.CreateBound(corners[3], corners[0]));
 
     CurveLoop tileLoop = CurveLoop.Create(profile);
-    
+
     // Create Tile Solid & Intersect
     Solid tileSolid = GeometryCreationUtilities.CreateExtrusionGeometry(new List<CurveLoop> { tileLoop }, XYZ.BasisZ, 1.0);
 
@@ -133,13 +135,13 @@ Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h,
             {
                 var loops = pf.GetEdgesAsCurveLoops();
                 if (loops.Count > 0)
-                    try { 
-                        createdFloorIds.Add(Floor.Create(Doc, loops, fType.Id, room.LevelId).Id); 
-                        // Accumulate Area
-                        if (typeIdx == 1) { areaT1 += pf.Area; countT1++; }
-                        else if (typeIdx == 2) { areaT2 += pf.Area; countT2++; }
-                        else if (typeIdx == 3) { areaT3 += pf.Area; countT3++; }
-                    } catch { }
+                try {
+                    createdFloorIds.Add(Floor.Create(Doc, loops, fType.Id, room.LevelId).Id);
+                    // Accumulate Area
+                    if (typeIdx == 1) { areaT1 += pf.Area; countT1++; }
+                    else if (typeIdx == 2) { areaT2 += pf.Area; countT2++; }
+                    else if (typeIdx == 3) { areaT3 += pf.Area; countT3++; }
+                } catch { }
             }
         }
     }
@@ -176,7 +178,7 @@ Transact("Generate Smart Floor Pattern", () =>
 
             // Create Main Tile
             CreateTile(u, v, w, h, currentFt, useTile1 ? 1 : 2);
-            
+
             // Buffer for filler calculation
             rowBuffer.Add((u, v, w, h));
 
@@ -220,7 +222,7 @@ if (createdFloorIds.Count > 0)
 {
     UIDoc.Selection.SetElementIds(createdFloorIds);
     Println($"✅ Successfully generated {createdFloorIds.Count} tiles in room: {room.Name}");
-    
+
     // Cost Calculation
     double sqFtToSqM = 0.092903;
     double c1 = (areaT1 * sqFtToSqM) * p.Tile1_Cost;
@@ -242,7 +244,7 @@ if (createdFloorIds.Count > 0)
     summary.Add(new { Type = "TOTAL", Count = countT1 + countT2 + countT3, Price_m2 = "-", Total_Price = totalCost.ToString("F2"), Total_Area_m2 = ((areaT1+areaT2+areaT3) * sqFtToSqM).ToString("F2") });
     Table(summary);
 }
-else
+else 
 {
     throw new Exception("⚠️ No tiles could be generated. Check room size and spacing.");
 }
@@ -267,7 +269,6 @@ public class Params
     [Unit("mm")]
     [Range(0, 50)]
     public double GroutWidth { get; set; } = 0;
-
     #endregion
 
     #region 02. Primary Tile (Tile 1)
@@ -285,7 +286,6 @@ public class Params
 
     /// <summary>Cost per square meter for Tile 1 (used for estimation).</summary>
     public double Tile1_Cost { get; set; } = 0;
-
     #endregion
 
     #region 03. Secondary Tile (Tile 2)
@@ -308,7 +308,6 @@ public class Params
     public bool Tile2_Width_Visible => PatternType != "Single Tile";
     public bool Tile2_Height_Visible => PatternType != "Single Tile";
     public bool Tile2_Cost_Visible => PatternType != "Single Tile";
-    
     #endregion
 
     #region 04. Gap Filler (Tile 3)
@@ -318,7 +317,7 @@ public class Params
     /// <summary>The Floor Type used to fill the detected gaps.</summary>
     [RevitElements(TargetType = "FloorType")]
     public string Tile3_Type { get; set; }
-    
+
     /// <summary>Cost per square meter for the filler tile.</summary>
     public double Tile3_Cost { get; set; } = 0;
 
@@ -332,6 +331,5 @@ public class Params
     public int RandomBias { get; set; } = 50;
 
     public bool RandomBias_Visible => PatternType == "Random";
-
     #endregion
 }

@@ -1,3 +1,9 @@
+using System;
+using System.IO;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Processing;
+using Autodesk.Revit.DB;
+
 /*
 DocumentType: Any
 Categories: Showcase, Image, Processing
@@ -8,12 +14,6 @@ Description:
 Production-ready image processing script that resizes and filters local images.
 Demonstrates ImageSharp integration for handling image assets.
 */
-
-using System;
-using System.IO;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Processing;
-using Autodesk.Revit.DB;
 
 // 1. Setup
 var p = new Params();
