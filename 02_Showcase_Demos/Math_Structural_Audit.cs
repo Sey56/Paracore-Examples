@@ -30,25 +30,25 @@ if (!walls.Any())
 }
 else
 {
-    // Extract Lengths (converted to meters for demo)
-    var lengths = walls.Select(w => UnitUtils.ConvertFromInternalUnits(
-        w.get_Parameter(BuiltInParameter.CURVE_ELEM_LENGTH).AsDouble(), 
-        UnitTypeId.Meters)).ToList();
+    // Extract Lengths (Internal Units: Feet)
+    var lengths = walls.Select(w => w.get_Parameter(BuiltInParameter.CURVE_ELEM_LENGTH).AsDouble()).ToList();
 
-    // 3. Statistical Analysis (MathNet.Numerics)
-    double mean = lengths.Mean();
-    double median = lengths.Median();
-    double stdDev = lengths.StandardDeviation();
-    double max = lengths.Maximum();
+    // 3. Statistical Analysis (MathNet.Numerics) - Calculations stay in Internal Units
+    double meanFeet = lengths.Mean();
+    double medianFeet = lengths.Median();
+    double stdDevFeet = lengths.StandardDeviation();
+    double maxFeet = lengths.Maximum();
 
-    // 4. Output Findings
+    // 4. Output Findings (Convert to Meters for display)
+    double ftToM = 0.3048;
     Println($"--- Wall Length Audit (Total: {walls.Count}) ---");
-    Println($"Average Length: {mean:F2} m");
-    Println($"Median Length:  {median:  F2} m");
-    Println($"Standard Dev:   {stdDev:F2} m");
-    Println($"Longest Wall:   {max:F2} m");
+    Println($"Average Length: {meanFeet * ftToM:F2} m");
+    Println($"Median Length:  {medianFeet * ftToM:F2} m");
+    Println($"Standard Dev:   {stdDevFeet * ftToM:F2} m");
+    Println($"Longest Wall:   {maxFeet * ftToM:F2} m");
     
-    if (stdDev > p.Tolerance_m)
+    // Compare in Internal Units (Both are Feet now)
+    if (stdDevFeet > p.Tolerance_m)
     {
         Println("⚠️ Warning: Significant variation in wall lengths detected.");
     }

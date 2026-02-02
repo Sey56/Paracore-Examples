@@ -43,7 +43,7 @@ if (p.AutoCreateLevels && currentCount < targetLevelCount)
         double currentElev = allLevels.Last().Elevation;
         for (int i = 0; i < (targetLevelCount - currentCount); i++)
         {
-            currentElev += (p.WallHeightMeters / 0.3048); // Convert meters to feet
+            currentElev += p.WallHeightMeters; // Already in feet via [Unit("m")] attribute
             Level.Create(Doc, currentElev);
         }
     });
