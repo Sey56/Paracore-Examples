@@ -4,7 +4,7 @@ using Autodesk.Revit.DB.Architecture;
 /*
 DocumentType: Project
 Categories: Advanced, Interiors, Analysis
-Author: Seyoum Hagos
+Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
