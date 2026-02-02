@@ -1,16 +1,15 @@
-using System.Globalization;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
-Categories: Documentation, Annotation, Management
+Categories: Advanced, Documentation, Management
 Author: Paracore Team
-Description: 
-🚀 Bonus Tool: Standardizes naming cases for Rooms, Views, Sheets, and Text Notes.
-⚠️ WARNING: This tool modifies many elements at once. Always test in a dummy project or create a backup before applying to a real production model.
+Dependencies: RevitAPI 2025, CoreScript.Engine
+
+Description:
+Standardizes naming cases for Rooms, Views, Sheets, and Text Notes.
+Supports UPPERCASE, lowercase, and Title Case conversions.
 */
+
+using System.Globalization;
 
 // 1. Setup & Safety Check
 var p = new Params();

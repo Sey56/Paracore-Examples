@@ -1,32 +1,16 @@
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 /*
 DocumentType: Project
-Categories: Architecture, Data, Import/Export
+Categories: Advanced, Data, Import/Export
 Author: Seyoum Hagos
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
-Demonstrates File Picker usage for both INPUT and OUTPUT:
-- INPUT: Read room names and floor finishes from a CSV file
-- OUTPUT: Export a summary of applied changes to a CSV file
-
-UsageExamples:
-- "Update room finishes from CSV"
-- "Import room data from file"
-- "Bulk update room parameters"
-
-CSV Format (Input):
-RoomName,FloorFinish
-Kitchen,Ceramic Tile
-Bedroom,Carpet
-Bathroom,Porcelain Tile
+Demonstrates File Picker usage for both INPUT and OUTPUT to sync room finishes.
+Reads data from CSV and applies updates to Revit room parameters.
 */
+
+using Autodesk.Revit.DB;
+
 
 var p = new Params();
 

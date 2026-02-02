@@ -1,23 +1,15 @@
-using Autodesk.Revit.DB;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 /*
 DocumentType: Project
-Categories: Architectural, Structural
+Categories: Advanced, Architectural, Structural
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
 Edit wall geometry by adding sweeps or reveals to selected or all walls.
 Supports vertical and horizontal placement with offset control.
-
-UsageExamples:
-- "Add a cornice sweep to all walls"
-- "Create a reveal at 1 meter height"
-- "Add vertical sweep to selected walls"
 */
+
+using Autodesk.Revit.DB;
 
 var p = new Params();
 

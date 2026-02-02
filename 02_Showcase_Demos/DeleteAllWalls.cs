@@ -1,8 +1,3 @@
-using Autodesk.Revit.DB;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-
 /*
 DocumentType: Project
 Categories: Architectural, Cleanup
@@ -12,14 +7,17 @@ Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 Description:
 Deletes all wall elements in the active document. Useful for prototyping resets,
 batch cleanup, or preparing a fresh layout canvas. Requires confirmation.
-
-UsageExamples:
-- "Delete all walls in the current project"
-- "Clear all walls for a new layout"
-- "Reset project walls"
 */
 
-// Initialize Parameters
+using Autodesk.Revit.DB;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+
+/*
+Testing
+
+*/
 var p = new Params();
 
 // Filter Walls
@@ -56,7 +54,7 @@ Println($"✅ Deleted {wallCount} wall(s).");
 public class Params
 {
     /// <summary>Check this to delete all walls in the current document</summary>
-    [Required]
+    [Mandatory]
     public bool ConfirmDeletion { get; set; }
 
     /// <summary>

@@ -2,9 +2,11 @@
 DocumentType: Any
 Categories: Basics, Tutorials, Multi-File
 Author: Paracore Team
-Description: 
-Tutorial 5: 
-A multi-file version of the Hello Revit tutorial. 
+Dependencies: RevitAPI 2025, CoreScript.Engine
+
+Description:
+Tutorial 5:
+A multi-file version of the Hello Revit tutorial.
 This file (Main.cs) contains the execution logic, while Params.cs contains the settings.
 */
 

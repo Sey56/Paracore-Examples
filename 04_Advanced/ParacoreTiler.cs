@@ -1,23 +1,16 @@
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 /*
 DocumentType: Project
-Categories: Architectural, Interiors, Analysis
+Categories: Advanced, Interiors, Analysis
 Author: Seyoum Hagos
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
-An advanced floor pattern generator that creates precise tile layouts within room boundaries. 
-Supports multiple tiling modes including Checkered, Alternating Rows, and Random distribution. 
-Features include custom rotation angles, adjustable grout widths, and gap-filling logic. 
-The script provides a detailed summary of tile counts, total area, and an estimated cost based on user-provided pricing.
-
-UsageExamples:
-- "Create a checkered floor pattern for the Lobby"
-- "Generate 600x600 floor tiles rotated by 45 degrees"
-- "Estimate the cost of tiling the kitchen with custom grout spacing"
-- "Fill floor gaps with a secondary tile type"
+An advanced floor pattern generator that creates precise tile layouts within room boundaries.
+Supports multiple tiling modes including Checkered, Alternating Rows, and Random distribution.
+Features include custom rotation angles, adjustable grout widths, and gap-filling logic.
 */
+
+using Autodesk.Revit.DB;
 // 1. Instantiate Parameters
 var p = new Params();
 

@@ -1,13 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-
 /*
-** MODERN PARAMETERS REFERENCE **
-This script demonstrates the Paracore Parameter Engine features.
-It serves as a "Kitchen Sink" reference for formatting C# Params to generate UI.
+DocumentType: Any
+Categories: Reference, Parameters, UI
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine
+
+Description:
+A comprehensive "Kitchen Sink" reference for the Paracore Parameter Engine.
+Demonstrates all supported C# types, attributes, and UI generation conventions.
 */
+
+using System;
 
 // 1. Instantiate Params at the top of your script
 var p = new Params();

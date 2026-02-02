@@ -1,3 +1,14 @@
+/*
+DocumentType: Project
+Categories: Showcase, Math, Structural, Audit
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine, MathNet.Numerics
+
+Description:
+Performs a statistical audit of wall lengths in the project using MathNet.Numerics.
+Calculates Mean, Median, and Standard Deviation to identify geometric variations.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

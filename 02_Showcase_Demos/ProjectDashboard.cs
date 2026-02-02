@@ -1,23 +1,18 @@
+/*
+DocumentType: Project
+Categories: Showcase, Analysis, Dashboard
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
+
+Description:
+Demonstrates ALL Data Visualization features. Renders bar, pie, and line charts
+along with interactive tables for a comprehensive project overview.
+*/
+
 using Autodesk.Revit.DB;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-
-/*
-DocumentType: Project
-Categories: Analysis, Dashboard
-Author: Paracore Team
-Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
-
-Description: 
-Demonstrates ALL Data Visualization features. Renders bar, pie, and line charts 
-along with interactive tables for a comprehensive project overview.
-
-UsageExamples:
-- "Generate a project dashboard"
-- "Show element distribution by category"
-- "list walls in an interactive table"
-*/
 
 Println("📊 Generating Project Dashboard...");
 

@@ -1,3 +1,14 @@
+/*
+DocumentType: Project
+Categories: Showcase, API, Web
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine, RestSharp
+
+Description:
+Connects to a live weather API to fetch site data based on the project's location.
+Demonstrates RestSharp integration within Revit scripts.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;

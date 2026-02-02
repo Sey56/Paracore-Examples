@@ -1,17 +1,19 @@
+/*
+DocumentType: Any
+Categories: Showcase, Safety, Demo
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
+
+Description:
+Demonstrates the "Safety Lock" pattern.
+The 'Run' button remains disabled until you deliberately fill the required safety parameters.
+Use this for destructive operations like Delete or Mass-Rename.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autodesk.Revit.DB;
-
-/*
-DocumentType: Any
-Categories: Safety, Demo
-Author: Paracore Team
-Description: 
-Demonstrates the "Safety Lock" pattern. 
-The 'Run' button remains disabled until you deliberately fill the required safety parameters.
-Use this for destructive operations like Delete or Mass-Rename.
-*/
 
 var p = new Params();
 

@@ -1,19 +1,15 @@
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
-Categories: Tutorials, Placement
+Categories: Advanced, Placement
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
 Places furniture instances along a selected model line path at regular intervals.
 Demonstrates Reference selection, FamilySymbol lookup, and instance placement.
-
-UsageExamples:
-- "Place chairs along a curved path"
-- "Distribute furniture evenly on a line"
 */
+
+using Autodesk.Revit.DB;
 
 var p = new Params();
 

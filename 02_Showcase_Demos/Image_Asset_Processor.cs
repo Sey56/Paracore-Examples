@@ -1,3 +1,14 @@
+/*
+DocumentType: Any
+Categories: Showcase, Image, Processing
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine, SixLabors.ImageSharp
+
+Description:
+Production-ready image processing script that resizes and filters local images.
+Demonstrates ImageSharp integration for handling image assets.
+*/
+
 using System;
 using System.IO;
 using SixLabors.ImageSharp;

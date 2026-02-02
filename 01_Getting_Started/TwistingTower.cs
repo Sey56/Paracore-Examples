@@ -1,23 +1,18 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
-DisplayName: Twisting Tower
 Categories: Getting Started, Geometry
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine
 
 Description:
-Demonstrates how to create a "Twisting House" by generating walls on multiple levels with a rotational offset.        
+Demonstrates how to create a "Twisting House" by generating walls on multiple levels with a rotational offset.
 A perfect introduction to working with Levels, Geometry, and Transactions in Paracore.
-
-UsageExamples:
-- "Create a twisting tower on all levels"
-- "Generate a concept mass"
 */
+
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using Autodesk.Revit.DB;
 
 // Initialize Parameters
 var p = new Params();

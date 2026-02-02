@@ -1,3 +1,14 @@
+/*
+DocumentType: Project
+Categories: Showcase, Excel, Export
+Author: Paracore Team
+Dependencies: RevitAPI 2025, CoreScript.Engine, MiniExcel
+
+Description:
+High-performance, zero-COM export of project Levels to Excel.
+Demonstrates MiniExcel integration for rapid data export.
+*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
