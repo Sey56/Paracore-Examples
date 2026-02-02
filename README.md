@@ -1,17 +1,46 @@
 # Paracore Examples Library 🚀
 
-This repository contains the official example scripts, demonstrations, and tutorials for [Paracore](https://sey56.github.io/paracore-help) (Release 3.0+).
+This repository contains the official example scripts, demonstrations, and tutorials for [Paracore](https://sey56.github.io/paracore-help) (Release 3.0+). These examples are designed to showcase the power of C# automation in Revit with zero boilerplate.
 
 ## 📂 Structure
 
-This library is organized into specialized folders. Each folder represents a **Script Source** that can be loaded into Paracore.
+This library is organized into specialized **Script Sources**. Each folder represents a category that can be loaded into Paracore.
 
-- **`01_Getting_Started/`**: The "Twisting Tower" verification script from the Getting Started guide.
-- **`02_Showcase_Demos/`**: Advanced integrations (Excel, API, Image Processing).
-- **`03_Tutorials/`**: Scripts matching the step-by-step help guides.
-- **`04_Advanced/`**: Complex algorithms and fully-featured automation tools.
-- **`05_Reference/`**: UI control and Revit element cheat sheets.
+### 🏁 01_Getting_Started
+Quick-start scripts to verify your installation and learn the basics.
+- **`TwistingTower.cs`**: The classic "Twisting House" verification script. Creates walls on all levels with a rotational offset.
 
+### 🌟 02_Showcase_Demos
+Advanced integrations demonstrating what's possible with professional libraries.
+- **`ProjectDashboard.cs`**: Renders bar, pie, and line charts for a project overview.
+- **`Api_Weather_RestSharp.cs`**: Connects to a live weather API to fetch site data using RestSharp.
+- **`Excel_Level_Export.cs`**: High-performance, zero-COM export of project Levels to Excel.
+- **`Image_Asset_Processor.cs`**: Production-ready image processing (Resizing, Grayscale) via ImageSharp.
+- **`Math_Structural_Audit.cs`**: Statistical analysis of element dimensions using MathNet.Numerics.
+- **`Safety_Lock_Demo.cs`**: Demonstrates the "Safety Lock" pattern for destructive operations.
+- **`DeleteAllWalls.cs`**: A simple cleanup utility with confirmation logic.
+
+### 🎓 03_Tutorials
+Scripts that match the step-by-step guides in the [Official Documentation](https://sey56.github.io/paracore-help/docs/tutorials).
+- **`01_HelloRevit.cs`**: Your first script greeting.
+- **`02_HelloWall.cs`**: Creating a basic linear wall.
+- **`03_ParametricFloor.cs`**: Driving geometry with user-defined Width/Depth.
+- **`04_ElementSelection.cs`**: Learning the `[Select]` attribute for model interaction.
+- **`05_MultiFile_HelloRevit/`**: Organizing complex logic across multiple files.
+
+### 🛠️ 04_Advanced
+Complex algorithms and production-ready automation tools.
+- **`ParacoreTiler.cs`**: The v3.0 Flagship. An advanced computational floor pattern generator with gap-filling and cost estimation.
+- **`Furniture_Path_Placer.cs`**: Distributes families along a selected curve path.
+- **`Wall_Geometry_Editor.cs`**: Bulk adding Sweeps and Reveals to walls.
+- **`RoomFinishUpdater.cs`**: Syncing Revit room data from external CSV files.
+- **`CaseStandardizer.cs`**: Standardizing naming cases for annotations and views.
+
+### 📖 05_Reference
+Interactive "Cheat Sheets" for the Paracore engine.
+- **`Parameters_Reference.cs`**: A "Kitchen Sink" of all UI control types and attributes.
+- **`Paracore_Parameter_Engine.md`**: Detailed guide on how UI is inferred from C# code.
+- **`revit_elements_deep_dive.md`**: Explaining the "Magic" discovery system of the `[RevitElements]` attribute.
 
 ## ⚡ How to Use
 
