@@ -45,26 +45,66 @@ if (furnitureSymbol == null)
     return;
 }
 
-// 3. Divide the curve into segments
+// 3. Divide the curve into segments using equidistant sampling
 double curveLength = pathCurve.Length;
-int instanceCount = (int)Math.Floor(curveLength / p.Spacing);
 
-if (instanceCount < 1)
+// Calculate placement points based on selected mode
+var targetDistances = new List<double>();
+
+if (p.DistributionMode == "Divide by Number")
 {
-    Println($"⚠️ Path is too short for the specified spacing ({p.Spacing} ft). Placing 1 instance at the start.");
-    instanceCount = 1;
+    if (p.ItemCount < 2) targetDistances.Add(0);
+    else 
+    {
+        double step = curveLength / (p.ItemCount - 1);
+        for (int i = 0; i < p.ItemCount; i++) targetDistances.Add(i * step);
+    }
+}
+else if (p.DistributionMode == "Centered")
+{
+    int count = (int)Math.Floor(curveLength / p.Spacing);
+    if (count < 1) targetDistances.Add(curveLength / 2.0);
+    else 
+    {
+        double usedLength = (count - 1) * p.Spacing;
+        double startOffset = (curveLength - usedLength) / 2.0;
+        for (int i = 0; i < count; i++) targetDistances.Add(startOffset + (i * p.Spacing));
+    }
+}
+else // "Fixed Spacing" or Default
+{
+    int count = (int)Math.Floor(curveLength / p.Spacing) + 1;
+    // Check if we overlap the end
+    if ((count - 1) * p.Spacing > curveLength + 0.001) count--; 
+    for (int i = 0; i < count; i++) targetDistances.Add(i * p.Spacing);
 }
 
-// Handle unbound curves (full circles, ellipses)
+// Handle unbound/cyclic curve range
 bool isUnbound = !pathCurve.IsBound;
 double startParam = isUnbound ? 0 : pathCurve.GetEndParameter(0);
 double endParam = isUnbound ? (pathCurve.IsCyclic ? Math.PI * 2 : 1) : pathCurve.GetEndParameter(1);
-double paramRange = endParam - startParam;
+
+// BUILD SAMPLE TABLE (Distance -> Parameter)
+// This ensures that even on Splines, objects are physically equidistant.
+int sampleCount = 1000;
+var samples = new List<(double dist, double param)>();
+double cumDist = 0;
+XYZ prevPt = pathCurve.Evaluate(startParam, false);
+samples.Add((0, startParam));
+
+for (int i = 1; i <= sampleCount; i++)
+{
+    double t = (double)i / sampleCount;
+    double pVal = startParam + t * (endParam - startParam);
+    XYZ currPt = pathCurve.Evaluate(pVal, false);
+    cumDist += currPt.DistanceTo(prevPt);
+    samples.Add((cumDist, pVal));
+    prevPt = currPt;
+}
 
 // 4. Place furniture at each point
 Transact("Place Furniture on Path", () =>
 {
-    // Activate the symbol if needed
     if (!furnitureSymbol.IsActive)
     {
         furnitureSymbol.Activate();
@@ -72,21 +112,36 @@ Transact("Place Furniture on Path", () =>
     }
 
     int placed = 0;
-    for (int i = 0; i < instanceCount; i++) // Changed to < to avoid overlap on closed curves
+    foreach (double d in targetDistances)
     {
-        double t = (double)i / instanceCount;
-        double param = startParam + t * paramRange;
-        XYZ point = pathCurve.Evaluate(param, false); // Use raw parameter, not normalized
+        // 1. Calculate final distance (handle Wrap/Flip)
+        double targetDist = p.FlipDirection ? (curveLength - d) : d;
+        
+        // 2. Lookup Parameter by Distance (Interpolated)
+        double param = samples.Last().param;
+        if (targetDist <= 0) param = samples[0].param;
+        else if (targetDist >= cumDist) param = samples.Last().param;
+        else {
+            for (int j = 0; j < samples.Count - 1; j++) {
+                if (targetDist <= samples[j+1].dist) {
+                    double ratio = (targetDist - samples[j].dist) / (samples[j+1].dist - samples[j].dist);
+                    param = samples[j].param + ratio * (samples[j+1].param - samples[j].param);
+                    break;
+                }
+            }
+        }
 
-        // Get the tangent for rotation
+        XYZ point = pathCurve.Evaluate(param, false); 
         Transform curveTransform = pathCurve.ComputeDerivatives(param, false);
         XYZ tangent = curveTransform.BasisX.Normalize();
+        if (p.FlipDirection) tangent = -tangent; // Flip rotation too
+        
         double angle = Math.Atan2(tangent.Y, tangent.X);
 
         // Create the instance
         FamilyInstance inst = Doc.Create.NewFamilyInstance(point, furnitureSymbol, Autodesk.Revit.DB.Structure.StructuralType.NonStructural);
 
-        // Rotate to align with path
+        // Rotate to align
         if (Math.Abs(angle) > 0.001)
         {
             Line axis = Line.CreateBound(point, point + XYZ.BasisZ);
@@ -96,12 +151,13 @@ Transact("Place Furniture on Path", () =>
         placed++;
     }
 
-    Println($"✅ Placed {placed} '{furnitureSymbol.FamilyName}' instances along the path.");
+    Println($"✅ Placed {placed} '{furnitureSymbol.FamilyName}' instances using '{p.DistributionMode}' mode.");
 });
 
 // --- Parameters ---
 public class Params
 {
+    #region 01. Placement Path
     /// <summary>Click a Model Line or Detail Line to use as the path</summary>
     [Select(SelectionType.Element)]
     [Required]
@@ -111,9 +167,25 @@ public class Params
     [RevitElements(TargetType = "FamilySymbol", Category = "Furniture")]
     [Required]
     public string FurnitureName { get; set; }
+    #endregion
 
-    /// <summary>Spacing between instances (in feet)</summary>
-    [Range(0.5, 50.0)]
+    #region 02. Distribution Logic
+    /// <summary>Choose how items are spaced along the path</summary>
+    public string DistributionMode { get; set; } = "Fixed Spacing";
+    public List<string> DistributionMode_Options => ["Fixed Spacing", "Divide by Number", "Centered"];
+
+    /// <summary>Distance between instances (feet)</summary>
+    [Range(0.5, 100.0)]
     [Unit("ft")]
     public double Spacing { get; set; } = 5.0;
+    public bool Spacing_Visible => DistributionMode != "Divide by Number";
+
+    /// <summary>Total number of items to distribute from start to end</summary>
+    [Range(2, 200)]
+    public int ItemCount { get; set; } = 5;
+    public bool ItemCount_Visible => DistributionMode == "Divide by Number";
+
+    /// <summary>Toggle to start placement from the opposite end of the curve</summary>
+    public bool FlipDirection { get; set; } = false;
+    #endregion
 }

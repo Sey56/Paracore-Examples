@@ -163,7 +163,7 @@ public class Params
     /// <summary>
     /// File Input: Opens a native "Open File" dialog filtering for csv and xlsx files.
     /// </summary>
-    [InputFile("csv,xlsx")] 
+    [InputFile("csv,xlsx"), Required] 
     public string SourceFile { get; set; }
 
     /// <summary>
