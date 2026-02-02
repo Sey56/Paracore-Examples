@@ -1,14 +1,7 @@
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
 /*
 DocumentType: Project
 Categories: Advanced, Data, Import/Export
-Author: Seyoum Hagos
+Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
@@ -113,7 +106,7 @@ Transact("Update Room Finishes", () =>
         }
 
         // Get the Floor Finish parameter
-        Parameter floorFinishParam = room.LookupParameter("Floor Finish");
+        Autodesk.Revit.DB.Parameter floorFinishParam = room.LookupParameter("Floor Finish");
         if (floorFinishParam == null || floorFinishParam.IsReadOnly)
         {
             Println($"⚠️ 'Floor Finish' parameter not found or read-only for room: {room.Name}");
