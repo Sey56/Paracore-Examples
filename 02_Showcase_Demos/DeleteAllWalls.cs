@@ -1,5 +1,6 @@
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 /*
@@ -54,6 +55,13 @@ Println($"✅ Deleted {wallCount} wall(s).");
 // V3 Simplified Parameters
 public class Params
 {
-    /// <summary>If true, proceeds with deletion.</summary>
-    public bool ConfirmDeletion { get; set; } = true;
+    /// <summary>Check this to delete all walls in the current document</summary>
+    [Required]
+    public bool ConfirmDeletion { get; set; }
+
+    /// <summary>
+    ///  Type 'DELETE' to confirm deletion
+    /// </summary>
+    [Confirm("DELETE")] [Required]
+    public string ConfirmText { get; set; }
 }
