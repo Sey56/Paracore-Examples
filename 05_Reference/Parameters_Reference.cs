@@ -58,7 +58,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 02. Dropdowns & Multi-Select (Calculated Options)
+    #region 02. Dropdowns & Multi-Select (Static Lists)
     /// <summary>
     /// Renders as a Dropdown because the type is 'string'.
     /// "UPPERCASE" is selected by default.
