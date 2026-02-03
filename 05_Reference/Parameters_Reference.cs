@@ -181,13 +181,33 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 7. Dynamic Logic & Validation
+    #region 7. Validation & Logic
     /// <summary>
     /// Required Field. User cannot submit form if empty.
+    /// Note: [Mandatory] is a built-in alias for [Required]. 
+    /// Use [Mandatory] if [Required] conflicts with other library namespaces.
     /// </summary>
-    [Required]
+    [Mandatory]
     public string MandatoryField { get; set; }
 
+    /// <summary>
+    /// Use [Required] if you prefer the standard DataAnnotations naming.
+    /// Functionally identical to [Mandatory].
+    /// </summary>
+    [Required]
+    public string RequiredField { get; set; }
+
+    /// <summary>
+    /// Confirmation: The 'Run' button remains disabled until the user 
+    /// types the exact string "DELETE" into this field. Best for destructive tasks.
+    /// </summary>
+    [Confirm("DELETE")] [Required]
+    public string ConfirmText { get; set; }
+
+    #endregion
+
+    // -----------------------------------------------------
+    #region 8. Conditional UI & Visibility
     /// <summary>Toggle visibility for advanced settings.</summary>
     public bool UseAdvancedSettings { get; set; } = false;
 
@@ -206,7 +226,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 8. High-End UI Controls
+    #region 9. High-End UI Controls
     /// <summary>
     /// Stepper: +/- Buttons for precise numeric control.
     /// Good for iterations, counts, or small steps.
@@ -228,6 +248,41 @@ public class Params
     [Segmented]
     public string ViewOrientation { get; set; } = "Horizontal";
     public List<string> ViewOrientation_Options => ["Horizontal", "Vertical", "Axonometric"];
+
+    #endregion
+
+    // -----------------------------------------------------
+    #region 10. Compute Action Button (Static vs Dynamic)
+    /// <summary>
+    /// CASE A: Static Options (No Compute Button).
+    /// The dropdown is populated immediately because the list is hardcoded.
+    /// </summary>
+    public string StaticName { get; set; }
+    public List<string> StaticName_Options => ["John", "Jack", "Jasper"];
+
+    /// <summary>
+    /// CASE B: Logic-Based Options (Triggers Compute Button).
+    /// Even if the list is "static" code-wise, the presence of transformation 
+    /// logic (like .OrderBy) triggers the 'Compute' button in the UI. 
+    /// This ensures complex logic only runs in Revit when requested.
+    /// </summary>
+    public string DynamicName { get; set; }
+    public List<string> DynamicName_Options 
+    {
+        get 
+        {
+            List<string> names = ["Paracore", "Dynamo", "Rhino"];
+            return names.OrderBy(n => n).ToList(); 
+        }
+    }
+
+    /// <summary>
+    /// CASE C: [RevitElements] (Always Triggers Compute Button).
+    /// Any parameter asking for live Revit data automatically shows the 
+    /// Compute button to sync with the current document state.
+    /// </summary>
+    [RevitElements(TargetType = "Wall")]
+    public string SelectedWall { get; set; }
 
     #endregion
 }
