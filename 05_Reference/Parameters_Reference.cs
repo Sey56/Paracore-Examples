@@ -29,7 +29,7 @@ if (p.IsActive)
 public class Params
 {
     // -----------------------------------------------------
-    #region 1. Basic Inputs (Inferred UI)
+    #region 01. Basic Inputs (Inferred UI)
     /// <summary>
     /// Renders as an empty text box.
     /// </summary>
@@ -58,7 +58,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 2. Dropdowns & Multi-Select (Calculated Options)
+    #region 02. Dropdowns & Multi-Select (Calculated Options)
     /// <summary>
     /// Renders as a Dropdown because the type is 'string'.
     /// "UPPERCASE" is selected by default.
@@ -84,7 +84,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 3. Custom Filtering (Revit API)
+    #region 03. Custom Filtering (Revit API)
     /// <summary>
     /// Custom Filter: Only Wall Types named "Generic...".
     /// </summary>
@@ -110,7 +110,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 4. Magic Extraction ([RevitElements])
+    #region 04. Magic Extraction ([RevitElements])
     /// <summary>
     /// Automatically Populated Dropdown of all Wall Types.
     /// (Single selection because type is string)
@@ -134,7 +134,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 5. Native Revit Selection
+    #region 05. Native Revit Selection
     /// <summary>
     /// UI: "Pick Point" Button.
     /// Returns XYZ coordinate.
@@ -159,7 +159,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 6. File System
+    #region 06. File System
     /// <summary>
     /// File Input: Opens a native "Open File" dialog filtering for csv and xlsx files.
     /// </summary>
@@ -181,7 +181,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 7. Validation & Logic
+    #region 07. Validation & Logic
     /// <summary>
     /// Required Field. User cannot submit form if empty.
     /// Note: [Mandatory] is a built-in alias for [Required]. 
@@ -207,7 +207,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 8. Conditional UI & Visibility
+    #region 08. Conditional UI & Visibility
     /// <summary>Toggle visibility for advanced settings.</summary>
     public bool UseAdvancedSettings { get; set; } = false;
 
@@ -226,7 +226,7 @@ public class Params
     #endregion
 
     // -----------------------------------------------------
-    #region 9. High-End UI Controls
+    #region 09. High-End UI Controls
     /// <summary>
     /// Stepper: +/- Buttons for precise numeric control.
     /// Good for iterations, counts, or small steps.
