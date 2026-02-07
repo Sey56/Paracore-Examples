@@ -164,7 +164,7 @@ Wrap properties in `#region GroupName` ... `#endregion` to group them in the UI.
 
 ### Validation Attributes
 *   `[Required]`: Input cannot be empty.
-*   `[Pattern("regex")]`: Enforce format (e.g. only numbers).
+*   `[Pattern("regex")]`: Enforce format (e.g. only numbers). 
 *   `[Min(0)]`, `[Max(100)]`: Numeric bounds without a slider.
 
 ### Conditional UI

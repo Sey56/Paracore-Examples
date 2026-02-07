@@ -1,61 +1,75 @@
 using Autodesk.Revit.DB;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 /*
 DocumentType: Project
 Categories: Architectural, Cleanup
 Author: Paracore Team
-Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
+Dependencies: RevitAPI 2025, CoreScript.Engine
 
 Description:
-Deletes all wall elements in the active document. Useful for prototyping resets,
-batch cleanup, or preparing a fresh layout canvas. Requires confirmation.
+Deletes walls in the active document with professional filtering options. 
+Demonstrates V3 hydration for sophisticated multi-selection.
 */
 
 var p = new Params();
 
-// Filter Walls
-FilteredElementCollector wallCollector = new FilteredElementCollector(Doc)
-    .OfClass(typeof(Wall))
-    .WhereElementIsNotElementType();
+// 1. Determine targets based on selection
+IEnumerable<Wall> targetWalls;
 
-ICollection<ElementId> wallIds = [.. wallCollector.Select(w => w.Id)];
-int wallCount = wallIds.Count;
+if (p.DeleteSelectionOnly && p.WallsToDelete != null && p.WallsToDelete.Count > 0)
+{
+    targetWalls = p.WallsToDelete;
+}
+else
+{
+    targetWalls = new FilteredElementCollector(Doc)
+        .OfClass(typeof(Wall))
+        .WhereElementIsNotElementType()
+        .Cast<Wall>();
+}
+
+// 2. Perform Deletion
+var targetIds = targetWalls.Select(w => w.Id).ToList();
+int wallCount = targetIds.Count;
 
 if (wallCount == 0)
 {
-    Println("ℹ️ No walls found to delete.");
+    Println("ℹ️ No target walls found to delete.");
     return;
 }
 
 if (!p.ConfirmDeletion)
 {
-    Println("⚠️ Deletion skipped due to 'ConfirmDeletion = false'.");
-    Println($"Found {wallCount} wall(s) that could be deleted.");
+    Println($"⚠️ Deletion skipped. Found {wallCount} wall(s) that could be deleted.");
     return;
 }
 
-// Write operations inside a transaction
-Transact("Delete All Walls", () =>
+Transact("Delete Walls", () =>
 {
-    Doc.Delete(wallIds);
+    Doc.Delete(targetIds);
 });
 
-// Print result
-Println($"✅ Deleted {wallCount} wall(s).");
+Println($"✅ Successfully deleted {wallCount} wall(s).");
 
-// V3 Simplified Parameters
 public class Params
 {
-    /// <summary>Check this to delete all walls in the current document</summary>
-    [Mandatory]
-    public bool ConfirmDeletion { get; set; }
+    #region Configuration
+    /// <summary>Check this to authorize the deletion</summary>
+    public bool ConfirmDeletion { get; set; } = false;
 
-    /// <summary>
-    ///  Type 'DELETE' to confirm deletion
-    /// </summary>
-    [Confirm("DELETE")] [Required]
+    /// <summary>Type 'DELETE' to confirm destructive action</summary>
+    [Confirm("DELETE"), Required]
     public string ConfirmText { get; set; }
+    #endregion
+
+    #region Targets
+    /// <summary>Toggle: Delete ONLY selected walls below, or ALL walls in project</summary>
+    public bool DeleteSelectionOnly { get; set; } = false;
+
+    /// <summary>V3 MAGIC: Select multiple walls to delete</summary>
+    [EnabledWhen(nameof(DeleteSelectionOnly), "true")]
+    public List<Wall> WallsToDelete { get; set; }
+    #endregion
 }

@@ -1,47 +1,50 @@
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 /*
 DocumentType: Project
-Categories: Advanced, Interiors, Analysis
+Categories: Architectural, Interiors, Analysis
 Author: Paracore Team
 Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 
 Description:
-An advanced floor pattern generator that creates precise tile layouts within room boundaries.
-Supports multiple tiling modes including Checkered, Alternating Rows, and Random distribution.
-Features include custom rotation angles, adjustable grout widths, and gap-filling logic.
-*/
+An advanced floor pattern generator that creates precise tile layouts within room boundaries. 
+Supports multiple tiling modes including Checkered, Alternating Rows, and Random distribution. 
+Features include custom rotation angles, adjustable grout widths, and gap-filling logic. 
+The script provides a detailed summary of tile counts, total area, and an estimated cost based on user-provided pricing.
 
+UsageExamples:
+- "Create a checkered floor pattern for the Lobby"
+- "Generate 600x600 floor tiles rotated by 45 degrees"
+- "Estimate the cost of tiling the kitchen with custom grout spacing"
+- "Fill floor gaps with a secondary tile type"
+*/
 // 1. Instantiate Parameters
 var p = new Params();
 
-// 2. Data Preparation & Validation (Read-Only)
-var room = new FilteredElementCollector(Doc)
-    .OfCategory(BuiltInCategory.OST_Rooms)
-    .WhereElementIsNotElementType()
-    .Cast<Room>()
-    .FirstOrDefault(r => r.Name == p.SelectedRoom);
-
-if (room == null) throw new Exception("🚫 Target room not found.");
+// 2. Data Preparation (Direct use of hydrated objects!)
+if (p.SelectedRoom == null) throw new Exception("🚫 Target room not found. Please select a Room in the UI.");
 
 // Retrieve Floor Types
-var ft1 = new FilteredElementCollector(Doc).OfClass(typeof(FloorType)).Cast<FloorType>().FirstOrDefault(x => x.Name == p.Tile1_Type);
-var ft2 = new FilteredElementCollector(Doc).OfClass(typeof(FloorType)).Cast<FloorType>().FirstOrDefault(x => x.Name == p.Tile2_Type);
+var ft1 = p.Tile1_Type;
+var ft2 = p.Tile2_Type;
 
-if (ft1 == null) throw new Exception($"🚫 Tile 1 Type '{p.Tile1_Type}' not found.");
-if (p.PatternType != "Single Tile" && ft2 == null) throw new Exception($"🚫 Tile 2 Type '{p.Tile2_Type}' not found.");
+if (ft1 == null) throw new Exception($"🚫 Tile 1 Type not selected.");
+if (p.PatternType != "Single Tile" && ft2 == null) throw new Exception($"🚫 Tile 2 Type not selected.");
 
 // Retrieve Filler Type
-var ft3 = new FilteredElementCollector(Doc).OfClass(typeof(FloorType)).Cast<FloorType>().FirstOrDefault(x => x.Name == p.Tile3_Type);
-if (p.FillEmptySpaces && ft3 == null) throw new Exception($"🚫 Filler Tile Type '{p.Tile3_Type}' not found.");        
+var ft3 = p.Tile3_Type;
+if (p.FillEmptySpaces && ft3 == null) throw new Exception($"🚫 Filler Tile Type not selected.");
 
 // Get Boundary and Bounding Box
 var opt = new SpatialElementBoundaryOptions { SpatialElementBoundaryLocation = SpatialElementBoundaryLocation.Finish };
-var boundarySegments = room.GetBoundarySegments(opt);
+var boundarySegments = p.SelectedRoom.GetBoundarySegments(opt);
 if (boundarySegments == null || boundarySegments.Count == 0) throw new Exception("🚫 Could not determine room boundaries.");
 
-BoundingBoxXYZ bbox = room.get_BoundingBox(null);
+BoundingBoxXYZ bbox = p.SelectedRoom.get_BoundingBox(null);
 XYZ roomCenter = (bbox.Min + bbox.Max) / 2.0;
 
 List<ElementId> createdFloorIds = new List<ElementId>();
@@ -55,13 +58,13 @@ if (boundarySegments.Count > 0 && boundarySegments[0].Count > 0)
 {
     // Use the Z level of the actual boundary curves to ensure intersection alignment
     zLevel = boundarySegments[0][0].GetCurve().GetEndPoint(0).Z;
-}
-
-foreach (var segList in boundarySegments)
-{
-    List<Curve> curves = new List<Curve>();
-    foreach (var seg in segList) curves.Add(seg.GetCurve());
-    roomLoops.Add(CurveLoop.Create(curves));
+    
+    foreach (var segList in boundarySegments)
+    {
+        List<Curve> curves = new List<Curve>();
+        foreach (var seg in segList) curves.Add(seg.GetCurve());
+        roomLoops.Add(CurveLoop.Create(curves));
+    }
 }
 
 // Create a solid representing the room volume (extruded up slightly)
@@ -73,7 +76,7 @@ double cos = Math.Cos(rotationRad);
 double sin = Math.Sin(rotationRad);
 
 // Calculate a search radius large enough to cover the room at any rotation angle
-double radius = bbox.Min.DistanceTo(bbox.Max);
+double radius = bbox.Min.DistanceTo(bbox.Max); 
 double minU = -radius;
 double minV = -radius;
 double maxU = radius;
@@ -88,7 +91,7 @@ int countT2 = 0;
 int countT3 = 0;
 
 // Helper Action to create a tile (avoids code duplication)
-Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h, fType, typeIdx) =>
+Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h, fType, typeIdx) => 
 {
     // Grout Logic: Shrink geometry, keep grid center
     double gw = p.GroutWidth;
@@ -119,7 +122,7 @@ Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h,
     profile.Add(Line.CreateBound(corners[3], corners[0]));
 
     CurveLoop tileLoop = CurveLoop.Create(profile);
-
+    
     // Create Tile Solid & Intersect
     Solid tileSolid = GeometryCreationUtilities.CreateExtrusionGeometry(new List<CurveLoop> { tileLoop }, XYZ.BasisZ, 1.0);
 
@@ -135,13 +138,13 @@ Action<double, double, double, double, FloorType, int> CreateTile = (u, v, w, h,
             {
                 var loops = pf.GetEdgesAsCurveLoops();
                 if (loops.Count > 0)
-                try {
-                    createdFloorIds.Add(Floor.Create(Doc, loops, fType.Id, room.LevelId).Id);
-                    // Accumulate Area
-                    if (typeIdx == 1) { areaT1 += pf.Area; countT1++; }
-                    else if (typeIdx == 2) { areaT2 += pf.Area; countT2++; }
-                    else if (typeIdx == 3) { areaT3 += pf.Area; countT3++; }
-                } catch { }
+                    try { 
+                        createdFloorIds.Add(Floor.Create(Doc, loops, fType.Id, p.SelectedRoom.LevelId).Id); 
+                        // Accumulate Area
+                        if (typeIdx == 1) { areaT1 += pf.Area; countT1++; }
+                        else if (typeIdx == 2) { areaT2 += pf.Area; countT2++; }
+                        else if (typeIdx == 3) { areaT3 += pf.Area; countT3++; }
+                    } catch { }
             }
         }
     }
@@ -178,7 +181,7 @@ Transact("Generate Smart Floor Pattern", () =>
 
             // Create Main Tile
             CreateTile(u, v, w, h, currentFt, useTile1 ? 1 : 2);
-
+            
             // Buffer for filler calculation
             rowBuffer.Add((u, v, w, h));
 
@@ -221,8 +224,8 @@ Transact("Generate Smart Floor Pattern", () =>
 if (createdFloorIds.Count > 0)
 {
     UIDoc.Selection.SetElementIds(createdFloorIds);
-    Println($"✅ Successfully generated {createdFloorIds.Count} tiles in room: {room.Name}");
-
+    Println($"✅ Successfully generated {createdFloorIds.Count} tiles in room: {p.SelectedRoom.Name}");
+    
     // Cost Calculation
     double sqFtToSqM = 0.092903;
     double c1 = (areaT1 * sqFtToSqM) * p.Tile1_Cost;
@@ -234,17 +237,17 @@ if (createdFloorIds.Count > 0)
 
     // Visualization Table
     var summary = new List<object> {
-        new { Type = p.Tile1_Type, Count = countT1, Price_m2 = p.Tile1_Cost.ToString("F2"), Total_Price = c1.ToString("F2"), Total_Area_m2 = (areaT1 * sqFtToSqM).ToString("F2") }
+        new { Type = p.Tile1_Type.Name, Count = countT1, Price_m2 = p.Tile1_Cost.ToString("F2"), Total_Price = c1.ToString("F2"), Total_Area_m2 = (areaT1 * sqFtToSqM).ToString("F2") }
     };
     if (p.PatternType != "Single Tile")
-        summary.Add(new { Type = p.Tile2_Type, Count = countT2, Price_m2 = p.Tile2_Cost.ToString("F2"), Total_Price = c2.ToString("F2"), Total_Area_m2 = (areaT2 * sqFtToSqM).ToString("F2") });
+        summary.Add(new { Type = p.Tile2_Type.Name, Count = countT2, Price_m2 = p.Tile2_Cost.ToString("F2"), Total_Price = c2.ToString("F2"), Total_Area_m2 = (areaT2 * sqFtToSqM).ToString("F2") });
     if (p.FillEmptySpaces)
-        summary.Add(new { Type = p.Tile3_Type, Count = countT3, Price_m2 = p.Tile3_Cost.ToString("F2"), Total_Price = c3.ToString("F2"), Total_Area_m2 = (areaT3 * sqFtToSqM).ToString("F2") });
+        summary.Add(new { Type = p.Tile3_Type.Name, Count = countT3, Price_m2 = p.Tile3_Cost.ToString("F2"), Total_Price = c3.ToString("F2"), Total_Area_m2 = (areaT3 * sqFtToSqM).ToString("F2") });
     
     summary.Add(new { Type = "TOTAL", Count = countT1 + countT2 + countT3, Price_m2 = "-", Total_Price = totalCost.ToString("F2"), Total_Area_m2 = ((areaT1+areaT2+areaT3) * sqFtToSqM).ToString("F2") });
     Table(summary);
 }
-else 
+else
 {
     throw new Exception("⚠️ No tiles could be generated. Check room size and spacing.");
 }
@@ -254,8 +257,7 @@ public class Params
 {
     #region 01. General Settings
     /// <summary>Select the target room where the floor tiles will be generated.</summary>
-    [RevitElements(TargetType = "Room"), Required]
-    public string SelectedRoom { get; set; }
+    public Room SelectedRoom { get; set; }
 
     /// <summary>Choose the tiling pattern layout.</summary>
     public string PatternType { get; set; } = "Checkered";
@@ -269,12 +271,12 @@ public class Params
     [Unit("mm")]
     [Range(0, 50)]
     public double GroutWidth { get; set; } = 0;
+
     #endregion
 
     #region 02. Primary Tile (Tile 1)
     /// <summary>The Floor Type used for the primary tile.</summary>
-    [RevitElements(TargetType = "FloorType"), Required]
-    public string Tile1_Type { get; set; }
+    public FloorType Tile1_Type { get; set; }
 
     /// <summary>Width of the primary tile.</summary>
     [Unit("m")]
@@ -286,12 +288,12 @@ public class Params
 
     /// <summary>Cost per square meter for Tile 1 (used for estimation).</summary>
     public double Tile1_Cost { get; set; } = 0;
+
     #endregion
 
     #region 03. Secondary Tile (Tile 2)
     /// <summary>The Floor Type used for the secondary tile (if pattern requires it).</summary>
-    [RevitElements(TargetType = "FloorType"), Required]
-    public string Tile2_Type { get; set; }
+    public FloorType Tile2_Type { get; set; }
 
     /// <summary>Width of the secondary tile.</summary>
     [Unit("m")]
@@ -308,6 +310,7 @@ public class Params
     public bool Tile2_Width_Visible => PatternType != "Single Tile";
     public bool Tile2_Height_Visible => PatternType != "Single Tile";
     public bool Tile2_Cost_Visible => PatternType != "Single Tile";
+    
     #endregion
 
     #region 04. Gap Filler (Tile 3)
@@ -315,9 +318,8 @@ public class Params
     public bool FillEmptySpaces { get; set; } = false;
 
     /// <summary>The Floor Type used to fill the detected gaps.</summary>
-    [RevitElements(TargetType = "FloorType")]
-    public string Tile3_Type { get; set; }
-
+    public FloorType Tile3_Type { get; set; }
+    
     /// <summary>Cost per square meter for the filler tile.</summary>
     public double Tile3_Cost { get; set; } = 0;
 
@@ -331,5 +333,6 @@ public class Params
     public int RandomBias { get; set; } = 50;
 
     public bool RandomBias_Visible => PatternType == "Random";
+
     #endregion
 }

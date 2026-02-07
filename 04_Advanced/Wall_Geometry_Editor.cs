@@ -7,199 +7,169 @@ using System.Linq;
 DocumentType: Project
 Categories: Advanced, Architectural, Structural
 Author: Paracore Team
-Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
+Dependencies: RevitAPI 2025, CoreScript.Engine
 
 Description:
-Edit wall geometry by adding sweeps or reveals to selected or all walls.
-Supports vertical and horizontal placement with offset control.
+Edit wall geometry by adding sweeps or reveals to selected walls.
+Uses V3 Hydration with a robust type-safe architecture.
 */
 
 var p = new Params();
 
-// Collect Walls
+// 1. Resolve Walls
 List<Wall> walls = new List<Wall>();
-
 if (p.UseSelection)
 {
-    var selection = UIDoc.Selection.GetElementIds();
-    foreach (var id in selection)
-    {
-        if (Doc.GetElement(id) is Wall w) walls.Add(w);
-    }
-    
+    walls = p.SelectedWalls ?? new List<Wall>();
     if (walls.Count == 0)
     {
-        Println("🚫 No walls selected. Please select walls or set UseSelection to false.");
+        Println("🚫 No walls selected. Please pick walls in the UI.");
         return;
     }
 }
 else
 {
-    walls = new FilteredElementCollector(Doc)
-        .OfClass(typeof(Wall))
-        .Cast<Wall>()
-        .ToList();
+    walls = new FilteredElementCollector(Doc).OfClass(typeof(Wall)).Cast<Wall>().ToList();
 }
 
-Println($"Found {walls.Count} walls to process.");
-
-// Find Sweep/Reveal Type by name
-ElementType? sweepType = null;
-BuiltInCategory targetCategory = p.Mode == "AddSweep" ? BuiltInCategory.OST_Cornices : BuiltInCategory.OST_Reveals;
-
-if (!string.IsNullOrEmpty(p.SweepTypeName))
+// 2. Resolve Profile
+FamilySymbol selectedProfile = p.ProfileName;
+if (selectedProfile == null)
 {
-    sweepType = new FilteredElementCollector(Doc)
-        .WhereElementIsElementType()
-        .OfCategory(targetCategory)
-        .Cast<ElementType>()
-        .FirstOrDefault(x => x.Name.Equals(p.SweepTypeName, StringComparison.OrdinalIgnoreCase));
-}
-
-// Fallback to first available if not found or not specified
-if (sweepType == null)
-{
-    sweepType = new FilteredElementCollector(Doc)
-        .WhereElementIsElementType()
-        .OfCategory(targetCategory)
-        .Cast<ElementType>()
-        .FirstOrDefault();
-        
-    if (sweepType != null)
-        Println($"ℹ️ Using default type: {sweepType.Name}");
-}
-
-if (sweepType == null)
-{
-    Println($"🚫 No {p.Mode} types found in the project.");
+    Println("🚫 Please select a Profile.");
     return;
 }
 
-// Find Profile (optional)
-FamilySymbol? profile = null;
-if (!string.IsNullOrEmpty(p.ProfileName))
-{
-    profile = new FilteredElementCollector(Doc)
-        .OfClass(typeof(FamilySymbol))
-        .OfCategory(BuiltInCategory.OST_ProfileFamilies)
-        .Cast<FamilySymbol>()
-        .FirstOrDefault(x => x.Name.Equals(p.ProfileName, StringComparison.OrdinalIgnoreCase));
-        
-    if (profile != null && !profile.IsActive)
-        profile.Activate();
-}
-
+// 3. Execution using Automatic Type Management
 int successCount = 0;
+Autodesk.Revit.DB.BuiltInCategory typeCategory = p.Mode == "AddSweep" 
+    ? BuiltInCategory.OST_Cornices 
+    : BuiltInCategory.OST_Reveals;
+
+Autodesk.Revit.DB.WallSweepType operationType = p.Mode == "AddSweep" 
+    ? Autodesk.Revit.DB.WallSweepType.Sweep 
+    : Autodesk.Revit.DB.WallSweepType.Reveal;
+
+// Find a template type to duplicate
+var templateType = new FilteredElementCollector(Doc)
+    .WhereElementIsElementType()
+    .OfCategory(typeCategory)
+    .Cast<ElementType>()
+    .FirstOrDefault();
+
+if (templateType == null)
+{
+    Println($"🚫 No {p.Mode} types found in project to use as a template.");
+    return;
+}
 
 Transact($"Wall Geometry - {p.Mode}", () =>
 {
+    // Resolve/Create the specific Type for this Profile
+    ElementType typeToUse = null;
+    string targetTypeName = $"{p.Mode}_{selectedProfile.Name}"; 
+
+    // check existance
+    var existing = new FilteredElementCollector(Doc)
+        .WhereElementIsElementType()
+        .OfCategory(typeCategory)
+        .Cast<ElementType>()
+        .FirstOrDefault(x => x.Name.Equals(targetTypeName, StringComparison.OrdinalIgnoreCase));
+
+    if (existing != null)
+    {
+        typeToUse = existing;
+        UpdateProfileParam(typeToUse, selectedProfile.Id);
+    }
+    else
+    {
+        try 
+        {
+            typeToUse = templateType.Duplicate(targetTypeName);
+            UpdateProfileParam(typeToUse, selectedProfile.Id);
+        }
+        catch (Exception ex)
+        {
+            Println($"Error creating type '{targetTypeName}': {ex.Message}");
+            return; // Skip if we can't make the type
+        }
+    }
+
+    // Force regeneration to ensure type properties are committed before instance creation
+    Doc.Regenerate();
+
     foreach (var wall in walls)
     {
         try
         {
-            // Create WallSweepInfo
-            WallSweepType sweepTypeEnum = p.Mode == "AddSweep" ? WallSweepType.Sweep : WallSweepType.Reveal;
-            WallSweepInfo sweepInfo = new WallSweepInfo(sweepTypeEnum, p.Vertical);
-            sweepInfo.WallSide = p.WallSide == "Exterior" ? WallSide.Exterior : WallSide.Interior;
-            
-            // For horizontal sweeps, Distance is measured from top or bottom
-            // For vertical sweeps, Distance is a parameter along the wall's path (0.0 to 1.0)
+            WallSweepInfo info = new WallSweepInfo(operationType, p.Vertical);
+            info.WallSide = p.WallSide == "Exterior" ? WallSide.Exterior : WallSide.Interior;
+
             if (p.Vertical)
             {
-                // Vertical: use normalized value (0.0 to 1.0)
-                sweepInfo.Distance = p.Offset;
+                info.Distance = p.Offset;
             }
             else
             {
-                // Horizontal: convert offset ratio to actual distance from base
-                // Get wall height and calculate distance from bottom
-                double wallHeight = wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
-                sweepInfo.Distance = wallHeight * p.Offset;
-                sweepInfo.DistanceMeasuredFrom = DistanceMeasuredFrom.Base;
+                double height = wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble();
+                if (height < 0.001) height = wall.get_BoundingBox(null).Max.Z - wall.get_BoundingBox(null).Min.Z;
+                
+                info.Distance = height * p.Offset;
+                info.DistanceMeasuredFrom = DistanceMeasuredFrom.Base;
             }
-            
-            WallSweep.Create(wall, sweepType.Id, sweepInfo);
+
+            WallSweep.Create(wall, typeToUse.Id, info);
             successCount++;
         }
-        catch (Exception ex)
-        {
-            Println($"⚠️ Failed to add {p.Mode} to wall {wall.Id}: {ex.Message}");
-        }
+        catch { }
     }
 });
 
-Println($"✅ Successfully added {p.Mode} to {successCount}/{walls.Count} walls.");
+if (successCount > 0)
+    Println($"✅ Successfully created {successCount} {p.Mode}s using profile '{selectedProfile.Name}'.");
+else
+    Println("⚠️ No geometry created. Ensure walls are standard walls.");
 
-// ============================================
-// CLASS DEFINITIONS (Must be at the bottom)
-// ============================================
+// Helper function to robustly set the Profile
+void UpdateProfileParam(ElementType type, ElementId profileId)
+{
+    Parameter param = type.get_Parameter(BuiltInParameter.WALL_SWEEP_PROFILE_PARAM);
+    
+    // Fallback: Look by name "Profile" if BuiltIn fails
+    if (param == null) param = type.LookupParameter("Profile");
+
+    if (param != null && !param.IsReadOnly)
+    {
+        param.Set(profileId);
+    }
+}
 
 public class Params
 {
     #region Settings
-    /// <summary>Operation type</summary>
+    [Segmented]
     public string Mode { get; set; } = "AddSweep";
     public List<string> Mode_Options => ["AddSweep", "AddReveal"];
 
-    /// <summary>Wall side placement</summary>
     public string WallSide { get; set; } = "Exterior";
     public List<string> WallSide_Options => ["Exterior", "Interior"];
 
-    /// <summary>Vertical or horizontal placement</summary>
-    public bool Vertical { get; set; } = false; // false = horizontal, true = vertical
+    public bool Vertical { get; set; } = false;
     #endregion
 
     #region Geometry
-    /// <summary>Position along wall height (0=bottom, 0.5=center, 1=top)</summary>
     [Range(0.0, 1.0, 0.05)]
     public double Offset { get; set; } = 0.5;
 
-    /// <summary>Wall Sweep or Reveal type</summary>
-    public string SweepTypeName { get; set; } = "";
-
-    public List<string> SweepTypeName_Options()
-    {
-        var options = new List<string>();
-
-        // Get Sweep Types (Cornices)
-        var sweepTypes = new FilteredElementCollector(Doc)
-            .WhereElementIsElementType()
-            .OfCategory(BuiltInCategory.OST_Cornices)
-            .Cast<ElementType>()
-            .Select(t => t.Name)
-            .ToList();
-
-        // Get Reveal Types
-        var revealTypes = new FilteredElementCollector(Doc)
-            .WhereElementIsElementType()
-            .OfCategory(BuiltInCategory.OST_Reveals)
-            .Cast<ElementType>()
-            .Select(t => t.Name)
-            .ToList();
-
-        options.AddRange(sweepTypes);
-        options.AddRange(revealTypes);
-
-        return options.OrderBy(n => n).ToList();
-    }
-
-    /// <summary>Profile family for the sweep/reveal</summary>
-    public string ProfileName { get; set; } = "";
-
-    public List<string> ProfileName_Options()
-    {
-        return new FilteredElementCollector(Doc)
-            .OfClass(typeof(FamilySymbol))
-            .OfCategory(BuiltInCategory.OST_ProfileFamilies)
-            .Cast<FamilySymbol>()
-            .Select(p => p.Name)
-            .OrderBy(n => n)
-            .ToList();
-    }
+    /// <summary>Select the Profile</summary>
+    [RevitElements(Category = "Profiles")]
+    public FamilySymbol ProfileName { get; set; }
     #endregion
 
     #region Selection
-    /// <summary>Operate on selected walls only</summary>
     public bool UseSelection { get; set; } = true;
+
+    [EnabledWhen(nameof(UseSelection), "true")]
+    public List<Wall> SelectedWalls { get; set; }
     #endregion
 }

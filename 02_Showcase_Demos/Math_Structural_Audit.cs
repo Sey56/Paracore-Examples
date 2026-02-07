@@ -13,61 +13,70 @@ Dependencies: RevitAPI 2025, CoreScript.Engine, MathNet.Numerics
 Description:
 Performs a statistical audit of wall lengths in the project using MathNet.Numerics.
 Calculates Mean, Median, and Standard Deviation to identify geometric variations.
+Enhanced with V3 Hydration for target selection.
 */
 
 // 1. Setup
 var p = new Params();
 
-// 2. Data Extraction
-var walls = new FilteredElementCollector(Doc)
-    .OfClass(typeof(Wall))
-    .Cast<Wall>()
-    .ToList();
-
-if (!walls.Any())
+// 2. Data Extraction (Hydration!)
+List<Wall> targetWalls;
+if (p.AuditSelectedOnly && p.SelectedWalls != null && p.SelectedWalls.Count > 0)
 {
-    Println("No walls found in the document.");
+    targetWalls = p.SelectedWalls;
+}
+else
+{
+    targetWalls = new FilteredElementCollector(Doc)
+        .OfClass(typeof(Wall))
+        .WhereElementIsNotElementType()
+        .Cast<Wall>()
+        .ToList();
+}
+
+if (!targetWalls.Any())
+{
+    Println("ℹ️ No walls found matching the audit criteria.");
 }
 else
 {
     // Extract Lengths (Internal Units: Feet)
-    var lengths = walls.Select(w => w.get_Parameter(BuiltInParameter.CURVE_ELEM_LENGTH).AsDouble()).ToList();
+    var lengths = targetWalls.Select(w => w.get_Parameter(BuiltInParameter.CURVE_ELEM_LENGTH).AsDouble()).ToList();
 
-    // 3. Statistical Analysis (MathNet.Numerics) - Calculations stay in Internal Units
+    // 3. Statistical Analysis
     double meanFeet = lengths.Mean();
     double medianFeet = lengths.Median();
     double stdDevFeet = lengths.StandardDeviation();
     double maxFeet = lengths.Maximum();
 
     // 4. Output Findings (Convert to Meters for display)
-    double ftToM = 0.3048;
-    Println($"--- Wall Length Audit (Total: {walls.Count}) ---");
-    Println($"Average Length: {meanFeet * ftToM:F2} m");
-    Println($"Median Length:  {medianFeet * ftToM:F2} m");
-    Println($"Standard Dev:   {stdDevFeet * ftToM:F2} m");
-    Println($"Longest Wall:   {maxFeet * ftToM:F2} m");
+    Println($"📊 --- Wall Length Audit (Total: {targetWalls.Count}) ---");
+    Println($"Average Length: {UnitUtils.ConvertFromInternalUnits(meanFeet, UnitTypeId.Meters):F2} m");
+    Println($"Median Length:  {UnitUtils.ConvertFromInternalUnits(medianFeet, UnitTypeId.Meters):F2} m");
+    Println($"Standard Dev:   {UnitUtils.ConvertFromInternalUnits(stdDevFeet, UnitTypeId.Meters):F2} m");
+    Println($"Longest Wall:   {UnitUtils.ConvertFromInternalUnits(maxFeet, UnitTypeId.Meters):F2} m");
     
-    // Compare in Internal Units (Both are Feet now)
+    // Check against threshold (Already in internal units)
     if (stdDevFeet > p.Tolerance_m)
     {
-        Println("⚠️ Warning: Significant variation in wall lengths detected.");
+        Println("\n⚠️ Warning: Significant variation in wall lengths detected.");
     }
 }
 
-// ---------------------------------------------------------
-// PARAMETERS
-// ---------------------------------------------------------
-
 public class Params
 {
-    #region Settings
+    #region Audit Scope
+    /// <summary>Toggle: Audit ONLY selection or ALL walls in project</summary>
+    public bool AuditSelectedOnly { get; set; } = false;
 
-    /// <summary>
-    /// The variation threshold in meters.
-    /// Triggers a warning if Standard Deviation exceeds this value.
-    /// </summary>
+    /// <summary>V3 MAGIC: Select specific walls to audit</summary>
+    [EnabledWhen(nameof(AuditSelectedOnly), "true")]
+    public List<Wall> SelectedWalls { get; set; }
+    #endregion
+
+    #region Thresholds
+    /// <summary>Variation threshold in meters</summary>
     [Unit("m")]
     public double Tolerance_m { get; set; } = 2.0;
-
     #endregion
 }

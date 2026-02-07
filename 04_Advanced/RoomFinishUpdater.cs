@@ -1,3 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.DB.Architecture;
+
 /*
 DocumentType: Project
 Categories: Advanced, Data, Import/Export
@@ -7,6 +14,7 @@ Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
 Description:
 Demonstrates File Picker usage for both INPUT and OUTPUT to sync room finishes.
 Reads data from CSV and applies updates to Revit room parameters.
+Now enhanced with V3 Hydration for custom scope selection.
 */
 
 var p = new Params();
@@ -70,12 +78,21 @@ catch (Exception ex)
 // =================================================================================
 Println("\n🔄 Applying updates to Revit rooms...");
 
-var rooms = new FilteredElementCollector(Doc)
-    .OfCategory(BuiltInCategory.OST_Rooms)
-    .WhereElementIsNotElementType()
-    .Cast<Room>()
-    .Where(r => r.Area > 0) // Only placed rooms
-    .ToList();
+// RESOLVE SCOPE: Either custom selection (Hydration) or entire project
+List<Room> rooms;
+if (p.UseCustomScope && p.CustomRooms != null && p.CustomRooms.Count > 0)
+{
+    rooms = p.CustomRooms;
+}
+else
+{
+    rooms = new FilteredElementCollector(Doc)
+        .OfCategory(BuiltInCategory.OST_Rooms)
+        .WhereElementIsNotElementType()
+        .Cast<Room>()
+        .Where(r => r.Area > 0)
+        .ToList();
+}
 
 var updateLog = new List<Dictionary<string, object>>();
 int successCount = 0;
@@ -88,20 +105,22 @@ Transact("Update Room Finishes", () =>
         string targetRoomName = kvp.Key;
         string newFloorFinish = kvp.Value;
 
-        // Find room (case-insensitive)
+        // Find room (case-insensitive) from the resolved scope
         var room = rooms.FirstOrDefault(r => 
             string.Equals((r.Name ?? "").Trim(), targetRoomName, StringComparison.OrdinalIgnoreCase));
 
         if (room == null)
         {
-            Println($"⚠️ Room not found: '{targetRoomName}'");
-            updateLog.Add(new Dictionary<string, object> {
-                { "RoomName", targetRoomName },
-                { "Status", "Not Found" },
-                { "OldFinish", "" },
-                { "NewFinish", newFloorFinish }
-            });
-            notFoundCount++;
+            // Only log as "Not Found" if we are processing the entire project
+            if (!p.UseCustomScope) {
+                updateLog.Add(new Dictionary<string, object> {
+                    { "RoomName", targetRoomName },
+                    { "Status", "Not Found" },
+                    { "OldFinish", "" },
+                    { "NewFinish", newFloorFinish }
+                });
+                notFoundCount++;
+            }
             continue;
         }
 
@@ -109,7 +128,6 @@ Transact("Update Room Finishes", () =>
         Autodesk.Revit.DB.Parameter floorFinishParam = room.LookupParameter("Floor Finish");
         if (floorFinishParam == null || floorFinishParam.IsReadOnly)
         {
-            Println($"⚠️ 'Floor Finish' parameter not found or read-only for room: {room.Name}");
             updateLog.Add(new Dictionary<string, object> {
                 { "RoomName", room.Name },
                 { "Status", "Parameter Error" },
@@ -125,7 +143,6 @@ Transact("Update Room Finishes", () =>
         // Set new value
         floorFinishParam.Set(newFloorFinish);
         
-        Println($"✅ Updated '{room.Name}': {oldValue} → {newFloorFinish}");
         updateLog.Add(new Dictionary<string, object> {
             { "RoomName", room.Name },
             { "Status", "Updated" },
@@ -136,7 +153,7 @@ Transact("Update Room Finishes", () =>
     }
 });
 
-Println($"\n📊 Summary: {successCount} updated, {notFoundCount} not found.");
+Println($"\n📊 Summary: {successCount} updated.");
 
 // =================================================================================
 // STEP 3: EXPORT SUMMARY (OPTIONAL)
@@ -149,11 +166,11 @@ if (!string.IsNullOrWhiteSpace(p.OutputCsvPath))
         
         foreach (var log in updateLog)
         {
-            string roomName = $"\"{log["RoomName"]}\"";
-            string status = $"\"{log["Status"]}\"";
-            string oldFinish = $"\"{log["OldFinish"]}\"";
-            string newFinish = $"\"{log["NewFinish"]}\"";
-            csvLines.Add($"{roomName},{status},{oldFinish},{newFinish}");
+            string rName = $"\"{log["RoomName"]}\"";
+            string rStatus = $"\"{log["Status"]}\"";
+            string rOld = $"\"{log["OldFinish"]}\"";
+            string rNew = $"\"{log["NewFinish"]}\"";
+            csvLines.Add($"{rName},{rStatus},{rOld},{rNew}");
         }
 
         File.WriteAllLines(p.OutputCsvPath, csvLines);
@@ -177,8 +194,17 @@ public class Params
 {
     #region Input
     /// <summary>CSV file with room names (RoomName,FloorFinish)</summary>
-    [InputFile("csv")]
+    [InputFile("csv"), Required]
     public string InputCsvPath { get; set; } = "";
+    #endregion
+
+    #region Scope Selection
+    /// <summary>Toggle: Update only specifically selected rooms below</summary>
+    public bool UseCustomScope { get; set; } = false;
+
+    /// <summary>V3 MAGIC: Pick specific rooms to include in the update</summary>
+    [EnabledWhen(nameof(UseCustomScope), "true")]
+    public List<Room> CustomRooms { get; set; }
     #endregion
 
     #region Output
