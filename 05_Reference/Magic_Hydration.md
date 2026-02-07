@@ -1,4 +1,4 @@
-# Reference: Magic Element Hydration (V3)
+# Reference: Magic Element Hydration (v3.0.2)
 
 The **Magic Element Hydration** system is a core feature introduced in Paracore v3.0.2. It eliminates the need for manual element collection and filtering in C# scripts by automatically resolving Revit objects directly from UI parameters.
 
@@ -18,7 +18,7 @@ When a script parameter is defined as a Revit type (e.g., `Level`, `WallType`, `
     If the value is a standard string (like "Level 01"), the engine automatically searches the document for an element of the **target class** with that **name**. This allows for "Agentic" workflows where you can simply set a parameter by name via chat or text.
 
 ### Custom Filtering (e.g. Placed Rooms)
-If you need to filter elements (e.g. only rooms that are placed and have area > 10 sqm), you use the standard `{ParameterName}_Options` convention. In V3, your provider can return `List<Element>` directly!
+If you need to filter elements (e.g. only rooms that are placed and have area > 10 sqm), you use the standard `{ParameterName}_Options` convention. In v3.0.2, your provider can return `List<Element>` directly!
 
 ```csharp
 // 1. Script Logic at the Top
@@ -32,7 +32,7 @@ public class Params
     /// <summary>Filtered Room Picker</summary>
     public Room TargetRoom { get; set; }
 
-    // V3 Professional Pattern: 
+    // v3.0.2 Professional Pattern: 
     // We use OST_Rooms + WhereElementIsNotElementType for absolute reliability with spatial elements.
     public List<Room> TargetRoom_Options => 
         new FilteredElementCollector(Doc)
@@ -86,7 +86,7 @@ public class Params
 - **Agent Friendly**: Allows the Paracore AI Agent to interact with scripts using natural names rather than cryptic IDs.
 - **Backward Compatible**: Existing scripts using `string` parameters continue to work as usual.
 
-## Simplified Attributes (New in V3)
+## Simplified Attributes (New in v3.0.2)
 For cases where you need to filter by Category (like Doors or Windows) but still want strong typing, you can now use the `[RevitElements]` attribute without specifying the redundant `TargetType`.
 
 **Old Way:**
@@ -95,7 +95,7 @@ For cases where you need to filter by Category (like Doors or Windows) but still
 public FamilyInstance MyDoor { get; set; }
 ```
 
-**New V3 Way:**
+**New v3.0.2 Way:**
 ```csharp
 [RevitElements(Category = "Doors")]
 public FamilyInstance MyDoor { get; set; }
