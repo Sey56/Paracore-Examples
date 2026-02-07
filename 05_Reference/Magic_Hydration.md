@@ -92,7 +92,7 @@ For cases where you need to filter by Category (like Doors or Windows) but still
 **Old Way:**
 ```csharp
 [RevitElements(TargetType = "FamilyInstance", Category = "Doors")]
-public FamilyInstance MyDoor { get; set; }
+public string MyDoor { get; set; }
 ```
 
 **New v3.0.2 Way:**
