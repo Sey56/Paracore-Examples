@@ -21,12 +21,9 @@ Advanced integrations demonstrating what's possible with professional libraries.
 - **`DeleteAllWalls.cs`**: A simple cleanup utility with confirmation logic.
 
 ### 🎓 03_Tutorials
-Scripts that match the step-by-step guides in the [Official Documentation](https://sey56.github.io/paracore-help/docs/tutorials).
-- **`01_HelloRevit.cs`**: Your first script greeting.
-- **`02_HelloWall.cs`**: Creating a basic linear wall.
-- **`03_ParametricFloor.cs`**: Driving geometry with user-defined Width/Depth.
-- **`04_ElementSelection.cs`**: Learning the `[Select]` attribute for model interaction.
-- **`05_MultiFile_HelloRevit/`**: Organizing complex logic across multiple files.
+This folder contains specialized **Script Sources** for the tutorial series. You must load these sub-folders individually.
+- **`Paracore_Fundamentals/`**: Scripts for the core Paracore engine basics.
+- **`RevitAPI_Fundamentals/`**: Scripts focusing on native Revit API interactions within Paracore.
 
 ### 🛠️ 04_Advanced
 Complex algorithms and production-ready automation tools.
