@@ -12,6 +12,7 @@ Dependencies: RevitAPI 2025, CoreScript.Engine
 Description:
 Creates a "Twisting House" by generating walls on multiple levels with a rotational offset.
 Demonstrates V3 dynamic hydration for Levels and WallTypes.
+Note: Uses "Smart Height" logic—automatically calculates wall heights based on level elevations to prevent overlaps, falling back to WallHeight only for the top floor.
 */
 
 var p = new Params();
