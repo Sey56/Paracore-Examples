@@ -52,7 +52,7 @@ Paracore organizes code into **Script Sources**. Each folder containing scripts 
     - **Single Sources**: Select folders like `01_Getting_Started` or `04_Advanced` and click "Select Folder".
     - **Nested Folders**: For `03_Tutorials`, you **must** go inside and select the individual sources (e.g., `Paracore_Fundamentals`) one by one.
 4.  **Quick Switch**: Once added, sources are saved. Use the **Local Folders** dropdown in the Sidebar to switch between them instantly.
-5.  **Gallery**: The Script Gallery populates based on your selection. Simply click a script and hit **"Run Script"**.
+5.  **Gallery**: The Script Gallery populates based on your selection. Simply click a script, adjust its parameters in the **Parameters** tab, and click **"Run Script"**.
 
 ## 📝 License
 
