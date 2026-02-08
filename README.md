@@ -1,6 +1,6 @@
 # Paracore Examples Library 🚀
 
-This repository contains the official example scripts, demonstrations, and tutorials for [Paracore](https://sey56.github.io/paracore-help) (Release 3.0+). These examples are designed to showcase the power of C# automation in Revit with zero boilerplate.
+This repository contains the official example scripts, demonstrations, and tutorials for [Paracore](https://sey56.github.io/paracore-help) (Release 3.0.2+). These examples are designed to showcase the power of C# automation in Revit with zero boilerplate.
 
 ## 📂 Structure
 
