@@ -85,8 +85,15 @@ public class Params
 - **Strong Typing**: Enjoy full Intellisense and type safety inside your script logic.
 - **Breaking Change Warning**: Legacy scripts using `string` parameters for Revit elements are no longer supported and must be updated to use the target Revit Class directly.
 
-## Simplified Attributes (New in v3.0.2)
-For cases where you need to filter by Category (like Doors or Windows) but still want strong typing, you can now use the `[RevitElements]` attribute without specifying the redundant `TargetType`.
+## 🧱 System Families vs. Loadable Components
+
+Magic Hydration handles different elements based on their Revit architecture:
+
+### 1. Automatic Hydration (System Families)
+For **System Families** and unique Revit types (e.g., `Wall`, `WallType`, `Level`, `Material`, `ViewSheet`), no attribute is needed. The type itself is specific enough for Paracore to know what to list or pick.
+
+### 2. Category Restriction (Loadable Components)
+For **Loadable Components** (`FamilyInstance` or `FamilySymbol`), the type is generic—a `FamilyInstance` could be a Door, a Desk, or a Column. To narrow the scope, you **must** use the `[RevitElements]` attribute to define the target category.
 
 **Legacy Way (NO LONGER SUPPORTED):**
 ```csharp
@@ -95,10 +102,14 @@ For cases where you need to filter by Category (like Doors or Windows) but still
 public string MyDoor { get; set; }
 ```
 
-**Modern v3.0.2 Way (Mandatory):**
+**Modern v3.0.2 Way (Mandatory for Loadable Components):**
 ```csharp
+// Use the native Revit type + Category restriction
 [RevitElements(Category = "Doors")]
 public FamilyInstance MyDoor { get; set; }
+
+[RevitElements(Category = "Windows")]
+public FamilySymbol WindowType { get; set; }
 ```
 
 ---
