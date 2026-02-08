@@ -1,8 +1,4 @@
 using System.Globalization;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
 
 /*
 DocumentType: Project
@@ -45,7 +41,7 @@ string Transform(string input)
     };
 }
 
-Parameter GetTargetParameter(Element e) 
+Autodesk.Revit.DB.Parameter GetTargetParameter(Element e) 
 {
     if (e is TextNote) return e.get_Parameter(BuiltInParameter.TEXT_TEXT);
     if (e is Room) return e.get_Parameter(BuiltInParameter.ROOM_NAME);
@@ -104,5 +100,9 @@ public class Params
     /// <summary>Select categories to process</summary>
     public List<string> SelectedCategories { get; set; } = ["Rooms", "Views", "Sheets"];
     public List<string> SelectedCategories_Options => ["Rooms", "Views", "Sheets", "Text Notes", "Levels"];
+
+    /// Type "APPLY" to apply project wide case change
+    [Confirm("APPLY")]
+    public string? Confirmation {get; set;}
     #endregion
 }

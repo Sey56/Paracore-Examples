@@ -40,7 +40,7 @@ Complex algorithms and production-ready automation tools.
 Interactive "Cheat Sheets" for the Paracore engine.
 - **`Parameters_Reference.cs`**: A "Kitchen Sink" of all UI control types and attributes.
 - **`Paracore_Parameter_Engine.md`**: Detailed guide on how UI is inferred from C# code.
-- **`revit_elements_deep_dive.md`**: Explaining the "Magic" discovery system of the `[RevitElements]` attribute.
+- **`Magic_Hydration.md`**: Explaining the v3.0.2 system for automatic Revit type resolution and category restriction.
 
 ## ⚡ How to Use
 
