@@ -44,14 +44,15 @@ Interactive "Cheat Sheets" for the Paracore engine.
 
 ## ⚡ How to Use
 
-Paracore populates its Gallery from one source at a time. To use this library:
+Paracore organizes code into **Script Sources**. Each folder containing scripts must be loaded individually.
 
-1.  **Clone or Download** this repository to your computer.
-2.  **Add Sources**: In the Paracore **Sidebar**, click the **"+"** button and add the sub-folders (e.g., `01_Getting_Started`, `03_Tutorials`) one by one.
-3.  **Switching Folders**: Once added, these folders will appear in the **Local Folders** dropdown in the Sidebar.
-4.  **View Scripts**: Select a folder from the dropdown to instantly populate the Gallery with its scripts. 
-
-> 💡 **Note**: The Gallery only shows scripts from the **currently selected** folder. To see a different category, simply change the selection in the dropdown.
+1.  **Clone or Download** this repository.
+2.  **Add Sources**: In the Paracore **Sidebar**, click the **"+"** button.
+3.  **Loading Folders**:
+    - **Single Sources**: Select folders like `01_Getting_Started` or `04_Advanced` and click "Select Folder".
+    - **Nested Folders**: For `03_Tutorials`, you **must** go inside and select the individual sources (e.g., `Paracore_Fundamentals`) one by one.
+4.  **Quick Switch**: Once added, sources are saved. Use the **Local Folders** dropdown in the Sidebar to switch between them instantly.
+5.  **Gallery**: The Script Gallery populates based on your selection. Simply click a script and hit **"Run Script"**.
 
 ## 📝 License
 
