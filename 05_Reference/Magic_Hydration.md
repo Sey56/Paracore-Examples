@@ -17,32 +17,28 @@ When a script parameter is defined as a Revit type (e.g., `Level`, `WallType`, `
 3.  **Pillar 3: Intuition (Name-Based Search)**
     If the value is a standard string (like "Level 01"), the engine automatically searches the document for an element of the **target class** with that **name**. This allows for flexible workflows where you can simply set a parameter by name.
 
-### Custom Filtering (e.g. Placed Rooms)
-If you need to filter elements (e.g. only rooms that are placed and have area > 10 sqm), you use the standard `{ParameterName}_Options` convention. In v3.0.2, your provider can return `List<Element>` directly!
+### 💎 The "Ultimate" Filter: The _Options Provider
+
+While simple hydration is "magic," the `{ParameterName}_Options` provider is the **ultimate, high-level filtering mechanism** in Paracore. Without it, hydration simply lists all elements of the target type. With it, you have total control over what appears in the UI.
+
+This works for both native Revit types (Hydration) and standard types (Strings).
 
 ```csharp
-// 1. Script Logic at the Top
-var p = new Params();
-if (p.TargetRoom != null) 
-    Println($"Operating on Room: {p.TargetRoom.Name} (Area: {p.TargetRoom.Area})");
-
-// 2. User-Defined Types at the Bottom
 public class Params
 {
-    /// <summary>Filtered Room Picker</summary>
-    public Room TargetRoom { get; set; }
+    /// <summary>Advanced Filtered Hydration</summary>
+    public WallType MyWallType { get; set; }
 
-    // v3.0.2 Professional Pattern: 
-    // We use OST_Rooms + WhereElementIsNotElementType for absolute reliability with spatial elements.
-    public List<Room> TargetRoom_Options => 
-        new FilteredElementCollector(Doc)
-            .OfCategory(BuiltInCategory.OST_Rooms)
-            .WhereElementIsNotElementType()
-            .Cast<Room>()
-            .Where(r => r.Area > 107.6) // Filter for > 10 square meters
-            .ToList();
+    /// <summary>The Ultimate Filter</summary>
+    // We only want Wall Types that contain the word "Generic"
+    public List<WallType> MyWallType_Options => new FilteredElementCollector(Doc)
+        .OfClass(typeof(WallType))
+        .Cast<WallType>()
+        .Where(wt => wt.Name.Contains("Generic"))
+        .ToList();
 }
 ```
+*The `_Options` provider is your tool for professional-grade, contextual filtering. It ensures the user only sees exactly what is relevant to your specific automation script.*
 
 ## Usage Examples
 
