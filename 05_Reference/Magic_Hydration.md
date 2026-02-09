@@ -112,5 +112,27 @@ public FamilyInstance MyDoor { get; set; }
 public FamilySymbol WindowType { get; set; }
 ```
 
+## ⚡ Reactive String Options (The Hybrid Way)
+
+While "Magic" attribute-driven string extraction is gone, **Custom Reactive Options for strings** are still fully supported. This is useful when you want to pick a Name or a custom value from Revit but store it as a string in your logic.
+
+```csharp
+public class Params
+{
+    /// <summary>Step 1: Define a standard string</summary>
+    public string WallName { get; set; }
+
+    /// <summary>Step 2: Provide a custom string list</summary>
+    public List<string> WallName_Options => new FilteredElementCollector(Doc)
+                .OfClass(typeof(Wall))
+                .Cast<Wall>()
+                .Select(w => w.Name)
+                .Distinct()
+                .OrderBy(name => name)
+                .ToList();
+}
+```
+*In this scenario, Paracore generates a Searchable Dropdown. The user picks a name, and your logic receives it as a simple string. This remains an extraordinary tool for data-driven workflows.*
+
 ---
 *Introduced in Paracore v3.0.2 - "The Hydration Update"*
