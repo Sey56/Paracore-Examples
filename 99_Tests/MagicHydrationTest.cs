@@ -98,4 +98,8 @@ public class Params {
     [Unit("m2")]
     public double AreaThreshold { get; set; } = 10.0;
     #endregion
+
+    #region Zone Eleven
+    public WallType MyWallType { get; set; }
+    #endregion
 }

@@ -1,5 +1,3 @@
-using Autodesk.Revit.DB;
-
 // This file only contains the Parameter definitions.
 // Paracore automatically detects public classes in all files in the folder.
 
