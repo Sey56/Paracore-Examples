@@ -1,8 +1,0 @@
-# Paracore IDE Scaffolding
-bin/
-obj/
-*.csproj
-global.json
-Globals.cs
-.editorconfig
-.github/
