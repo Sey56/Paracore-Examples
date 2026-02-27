@@ -1,56 +1,56 @@
 # Paracore Examples Library 🚀
 
-This repository contains the official example scripts, demonstrations, and tutorials for [Paracore](https://sey56.github.io/paracore-help) (Release 3.0.2+). These examples are designed to showcase the power of C# automation in Revit with zero boilerplate.
+This repository contains the official example scripts, demonstrations, and starter templates for [Paracore](https://sey56.github.io/paracore-help) (Release 4.0.0+). 
+
+These examples showcase the "One Source of Truth" architecture of Paracore—demonstrating how you can build professional C# Revit automations with zero boilerplate and immediate execution.
 
 ## 📂 Structure
 
-This library is organized into specialized **Script Sources**. Each folder represents a category that can be loaded into Paracore.
+This library is organized into specialized **Script Sources**. In Paracore v4, you can load the root folder directly to populate your gallery with all categories at once.
 
 ### 🏁 01_Getting_Started
 Quick-start scripts to verify your installation and learn the basics.
 - **`TwistingTower.cs`**: The classic "Twisting House" verification script. Creates walls on all levels with a rotational offset.
 
-### 🌟 02_Showcase_Demos
-Advanced integrations demonstrating what's possible with professional libraries.
-- **`ProjectDashboard.cs`**: Renders bar, pie, and line charts for a project overview.
-- **`Api_Weather_RestSharp.cs`**: Connects to a live weather API to fetch site data using RestSharp.
-- **`Excel_Level_Export.cs`**: High-performance, zero-COM export of project Levels to Excel.
-- **`Image_Asset_Processor.cs`**: Production-ready image processing (Resizing, Grayscale) via ImageSharp.
-- **`Math_Structural_Audit.cs`**: Statistical analysis of element dimensions using MathNet.Numerics.
+### 🌟 02_Paracore_Fundamentals
+Core concepts of the Paracore engine.
 - **`Safety_Lock_Demo.cs`**: Demonstrates the "Safety Lock" pattern for destructive operations.
-- **`DeleteAllWalls.cs`**: A simple cleanup utility with confirmation logic.
+- **`Parameters_Reference.cs`**: A "Kitchen Sink" of all UI control types and attributes.
 
-### 🎓 03_Tutorials
-This folder contains specialized **Script Sources** for the tutorial series. You must load these sub-folders individually.
-- **`Paracore_Fundamentals/`**: Scripts for the core Paracore engine basics.
-- **`RevitAPI_Fundamentals/`**: Scripts focusing on native Revit API interactions within Paracore.
+### 🏗️ 03_RevitAPI_Fundamentals
+Practical examples of interacting with the Revit API inside the Paracore ecosystem.
+- **`Element_Selection_Demo.cs`**: Various patterns for selecting and filtering Revit elements.
+- **`Parametric_Wall_Creator.cs`**: Creating elements with dynamic parameter inputs.
 
 ### 🛠️ 04_Advanced
-Complex algorithms and production-ready automation tools.
-- **`ParacoreTiler.cs`**: The v3.0 Flagship. An advanced computational floor pattern generator with gap-filling and cost estimation.
+Complex algorithms and production-ready automation patterns.
+- **`ParacoreTiler.cs`**: An advanced computational floor pattern generator with gap-filling and cost estimation.
 - **`Furniture_Path_Placer.cs`**: Distributes families along a selected curve path.
-- **`Wall_Geometry_Editor.cs`**: Bulk adding Sweeps and Reveals to walls.
-- **`RoomFinishUpdater.cs`**: Syncing Revit room data from external CSV files.
-- **`CaseStandardizer.cs`**: Standardizing naming cases for annotations and views.
 
 ### 📖 05_Reference
-Interactive "Cheat Sheets" for the Paracore engine.
-- **`Parameters_Reference.cs`**: A "Kitchen Sink" of all UI control types and attributes.
-- **`Paracore_Parameter_Engine.md`**: Detailed guide on how UI is inferred from C# code.
-- **`Magic_Hydration.md`**: Explaining the v3.0.2 system for automatic Revit type resolution and category restriction.
+Cheat sheets and internal engine documentation.
+- **`Globals_Cheat_Sheet.cs`**: Quick reference for all available global functions (Select, Table, Transact, etc.).
+
+### 🎨 06_Showcase_Demos
+Advanced integrations demonstrating what's possible with professional libraries and high-end UI patterns.
+- **`ProjectDashboard.cs`**: Renders bar, pie, and line charts for a project overview.
+- **`Excel_Level_Export.cs`**: High-performance export of project Levels to Excel.
+
+### 🛡️ 07_SentinelSource (Starter Templates)
+These are **Test Scripts** designed to demonstrate the Sentinel (Watchdog) background monitoring system.
+- **`LengthChecker.cs`**: Generated with the Visual Query Builder; shows how to monitor and report on element properties.
+- **`UnplacedRooms.cs`**: A pattern for monitoring model health and reporting warnings.
+- **`CADImportGuard.cs`**: Professional guardrail template for monitoring model cleanliness.
 
 ## ⚡ How to Use
 
-Paracore organizes code into **Script Sources**. Each folder containing scripts must be loaded individually.
+Paracore v4 introduces a "Zero-Manual-Management" workflow.
 
 1.  **Clone or Download** this repository.
-2.  **Add Sources**: In the Paracore **Sidebar**, click the **"+"** button.
-3.  **Loading Folders**:
-    - **Single Sources**: Select folders like `01_Getting_Started` or `04_Advanced` and click "Select Folder".
-    - **Nested Folders**: For `03_Tutorials`, you **must** go inside and select the individual sources (e.g., `Paracore_Fundamentals`) one by one.
-4.  **Quick Switch**: Once added, sources are saved. Use the **Local Folders** dropdown in the Sidebar to switch between them instantly.
-5.  **Gallery**: The Script Gallery populates based on your selection. Simply click a script, adjust its parameters in the **Parameters** tab, and click **"Run Script"**.
+2.  **Add all Examples**: In the Paracore **Sidebar**, click the **Folder (Load)** icon and select this root repository folder. Paracore will recursively scan and load all categorized script sources at once.
+3.  **Select Active Source**: Use the **Script Sources** dropdown in the Sidebar to switch between categories (e.g., `01_Getting_Started`).
+4.  **Edit & Run**: Click any script in the Gallery. Click **"Edit Script"** to see the "One Source of Truth" project scaffolding in VS Code, or simply click **"Run"** to execute immediately.
 
 ## 📝 License
 
-These scripts are provided under the MIT License. Feel free to copy, modify, and use them in your own commercial or private projects.
+These scripts are provided under the MIT License. They are intended as a "factory" for your own tools—feel free to copy, modify, and use them as templates for your own commercial or private projects.
