@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
 Categories: Tutorial, Parameters, Data
@@ -15,9 +10,10 @@ Provides a comprehensive audit of all parameters for a selected Wall.
 Demonstrates how to access Parameter definitions, values, and storage types.
 */
 
-var p = new Params();
+Params p = new();
 
-if (p.TargetWall == null) {
+if (p.TargetWall == null)
+{
     Println("🚫 Please select a Wall in the UI to begin the deep dive.");
     return;
 }
@@ -26,7 +22,7 @@ if (p.TargetWall == null) {
 Println($"🔍 Inspecting Wall: {p.TargetWall.Name} (Id: {p.TargetWall.Id})");
 
 // 2. Collect ALL parameters from the selected wall
-var paramData = new List<object>();
+List<object> paramData = [];
 
 foreach (Autodesk.Revit.DB.Parameter param in p.TargetWall.Parameters)
 {
@@ -37,7 +33,7 @@ foreach (Autodesk.Revit.DB.Parameter param in p.TargetWall.Parameters)
 
     paramData.Add(new
     {
-        Id = p.TargetWall.Id,
+        p.TargetWall.Id,
         Name = paramName,
         Value = paramValue,
         Type = paramType
@@ -52,6 +48,6 @@ public class Params
 {
     #region Targets
     /// <summary>Pick a wall instance to dive into its parameters</summary>
-    public Wall TargetWall { get; set; }
+    public Wall? TargetWall { get; set; }
     #endregion
 }

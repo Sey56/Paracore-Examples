@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
 Categories: Tutorial, Geometry
@@ -15,7 +10,7 @@ Demonstrates creating a rectangular floor using real Revit objects
 hydrated directly into the Params class.
 */
 
-var p = new Params();
+Params p = new();
 
 if (p.TargetLevel == null || p.FloorType == null)
 {
@@ -24,27 +19,30 @@ if (p.TargetLevel == null || p.FloorType == null)
 }
 
 // 1. Define the geometry
-var p1 = new XYZ(0, 0, 0);
-var p2 = new XYZ(p.Width, 0, 0);
-var p3 = new XYZ(p.Width, p.Depth, 0);
-var p4 = new XYZ(0, p.Depth, 0);
+XYZ p1 = new(0, 0, 0);
+XYZ p2 = new(p.Width, 0, 0);
+XYZ p3 = new(p.Width, p.Depth, 0);
+XYZ p4 = new(0, p.Depth, 0);
 
-var curves = new List<Curve> {
+List<Curve> curves =
+[
     Line.CreateBound(p1, p2),
     Line.CreateBound(p2, p3),
     Line.CreateBound(p3, p4),
     Line.CreateBound(p4, p1)
-};
-var loop = CurveLoop.Create(curves);
+];
+
+CurveLoop loop = CurveLoop.Create(curves);
 
 // 2. Modify the model
-Transact("Create Floor", () => {
-    Floor.Create(Doc, new List<CurveLoop> { loop }, p.FloorType.Id, p.TargetLevel.Id);
-    
+Transact("Create Floor", () =>
+{
+    _ = Floor.Create(Doc, [loop], p.FloorType.Id, p.TargetLevel.Id);
+
     // Convert back to meters for the console report
     double widthM = UnitUtils.ConvertFromInternalUnits(p.Width, UnitTypeId.Meters);
     double depthM = UnitUtils.ConvertFromInternalUnits(p.Depth, UnitTypeId.Meters);
-    
+
     Println($"✅ Created {p.FloorType.Name} floor: {widthM:F2}m x {depthM:F2}m");
 });
 
@@ -52,10 +50,10 @@ public class Params
 {
     #region Standard Revit Selections
     /// <summary>Base level for the floor</summary>
-    public Level TargetLevel { get; set; }
+    public Level? TargetLevel { get; set; }
 
     /// <summary>Blueprint for the floor</summary>
-    public FloorType FloorType { get; set; }
+    public FloorType? FloorType { get; set; }
     #endregion
 
     #region Dimensions

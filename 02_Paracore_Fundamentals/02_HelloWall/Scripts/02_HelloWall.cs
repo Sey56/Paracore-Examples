@@ -10,11 +10,11 @@ Demonstrates creating a linear wall using real Revit Types
 automatically hydrated by the engine.
 */
 
-var p = new Params();
+Params p = new();
 
 // 1. Setup the geometry
-XYZ pt1 = new XYZ(0, 0, 0);
-XYZ pt2 = new XYZ(p.WallLength, 0, 0);
+XYZ pt1 = new(0, 0, 0);
+XYZ pt2 = new(p.WallLength, 0, 0);
 Line wallLine = Line.CreateBound(pt1, pt2);
 
 // 2. Execution (Direct use of real objects!)
@@ -28,19 +28,20 @@ Transact("Create Tutorial Wall", () =>
 {
     Wall wall = Wall.Create(Doc, wallLine, p.TargetLevel.Id, false);
     wall.WallType = p.WallType;
-    
+
     // Set the height (auto-converted from meters in UI)
-    wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)?.Set(p.WallHeight);
+    _ = (wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)?.Set(p.WallHeight));
 
     Println($"✅ Wall created: {wall.Id} on {p.TargetLevel.Name}");
 });
 
-public class Params {
+public class Params
+{
     /// <summary>Select the base level</summary>
-    public Level TargetLevel { get; set; }
+    public Level? TargetLevel { get; set; }
 
     /// <summary>Select the wall type</summary>
-    public WallType WallType { get; set; }
+    public WallType? WallType { get; set; }
 
     /// <summary>Length in meters</summary>
     [Unit("m")]

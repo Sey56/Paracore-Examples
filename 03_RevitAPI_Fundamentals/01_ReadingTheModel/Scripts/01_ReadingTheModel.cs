@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
 Categories: Tutorial, Collection, Data
@@ -15,20 +10,20 @@ Learn how to collect and analyze elements project-wide.
 Demonstrates using a Segmented UI to switch between categories.
 */
 
-var p = new Params();
+Params p = new();
 
 // 1. Efficiently collect all instances of the selected category
-var collector = new FilteredElementCollector(Doc)
+FilteredElementCollector collector = new FilteredElementCollector(Doc)
     .OfCategory(p.TargetCategory)
     .WhereElementIsNotElementType();
 
-var allInstances = collector.ToList();
+List<Element> allInstances = [.. collector];
 
 Println($"📊 Analyzing Category: {p.TargetCategory}");
 Println($"🔍 Total instances in project: {allInstances.Count}");
 
 // 2. Filter for instances in the active view
-var inViewCount = new FilteredElementCollector(Doc, Doc.ActiveView.Id)
+int inViewCount = new FilteredElementCollector(Doc, Doc.ActiveView.Id)
     .OfCategory(p.TargetCategory)
     .WhereElementIsNotElementType()
     .GetElementCount();
@@ -57,15 +52,14 @@ public class Params
     /// <summary>Choose a category to analyze</summary>
     [Segmented]
     public BuiltInCategory TargetCategory { get; set; } = BuiltInCategory.OST_Walls;
-
-    public List<BuiltInCategory> TargetCategory_Options => new List<BuiltInCategory>
-    {
+    public List<BuiltInCategory> TargetCategory_Options =>
+    [
         BuiltInCategory.OST_Walls,
         BuiltInCategory.OST_Doors,
         BuiltInCategory.OST_Windows,
         BuiltInCategory.OST_Rooms,
         BuiltInCategory.OST_Floors,
         BuiltInCategory.OST_Columns
-    };
+    ];
     #endregion
 }

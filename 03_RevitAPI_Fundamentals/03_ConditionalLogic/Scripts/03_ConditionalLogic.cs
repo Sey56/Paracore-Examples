@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.DB.Architecture;
-
 /*
 DocumentType: Project
 Categories: Tutorial, Logic, Filters
@@ -16,14 +10,13 @@ Learn how to use C# conditional statements and LINQ to filter the model.
 Finds all rooms smaller than a user-defined threshold and displays them in an interactive table.
 */
 
-var p = new Params();
+Params p = new();
 
 // 1. Collect all Rooms in the active document
-var allRooms = new FilteredElementCollector(Doc)
+List<Room> allRooms = [.. new FilteredElementCollector(Doc)
     .OfCategory(BuiltInCategory.OST_Rooms)
     .WhereElementIsNotElementType()
-    .Cast<Room>()
-    .ToList();
+    .Cast<Room>()];
 
 if (allRooms.Count == 0)
 {
@@ -33,7 +26,7 @@ if (allRooms.Count == 0)
 
 // 2. Apply Conditional Logic (Filter for rooms LESS than threshold)
 // Note: p.ThresholdArea is already converted to Internal Units (sqft) by the engine.
-var smallRooms = allRooms.Where(r => r.Area < p.ThresholdArea).ToList();
+List<Room> smallRooms = [.. allRooms.Where(r => r.Area < p.ThresholdArea)];
 
 // 3. Report Findings
 Println($"📊 Analysis Complete.");
@@ -43,10 +36,11 @@ Println($"🔴 Rooms < {UnitUtils.ConvertFromInternalUnits(p.ThresholdArea, Unit
 // 4. Display Interactive Table
 if (smallRooms.Count > 0)
 {
-    var tableData = smallRooms.Select(r => new {
-        Id = r.Id, // Enables "Select in Revit" on click
-        Number = r.Number,
-        Name = r.Name,
+    var tableData = smallRooms.Select(r => new
+    {
+        r.Id, // Enables "Select in Revit" on click
+        r.Number,
+        r.Name,
         Area_Internal = r.Area.ToString("F2") + " sqft",
         Area_Metric = UnitUtils.ConvertFromInternalUnits(r.Area, UnitTypeId.SquareMeters).ToString("F2") + " m²"
     }).OrderBy(x => x.Number).ToList();

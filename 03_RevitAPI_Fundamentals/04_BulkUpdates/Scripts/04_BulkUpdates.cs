@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Autodesk.Revit.DB;
-
 /*
 DocumentType: Project
 Categories: Tutorial, Modification, Parameters
@@ -15,10 +10,11 @@ Learn how to modify multiple elements efficiently using hydrated objects.
 Demonstrates batch parameter updates for selected Walls.
 */
 
-var p = new Params();
+Params p = new();
 
 // 1. Resolve Targets (List<Wall> is automatically populated!)
-if (p.TargetWalls == null || p.TargetWalls.Count == 0) {
+if (p.TargetWalls == null || p.TargetWalls.Count == 0)
+{
     Println("ℹ️ No walls selected. Please select walls in the UI.");
     return;
 }
@@ -26,11 +22,14 @@ if (p.TargetWalls == null || p.TargetWalls.Count == 0) {
 int successCount = 0;
 
 // 2. Perform Batch Update
-Transact("Bulk Update Walls", () => {
-    foreach (var wall in p.TargetWalls) {
-        var param = wall.LookupParameter(p.ParameterName);
-        if (param != null && !param.IsReadOnly) {
-            param.Set(p.NewValue);
+Transact("Bulk Update Walls", () =>
+{
+    foreach (Wall wall in p.TargetWalls)
+    {
+        Autodesk.Revit.DB.Parameter param = wall.LookupParameter(p.ParameterName);
+        if (param != null && !param.IsReadOnly)
+        {
+            _ = param.Set(p.NewValue);
             successCount++;
         }
     }
@@ -42,7 +41,7 @@ public class Params
 {
     #region Targets
     /// <summary>Choose which walls to modify</summary>
-    public List<Wall> TargetWalls { get; set; }
+    public List<Wall>? TargetWalls { get; set; }
     #endregion
 
     #region Values

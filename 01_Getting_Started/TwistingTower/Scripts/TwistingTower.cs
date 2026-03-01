@@ -1,24 +1,14 @@
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using Autodesk.Revit.DB;
-
-
-
-
-
 /*
 DocumentType: Project
 Categories: Getting Started, Geometry
 Author: Paracore Team
-Dependencies: RevitAPI 2025, CoreScript.Engine
+Dependencies: RevitAPI 2025+, Paracore.Addin
 
 Description:
 Creates a "Twisting House" by generating walls on multiple levels with a rotational offset.
 Demonstrates V3 dynamic hydration for Levels and WallTypes.
-Note: Uses "Smart Height" logic—automatically calculates wall heights based on level elevations to prevent overlaps, falling back to WallHeight only for the top floor.
-*/
 
+*/
 Params p = new();
 
 // 1. Validation
