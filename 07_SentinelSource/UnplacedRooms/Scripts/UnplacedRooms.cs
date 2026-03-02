@@ -1,3 +1,13 @@
+/*
+DocumentType: Project
+Categories: Architectural
+Author: Paracore Team
+Dependencies: RevitAPI 2025+, Paracore.Addin
+
+Description:
+Monitors for unplaced rooms in the document
+*/
+
 using Autodesk.Revit.DB;
 using Autodesk.Revit.DB.Architecture;
 using System.Linq;

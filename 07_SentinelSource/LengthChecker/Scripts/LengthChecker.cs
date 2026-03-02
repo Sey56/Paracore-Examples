@@ -1,3 +1,13 @@
+/*
+DocumentType: Project
+Categories: Architectural
+Author: Paracore VQB
+Dependencies: RevitAPI 2025+, Paracore.Addin
+
+Description:
+Monitors all walls shorter than a given threshold length in millimeter at a user specified level or on all levels if the level is left null.
+*/
+
 // Watchdog: Generated Sentinel
 // Generated from Visual Query Builder
 Watchdog(() =>

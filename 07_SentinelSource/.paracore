@@ -1,4 +1,6 @@
 {
-    "name": "SentinelSource",
+    "name": "07_SentinelSource",
+    "description": "07_SentinelSource",
+    "version": "4.0.0",
     "type": "automation-pack"
 }

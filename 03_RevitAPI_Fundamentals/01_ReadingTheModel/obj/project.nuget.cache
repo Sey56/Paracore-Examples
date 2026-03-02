@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "dgSpecHash": "W3uXpfhSz4o=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\seyou\\Paracore\\Paracore-Examples\\03_RevitAPI_Fundamentals\\01_ReadingTheModel\\01_ReadingTheModel.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\seyou\\.nuget\\packages\\mathnet.numerics\\5.0.0\\mathnet.numerics.5.0.0.nupkg.sha512",
+    "C:\\Users\\seyou\\.nuget\\packages\\miniexcel\\1.31.2\\miniexcel.1.31.2.nupkg.sha512",
+    "C:\\Users\\seyou\\.nuget\\packages\\restsharp\\113.1.0\\restsharp.113.1.0.nupkg.sha512",
+    "C:\\Users\\seyou\\.nuget\\packages\\sixlabors.imagesharp\\3.1.5\\sixlabors.imagesharp.3.1.5.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1903",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.5 has a known high severity vulnerability, https://github.com/advisories/GHSA-2cmq-823j-5qj8",
+      "projectPath": "C:\\Users\\seyou\\Paracore\\Paracore-Examples\\03_RevitAPI_Fundamentals\\01_ReadingTheModel\\01_ReadingTheModel.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\seyou\\Paracore\\Paracore-Examples\\03_RevitAPI_Fundamentals\\01_ReadingTheModel\\01_ReadingTheModel.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    },
+    {
+      "code": "NU1902",
+      "level": "Warning",
+      "message": "Package 'SixLabors.ImageSharp' 3.1.5 has a known moderate severity vulnerability, https://github.com/advisories/GHSA-rxmq-m78w-7wmc",
+      "projectPath": "C:\\Users\\seyou\\Paracore\\Paracore-Examples\\03_RevitAPI_Fundamentals\\01_ReadingTheModel\\01_ReadingTheModel.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\seyou\\Paracore\\Paracore-Examples\\03_RevitAPI_Fundamentals\\01_ReadingTheModel\\01_ReadingTheModel.csproj",
+      "libraryId": "SixLabors.ImageSharp",
+      "targetGraphs": [
+        "net8.0-windows7.0"
+      ]
+    }
+  ]
+}
