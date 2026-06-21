@@ -1,8 +1,3 @@
-using Autodesk.Revit.DB;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-
 /*
 DocumentType: Project
 Categories: Showcase, Analysis, Dashboard
@@ -31,7 +26,7 @@ var categoryData = categories.Select(cat => new {
 }).ToList();
 
 Println("1️⃣ Bar Chart: Elements per Category");
-ChartBar(categoryData); // Or BarChart(categoryData)
+BarChart(categoryData); // Or BarGraph(categoryData)
 
 // 2. Pie Chart: Wall Types Distribution
 var walls = new FilteredElementCollector(Doc)
