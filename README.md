@@ -1,56 +1,60 @@
-# Paracore Examples Library 🚀
+# Paracore Examples
 
-This repository contains the official example scripts, demonstrations, and starter templates for [Paracore](https://sey56.github.io/paracore-help) (Release 4.0.0+). 
+Official example scripts and finished tutorial scripts for [Paracore](https://sey56.github.io/paracore-help) — dynamic C# automation for Revit, written in VS Code and run from the desktop app.
 
-These examples showcase the "One Source of Truth" architecture of Paracore—demonstrating how you can build professional C# Revit automations with zero boilerplate and immediate execution.
+**New here? Start with `00_Tutorials`.** It contains the finished script for every lesson in the
+[Gallery tutorials](https://sey56.github.io/paracore-help/docs/tutorials/gallery-00-start-here),
+using the exact script names the lessons teach. Follow a lesson and build the script yourself, or
+load this source and compare your result with the finished version.
 
-## 📂 Structure
+## Load a script source
 
-This library is organized into specialized **Script Sources**. In Paracore v4, you can load the root folder directly to populate your gallery with all categories at once.
+Each numbered folder is a **script source** — a folder containing a `.paracore` file and one
+sub-folder per script, each with a `Scripts\` folder of `.cs` files.
 
-### 🏁 01_Getting_Started
-Quick-start scripts to verify your installation and learn the basics.
-- **`TwistingTower.cs`**: The classic "Twisting House" verification script. Creates walls on all levels with a rotational offset.
+1. Clone or download this repository.
+2. In the desktop app open the **hamburger menu → Sidebar → Local Sources → Load or Initialize Source**.
+3. Select the numbered folder you want — for example **`00_Tutorials`** — not the repository root.
+4. That folder becomes the active source. Open **Gallery** to see its scripts, then **Configure** and **Run**.
 
-### 🌟 02_Paracore_Fundamentals
-Core concepts of the Paracore engine.
-- **`Safety_Lock_Demo.cs`**: Demonstrates the "Safety Lock" pattern for destructive operations.
-- **`Parameters_Reference.cs`**: A "Kitchen Sink" of all UI control types and attributes.
+To switch to another category, load that folder the same way. **Edit Script** opens the script in
+VS Code and adds the IntelliSense helper files if they are missing; Paracore itself runs only the
+`.cs` files in `Scripts\`.
 
-### 🏗️ 03_RevitAPI_Fundamentals
-Practical examples of interacting with the Revit API inside the Paracore ecosystem.
-- **`Element_Selection_Demo.cs`**: Various patterns for selecting and filtering Revit elements.
-- **`Parametric_Wall_Creator.cs`**: Creating elements with dynamic parameter inputs.
+Full walkthrough: [Before You Start: Script Sources and VS Code](https://sey56.github.io/paracore-help/docs/tutorials/gallery-00-start-here).
 
-### 🛠️ 04_Advanced
-Complex algorithms and production-ready automation patterns.
-- **`ParacoreTiler.cs`**: An advanced computational floor pattern generator with gap-filling and cost estimation.
-- **`Furniture_Path_Placer.cs`**: Distributes families along a selected curve path.
+## 📂 What's here
 
-### 📖 05_Reference
-Cheat sheets and internal engine documentation.
-- **`Globals_Cheat_Sheet.cs`**: Quick reference for all available global functions (Select, Table, Transact, etc.).
+### 🎓 00_Tutorials — the current Gallery lessons
 
-### 🎨 06_Showcase_Demos
-Advanced integrations demonstrating what's possible with professional libraries and high-end UI patterns.
-- **`ProjectDashboard.cs`**: Renders bar, pie, and line charts for a project overview.
-- **`Excel_Level_Export.cs`**: High-performance export of project Levels to Excel.
+| Script | Lesson |
+|---|---|
+| `MyScript` | [Before You Start](https://sey56.github.io/paracore-help/docs/tutorials/gallery-00-start-here) — your first generated script |
+| `HelloWall` | [1 · Hello Wall](https://sey56.github.io/paracore-help/docs/tutorials/gallery-01-hello-wall) — `Params` and `[Unit]` |
+| `RoomInspector` | [2 · Parameter Palette](https://sey56.github.io/paracore-help/docs/tutorials/gallery-02-parameter-palette) — the full control palette |
+| `DoorRenumberer` | [3 · Pick and Place](https://sey56.github.io/paracore-help/docs/tutorials/gallery-03-pick-and-place) — viewport selection |
+| `LevelAuditor` | [4 · Modular Scripts](https://sey56.github.io/paracore-help/docs/tutorials/gallery-04-modular-scripts) — three files |
+| `SmartOffset` | [5 · Units and Conversions](https://sey56.github.io/paracore-help/docs/tutorials/gallery-05-units-and-conversions) |
+| `RoomFinishUpdater` | [6 · Dynamic UI](https://sey56.github.io/paracore-help/docs/tutorials/gallery-06-dynamic-ui) |
+| `CsvRoomSync` | [7 · File I/O](https://sey56.github.io/paracore-help/docs/tutorials/gallery-07-file-io) — includes `sample-rooms.csv` |
+| `StructuralFrame` | [8 · Multi-File Architecture](https://sey56.github.io/paracore-help/docs/tutorials/gallery-08-multi-file) — four files |
 
-### 🛡️ 07_SentinelSource (Starter Templates)
-These are **Test Scripts** designed to demonstrate the Sentinel (Watchdog) background monitoring system.
-- **`LengthChecker.cs`**: Generated with the Visual Query Builder; shows how to monitor and report on element properties.
-- **`UnplacedRooms.cs`**: A pattern for monitoring model health and reporting warnings.
-- **`CADImportGuard.cs`**: Professional guardrail template for monitoring model cleanliness.
+### 🗂 01–07 — the 4.0.0-era example library
 
-## ⚡ How to Use
+These are older examples and starter templates. They still load and run, but they are **not** the
+current tutorials. Start with `00_Tutorials` above.
 
-Paracore v4 introduces a "Zero-Manual-Management" workflow.
-
-1.  **Clone or Download** this repository.
-2.  **Add all Examples**: In the Paracore **Sidebar**, click the **Folder (Load)** icon and select this root repository folder. Paracore will recursively scan and load all categorized script sources at once.
-3.  **Select Active Source**: Use the **Script Sources** dropdown in the Sidebar to switch between categories (e.g., `01_Getting_Started`).
-4.  **Edit & Run**: Click any script in the Gallery. Click **"Edit Script"** to see the "One Source of Truth" project scaffolding in VS Code, or simply click **"Run"** to execute immediately.
+| Source | Scripts |
+|---|---|
+| `01_Getting_Started` | `TwistingTower` |
+| `02_Paracore_Fundamentals` | `01_HelloRevit`, `02_HelloWall`, `03_ParametricFloor`, `04_ElementSelection` |
+| `03_RevitAPI_Fundamentals` | `01_ReadingTheModel`, `02_ParametersDeepDive`, `03_ConditionalLogic`, `04_BulkUpdates`, `05_TypesVsInstances`, `WallLengthAuditor` |
+| `04_Advanced` | `CaseStandardizer`, `Furniture_Path_Placer`, `ParacoreTiler`, `RoomFinishUpdater`, `Wall_Geometry_Editor` |
+| `05_Reference` | `MagicHydrationTest`, `Parameters_Reference` — plus `Magic_Hydration.md` and `Paracore_Parameter_Engine.md` |
+| `06_Showcase_Demos` | `Api_Weather_RestSharp`, `DeleteAllWalls`, `Excel_Level_Export`, `Image_Asset_Processor`, `Math_Structural_Audit`, `ProjectDashboard`, `Safety_Lock_Demo` |
+| `07_SentinelSource` | `CADImportGuard`, `LengthChecker`, `RoomAreaAudit`, `UnplacedRooms` — Sentinel (watchdog) starter templates |
 
 ## 📝 License
 
-These scripts are provided under the MIT License. They are intended as a "factory" for your own tools—feel free to copy, modify, and use them as templates for your own commercial or private projects.
+These scripts are provided under the MIT License. Use them as a factory for your own tools — copy,
+modify and adapt them for commercial or private projects.

@@ -1,0 +1,6 @@
+{
+    "name": "00_Tutorials",
+    "description": "Finished scripts for the Gallery tutorials on the Paracore help site",
+    "version": "4.0.0",
+    "type": "automation-pack"
+}
