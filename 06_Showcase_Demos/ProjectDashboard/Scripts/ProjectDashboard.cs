@@ -2,7 +2,7 @@
 DocumentType: Project
 Categories: Showcase, Analysis, Dashboard
 Author: Paracore Team
-Dependencies: RevitAPI 2025, CoreScript.Engine, Paracore.Addin
+Dependencies: RevitAPI 2025+, CoreScript.Engine, Paracore.Addin
 
 Description:
 Demonstrates ALL Data Visualization features. Renders bar, pie, and line charts
@@ -26,7 +26,7 @@ var categoryData = categories.Select(cat => new {
 }).ToList();
 
 Println("1️⃣ Bar Chart: Elements per Category");
-BarChart(categoryData); // Or BarGraph(categoryData)
+BarGraph(categoryData);
 
 // 2. Pie Chart: Wall Types Distribution
 var walls = new FilteredElementCollector(Doc)
@@ -45,7 +45,7 @@ var wallTypeData = walls
     .ToList();
 
 Println("2️⃣ Pie Chart: Top 5 Wall Types");
-PieChart(wallTypeData);
+PieGraph(wallTypeData);
 
 // 3. Line Chart: Elements by Level Elevation
 // We'll count how many elements are on each level, sorted by elevation
@@ -70,7 +70,7 @@ foreach (var level in levels)
 }
 
 Println("3️⃣ Line Chart: Elements per Level (by Elevation)");
-LineChart(levelData); // Or ChartLine(levelData)
+LineGraph(levelData);
 
 // 4. Interactive Table
 var wallTableData = walls.Select(w => new {
