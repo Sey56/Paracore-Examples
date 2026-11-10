@@ -164,8 +164,12 @@ Wrap properties in `#region GroupName` ... `#endregion` to group them in the UI.
 
 ### Validation Attributes
 *   `[Required]`: Input cannot be empty.
-*   `[Pattern("regex")]`: Enforce format (e.g. only numbers). 
-*   `[Min(0)]`, `[Max(100)]`: Numeric bounds without a slider.
+*   `[Range(min, max, step)]`: Numeric bounds and a slider. Supply all three arguments — omitting
+    the third leaves `step` unset.
+*   `[Confirm("TEXT")]`: The user must type an exact phrase; the engine enforces it at execution time.
+*   `[Pattern("regex")]`, `[Min(0)]` and `[Max(100)]` were **removed on 2026-11-10** — they were
+    never read by the extractor. Writing one now fails to compile; use `[Range]` for bounds and
+    `[Confirm]` for an exact phrase.
 
 ### Conditional UI
 *   **`[EnabledWhen("ParamName", "Value")]`**: Disables the input unless the condition matches.
