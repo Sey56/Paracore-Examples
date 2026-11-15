@@ -9,12 +9,13 @@ load this source and compare your result with the finished version.
 
 ## Load a script source
 
-Each numbered folder is a **script source** — a folder containing a `.paracore` file and one
-sub-folder per script, each with a `Scripts\` folder of `.cs` files.
+Each source folder — the numbered ones and **`PlaylistSource`** — is a **script source**: a folder
+containing a `.paracore` file and one sub-folder per script, each with a `Scripts\` folder of `.cs`
+files.
 
 1. Clone or download this repository.
 2. In the desktop app open the **hamburger menu → Sidebar → Local Sources → Load or Initialize Source**.
-3. Select the numbered folder you want — for example **`00_Tutorials`** — not the repository root.
+3. Select the source folder you want — for example **`00_Tutorials`** or **`PlaylistSource`** — not the repository root.
 4. That folder becomes the active source. Open **Gallery** to see its scripts, then **Configure** and **Run**.
 
 To switch to another category, load that folder the same way. **Edit Script** opens the script in
@@ -38,6 +39,20 @@ Full walkthrough: [Before You Start: Script Sources and VS Code](https://sey56.g
 | `RoomFinishUpdater` | [6 · Dynamic UI](https://sey56.github.io/paracore-help/docs/tutorials/gallery-06-dynamic-ui) |
 | `CsvRoomSync` | [7 · File I/O](https://sey56.github.io/paracore-help/docs/tutorials/gallery-07-file-io) — includes `sample-rooms.csv` |
 | `StructuralFrame` | [8 · Multi-File Architecture](https://sey56.github.io/paracore-help/docs/tutorials/gallery-08-multi-file) — four files |
+
+### ▶ PlaylistSource — the current Playlist lessons
+
+A source containing the finished scripts for the three [Playlist tutorials](https://sey56.github.io/paracore-help/docs/tutorials/playlists). Load **`PlaylistSource`** and keep it as the active source — a playlist can only sequence scripts from the source currently showing in the Gallery.
+
+| Script | Lesson |
+|---|---|
+| `WallCountByLevel` | [P1 · Your First Playlist](https://sey56.github.io/paracore-help/docs/tutorials/playlist-01-first-playlist) — three-report morning check |
+| `RoomAreaReport` | [P1](https://sey56.github.io/paracore-help/docs/tutorials/playlist-01-first-playlist) — room area by level |
+| `DoorSchedule` | [P1](https://sey56.github.io/paracore-help/docs/tutorials/playlist-01-first-playlist) / [P3](https://sey56.github.io/paracore-help/docs/tutorials/playlist-03-staged-writes) |
+| `StampWallsOnLevel` | [P2 · One Tool, Three Levels](https://sey56.github.io/paracore-help/docs/tutorials/playlist-02-one-tool-many-levels) — one script, a different `Target Level` on each step |
+| `FailCheck` | [P3 · Staged Writes and Stopping on Failure](https://sey56.github.io/paracore-help/docs/tutorials/playlist-03-staged-writes) — throws on purpose |
+
+Playlists themselves are saved by the desktop app into the source folder as `*.playlist.json`; each one holds absolute script paths, so they are local to your machine and are not shipped here. Build them by following the lessons.
 
 ### 🗂 01–07 — the 4.0.0-era example library
 

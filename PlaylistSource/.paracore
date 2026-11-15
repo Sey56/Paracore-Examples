@@ -1,0 +1,6 @@
+{
+    "name": "PlaylistSource",
+    "description": "Finished scripts for the Playlist tutorials on the Paracore help site",
+    "version": "4.8.4",
+    "type": "automation-pack"
+}
