@@ -20,18 +20,18 @@ double netAreaM2 = panels * (p.PanelW - p.Joint) * (p.PanelH - p.Joint) / 100000
 
 public class Params
 {
-    /// <summary>Facade length in mm.</summary>
+    /// Facade length in mm.
     public double FacadeLen { get; set; } = 12000;
 
-    /// <summary>Facade height in mm.</summary>
+    /// Facade height in mm.
     public double FacadeHt { get; set; } = 3200;
 
-    /// <summary>Panel width in mm.</summary>
+    /// Panel width in mm.
     public double PanelW { get; set; } = 600;
 
-    /// <summary>Panel height in mm.</summary>
+    /// Panel height in mm.
     public double PanelH { get; set; } = 1200;
 
-    /// <summary>Joint or gap in mm.</summary>
+    /// Joint or gap in mm.
     public double Joint { get; set; } = 10;
 }
