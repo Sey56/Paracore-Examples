@@ -9,7 +9,7 @@ load this source and compare your result with the finished version.
 
 ## Load a script source
 
-Each source folder — the numbered ones and **`PlaylistSource`** — is a **script source**: a folder
+Each source folder — the numbered ones, **`PlaylistSource`** and **`V4_9_Dynamo`** — is a **script source**: a folder
 containing a `.paracore` file and one sub-folder per script, each with a `Scripts\` folder of `.cs`
 files.
 
@@ -53,6 +53,10 @@ A source containing the finished scripts for the three [Playlist tutorials](http
 | `FailCheck` | [P3 · Staged Writes and Stopping on Failure](https://sey56.github.io/paracore-help/docs/tutorials/playlist-03-staged-writes) — throws on purpose |
 
 Playlists themselves are saved by the desktop app into the source folder as `*.playlist.json`; each one holds absolute script paths, so they are local to your machine and are not shipped here. Build them by following the lessons.
+
+### ⚡ V4_9_Dynamo — Dynamo export (new in 4.9.0)
+
+Load **`V4_9_Dynamo`** as the script source. It contains `DynamoMethod` (export a Method node) and `DynamoGraph` (export a standalone `.dyn`), plus two REPL snippets for the 4.9.0 IntelliSense. These examples need Paracore 4.9.0 or newer; see `V4_9_Dynamo/README.md`.
 
 ### 🗂 01–07 — the 4.0.0-era example library
 
