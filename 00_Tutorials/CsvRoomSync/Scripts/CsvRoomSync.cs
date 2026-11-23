@@ -35,10 +35,20 @@ for (int i = startRow; i < lines.Length; i++)
 
 Println($"Parsed {updates.Count} room updates from CSV.");
 
+// Keep the exact input file so a dry run or a later edit can be traced back.
+if (!string.IsNullOrWhiteSpace(p.BackupFolder))
+{
+    Directory.CreateDirectory(p.BackupFolder);
+    string stamp = DateTime.Now.ToString("yyyyMMdd-HHmmss");
+    string backup = Path.Combine(p.BackupFolder, $"RoomFinishes-{stamp}.csv");
+    File.Copy(p.InputCsvPath, backup, overwrite: false);
+    Println($"Input CSV backed up to: {backup}");
+}
+
 // 2. Apply to Revit rooms
-var rooms = GetElements<Room>().Where(r => r.Area > 0).ToList();
+var rooms = GetElements<Room>().Where(r => r.Area > 0);
 int matched = 0, notFound = 0;
-var log = new List<object>();
+var log = new List<FinishLogRow>();
 
 Transact("Sync Room Finishes from CSV", () =>
 {
@@ -50,14 +60,14 @@ Transact("Sync Room Finishes from CSV", () =>
         if (room == null)
         {
             notFound++;
-            log.Add(new { Room = kvp.Key, Status = "Not Found", New = kvp.Value });
+            log.Add(new FinishLogRow { Id = 0, Room = kvp.Key, Status = "Not Found", New = kvp.Value });
             continue;
         }
 
         var param = room.LookupParameter("Floor Finish");
         if (param == null || param.IsReadOnly)
         {
-            log.Add(new { Room = room.Name, Status = "Read Only", New = kvp.Value });
+            log.Add(new FinishLogRow { Id = room.Id.Value, Room = room.Name, Status = "Read Only", New = kvp.Value });
             continue;
         }
 
@@ -65,7 +75,7 @@ Transact("Sync Room Finishes from CSV", () =>
         param.Set(kvp.Value);
         matched++;
 
-        log.Add(new { Room = room.Name, Status = "Updated", Old = old, New = kvp.Value });
+        log.Add(new FinishLogRow { Id = room.Id.Value, Room = room.Name, Status = "Updated", Old = old, New = kvp.Value });
     }
 });
 
@@ -75,15 +85,10 @@ Table(log);
 // 3. Export summary (optional)
 if (!string.IsNullOrWhiteSpace(p.OutputCsvPath))
 {
-    var csv = new List<string> { "Room,Status,OldFinish,NewFinish" };
+    var csv = new List<string> { "Id,Room,Status,OldFinish,NewFinish" };
     foreach (var entry in log)
     {
-        var type = entry.GetType();
-        string room = type.GetProperty("Room")?.GetValue(entry)?.ToString() ?? "";
-        string status = type.GetProperty("Status")?.GetValue(entry)?.ToString() ?? "";
-        string oldVal = type.GetProperty("Old")?.GetValue(entry)?.ToString() ?? "";
-        string newVal = type.GetProperty("New")?.GetValue(entry)?.ToString() ?? "";
-        csv.Add($"\"{room}\",\"{status}\",\"{oldVal}\",\"{newVal}\"");
+        csv.Add($"\"{entry.Id}\",\"{entry.Room}\",\"{entry.Status}\",\"{entry.Old}\",\"{entry.New}\"");
     }
 
     File.WriteAllLines(p.OutputCsvPath, csv);
@@ -110,9 +115,18 @@ public class Params
     [OutputFile("csv")]
     public string OutputCsvPath { get; set; } = "";
 
-    /// <summary>Optional: folder to back up the Revit project first</summary>
+    /// <summary>Optional: folder to copy the input CSV into before applying it</summary>
     [FolderPath]
     public string BackupFolder { get; set; } = "";
 
     #endregion
+}
+
+public class FinishLogRow
+{
+    public long Id { get; set; }
+    public string Room { get; set; } = "";
+    public string Status { get; set; } = "";
+    public string Old { get; set; } = "";
+    public string New { get; set; } = "";
 }

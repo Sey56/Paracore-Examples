@@ -18,9 +18,8 @@ if (p.TargetWalls == null || p.TargetWalls.Count == 0)
 }
 
 // Collect doors hosted by the selected walls
-var doors = GetElements<FamilyInstance>("Doors")
-    .Where(d => d.Host?.Id != null && p.TargetWalls.Any(w => w.Id == d.Host.Id))
-    .ToList();
+List<FamilyInstance> doors = [.. GetElements<FamilyInstance>("Doors")
+    .Where(d => d.Host?.Id != null && p.TargetWalls.Any(w => w.Id == d.Host.Id))];
 
 if (doors.Count == 0)
 {
@@ -30,7 +29,7 @@ if (doors.Count == 0)
 
 if (p.SkipDoorsWithMarks)
 {
-    doors = doors.Where(d => string.IsNullOrWhiteSpace(d.GetStr("Mark"))).ToList();
+    doors = [.. doors.Where(d => string.IsNullOrWhiteSpace(d.GetStr("Mark")))];
     Println($"Skipping doors that already have marks — {doors.Count} left.");
 }
 

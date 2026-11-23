@@ -8,11 +8,11 @@ public static class JoinManager
         var levels = new[] { baseLevel.Name };
 
         var columns = GetElements<FamilyInstance>("Structural Columns")
-            .Where(c => levels.Contains(c.GetStr("Base Level"))).ToList();
+            .Where(c => levels.Contains(c.GetStr("Base Level")));
         var beams = GetElements<FamilyInstance>("Structural Framing")
-            .Where(b => levels.Contains(b.GetStr("Reference Level"))).ToList();
+            .Where(b => levels.Contains(b.GetStr("Reference Level")));
         var slabs = GetElements("Floors")
-            .Where(s => levels.Contains(s.GetStr("Level"))).ToList();
+            .Where(s => levels.Contains(s.GetStr("Level")));
 
         int joins = 0;
         Transact("Set Join Order", () =>

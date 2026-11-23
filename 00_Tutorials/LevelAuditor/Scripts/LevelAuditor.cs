@@ -11,7 +11,7 @@ reports duplicate elevations, and shows a table of all levels.
 
 Params p = new();
 
-var allLevels = GetElements<Level>().OrderBy(l => l.Elevation).ToList();
+List<Level> allLevels = [.. GetElements<Level>().OrderBy(l => l.Elevation)];
 
 if (allLevels.Count == 0)
 {
@@ -19,13 +19,13 @@ if (allLevels.Count == 0)
     return;
 }
 
-var rows = LevelAudit.BuildReport(allLevels, p.MinSpacingMm, p.BaseLevel);
-var issues = rows.Where(r => r.Issue != "OK").ToList();
+var rows = LevelAudit.BuildReport(allLevels, p.MinSpacing, p.BaseLevel);
+var issues = rows.Where(r => r.Issue != "OK");
 
-Println($"Audited {allLevels.Count} levels. {issues.Count} issue(s) found.");
+Println($"Audited {allLevels.Count} levels. {issues.Count()} issue(s) found.");
 Table(rows);
 
-if (issues.Count > 0)
+if (issues.Count() > 0)
 {
     Println("\nIssues:");
     foreach (var issue in issues)

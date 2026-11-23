@@ -72,10 +72,9 @@ public static class FrameGeometry
         int created = 0;
         foreach (Grid grid in grids)
         {
-            var onGrid = intersections
+            List<XYZ> onGrid = [.. intersections
                 .Where(p => p.g1.Id == grid.Id || p.g2.Id == grid.Id)
-                .Select(p => p.point)
-                .ToList();
+                .Select(p => p.point)];
             if (onGrid.Count < 2) continue;
 
             XYZ gDir = (grid.Curve.GetEndPoint(1) - grid.Curve.GetEndPoint(0)).Normalize();

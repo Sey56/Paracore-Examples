@@ -4,9 +4,10 @@
 public static class LevelAudit
 {
     public static List<LevelRow> BuildReport(
-        List<Level> levels, double minSpacingMm, Level? baseLevel)
+        List<Level> levels, double minSpacingFt, Level? baseLevel)
     {
-        double minSpacingFt = minSpacingMm / 304.8;   // mm → ft
+        // [Unit("mm")] already converted the input to Revit's internal feet.
+        // Converting it again here would turn 1000 mm into about 3 mm.
 
         var rows = new List<LevelRow>();
         for (int i = 0; i < levels.Count; i++)
@@ -43,7 +44,7 @@ public static class LevelAudit
     }
 }
 
-public record LevelRow
+public class LevelRow
 {
     public long Id { get; init; }
     public string Name { get; init; } = "";

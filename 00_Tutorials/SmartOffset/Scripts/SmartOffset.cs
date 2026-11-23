@@ -17,9 +17,8 @@ if (p.TargetWallType == null)
     return;
 }
 
-var walls = GetElements<Wall>()
-    .Where(w => w.WallType.Id == p.TargetWallType.Id)
-    .ToList();
+List<Wall> walls = [.. GetElements<Wall>()
+    .Where(w => w.WallType.Id == p.TargetWallType.Id)];
 
 if (walls.Count == 0)
 {
@@ -36,7 +35,7 @@ Transact("Adjust Walls", () =>
         if (p.Mode == "Offset")
         {
             // p.OffsetMm is already in feet — pass it directly
-            wall.SetNum("Base Offset", p.OffsetMm);
+            wall.SetNum("Base Offset", p.OffsetMm, "");
         }
         else if (p.Mode == "Set Height")
         {
@@ -49,9 +48,9 @@ Transact("Adjust Walls", () =>
 // Report back in the units the user thinks in
 Println($"Mode: {p.Mode}");
 if (p.Mode == "Offset")
-    Println($"Offset applied: {OutputUnit(p.OffsetMm, "mm"):F0} mm");
+    Println($"Offset applied: {p.OffsetMm.OutputUnit("mm"):F0} mm");
 else
-    Println($"Height set to: {OutputUnit(p.TargetHeightM, "m"):F2} m");
+    Println($"Height set to: {p.TargetHeightM.OutputUnit("m"):F2} m");
 
 public class Params
 {
