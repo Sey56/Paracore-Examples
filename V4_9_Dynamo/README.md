@@ -5,7 +5,7 @@
 > onward, so you can tell at a glance which examples need a newer Paracore.
 
 This is a **Paracore script source**: five scripts that show the two Dynamo export kinds and
-three integration patterns. The exported logic is pure .NET, so the node or graph runs in Dynamo
+three wiring examples. The exported logic is pure .NET, so the node or graph runs in Dynamo
 without Paracore installed. `DynamoMethod` uses `Println` only when you Run it in Paracore; that
 call is not part of the exported node. The other four scripts use no Revit API or Paracore helpers
 at all.
@@ -42,8 +42,8 @@ error names the exact token and what to change.
 **Export Dynamo** writes only Dynamo nodes today: Method nodes or a `.dyn` with input nodes,
 one CodeBlock and Watch nodes. There are no Revit nodes in the export and no Paracore runtime
 inside Dynamo. The exported input nodes carry short hints about which Revit parameter read to
-wire into them. More tutorials are coming that show how to use exported Paracore graphs and
-Method nodes to automate in Revit.
+wire into them. Add native Revit nodes in Dynamo if you want the exported logic to read or write
+model data.
 :::
 
 ## 3. `DynamoDoorMark` — string composition (Graph)
