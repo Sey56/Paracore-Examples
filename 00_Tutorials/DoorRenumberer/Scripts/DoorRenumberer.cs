@@ -50,7 +50,7 @@ public class Params
 {
     #region Selection
 
-    /// <summary>Pick walls in the Revit viewport</summary>
+    /// Pick walls in the Revit viewport
     [Select(SelectionType.Element)]
     [Required]
     public List<Wall>? TargetWalls { get; set; }
@@ -59,14 +59,14 @@ public class Params
 
     #region Settings
 
-    /// <summary>Prefix for the door marks (e.g. "A", "L1", "N")</summary>
+    /// Prefix for the door marks (e.g. "A", "L1", "N")
     [Required]
     public string Prefix { get; set; } = "D";
 
-    /// <summary>Starting number for the sequence</summary>
+    /// Starting number for the sequence
     public int StartNumber { get; set; } = 1;
 
-    /// <summary>Skip doors that already have a Mark value</summary>
+    /// Skip doors that already have a Mark value
     public bool SkipDoorsWithMarks { get; set; } = false;
 
     #endregion

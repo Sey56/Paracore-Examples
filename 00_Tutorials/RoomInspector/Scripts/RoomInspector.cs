@@ -50,12 +50,12 @@ public class Params
 {
     #region Scope
 
-    /// <summary>Choose what to inspect</summary>
+    /// Choose what to inspect
     [Segmented]
     public string Scope { get; set; } = "All Rooms";
     public List<string> Scope_Options => ["All Rooms", "One Room"];
 
-    /// <summary>Pick a specific room (only when Scope is One Room)</summary>
+    /// Pick a specific room (only when Scope is One Room)
     public Room? SelectedRoom { get; set; }
     public bool SelectedRoom_Visible => Scope == "One Room";
 
@@ -63,10 +63,10 @@ public class Params
 
     #region Filter
 
-    /// <summary>Only show rooms below a certain area</summary>
+    /// Only show rooms below a certain area
     public bool FilterByArea { get; set; } = false;
 
-    /// <summary>Maximum area in square metres</summary>
+    /// Maximum area in square metres
     [Unit("m2")]
     [Range(1, 500, 1)]
     public double MaxArea { get; set; } = 20.0;

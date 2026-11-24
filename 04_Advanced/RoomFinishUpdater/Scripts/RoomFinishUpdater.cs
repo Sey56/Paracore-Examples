@@ -193,22 +193,22 @@ Println($"\n✅ Script completed. Updated {successCount} rooms.");
 public class Params
 {
     #region Input
-    /// <summary>CSV file with room names (RoomName,FloorFinish)</summary>
+    /// CSV file with room names (RoomName,FloorFinish)
     [InputFile("csv"), Required]
     public string InputCsvPath { get; set; } = "";
     #endregion
 
     #region Scope Selection
-    /// <summary>Toggle: Update only specifically selected rooms below</summary>
+    /// Toggle: Update only specifically selected rooms below
     public bool UseCustomScope { get; set; } = false;
 
-    /// <summary>V3 MAGIC: Pick specific rooms to include in the update</summary>
+    /// V3 MAGIC: Pick specific rooms to include in the update
     [EnabledWhen(nameof(UseCustomScope), "true")]
     public List<Room> CustomRooms { get; set; }
     #endregion
 
     #region Output
-    /// <summary>Optional: Export summary of changes</summary>
+    /// Optional: Export summary of changes
     [OutputFile("csv")]
     public string OutputCsvPath { get; set; } = "";
     #endregion

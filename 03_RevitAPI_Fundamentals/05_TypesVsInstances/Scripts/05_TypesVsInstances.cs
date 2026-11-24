@@ -60,12 +60,12 @@ else
 public class Params
 {
     #region Type Selection
-    /// <summary>Choose the Wall Type (The Blueprint)</summary>
+    /// Choose the Wall Type (The Blueprint)
     public WallType? TargetType { get; set; }
     #endregion
 
     #region Instance Data
-    /// <summary>Comment to apply to all instances</summary>
+    /// Comment to apply to all instances
     public string NewComment { get; set; } = "Updated by Type Batch";
     #endregion
 }

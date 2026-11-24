@@ -40,15 +40,15 @@ Println($"✅ Successfully updated {successCount} walls with {p.ParameterName} =
 public class Params
 {
     #region Targets
-    /// <summary>Choose which walls to modify</summary>
+    /// Choose which walls to modify
     public List<Wall>? TargetWalls { get; set; }
     #endregion
 
     #region Values
-    /// <summary>Name of the parameter to change</summary>
+    /// Name of the parameter to change
     public string ParameterName { get; set; } = "Comments";
 
-    /// <summary>New value to apply</summary>
+    /// New value to apply
     public string NewValue { get; set; } = "Updated via Paracore Batch";
     #endregion
 }

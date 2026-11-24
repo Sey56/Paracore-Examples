@@ -53,10 +53,10 @@ public class Params
 {
     #region Filter
 
-    /// <summary>Only show rooms under a certain area</summary>
+    /// Only show rooms under a certain area
     public bool FilterByArea { get; set; } = false;
 
-    /// <summary>Maximum area in square metres</summary>
+    /// Maximum area in square metres
     [Unit("m2")]
     public double MaxArea { get; set; } = 15.0;
 
@@ -66,10 +66,10 @@ public class Params
 
     #region Scope
 
-    /// <summary>Narrow the audit to specific rooms</summary>
+    /// Narrow the audit to specific rooms
     public bool UseScope { get; set; } = false;
 
-    /// <summary>Pick rooms to include (enable the toggle first)</summary>
+    /// Pick rooms to include (enable the toggle first)
     [EnabledWhen(nameof(UseScope), "true")]
     public List<Room>? Rooms { get; set; }
 
@@ -77,7 +77,7 @@ public class Params
 
     #region Confirmation
 
-    /// <summary>Type REPORT to confirm</summary>
+    /// Type REPORT to confirm
     [Confirm("REPORT")]
     public string? Confirm { get; set; }
 

@@ -22,51 +22,51 @@ public class Params
 {
     // -----------------------------------------------------
     #region 01. Automatic Hydration
-    /// <summary>Returns the REAL Level object</summary>
+    /// Returns the REAL Level object
     public Level TargetLevel { get; set; }
 
-    /// <summary>Select multiple real Sheets (Multi-select inferred)</summary>
+    /// Select multiple real Sheets (Multi-select inferred)
     public List<ViewSheet> TargetSheets { get; set; }
     #endregion
 
     // -----------------------------------------------------
     #region 02. High-End UI Controls
-    /// <summary>Modern horizontal selection group</summary>
+    /// Modern horizontal selection group
     [Segmented]
     public string OperationMode { get; set; } = "Preview";
     public List<string> OperationMode_Options => ["Preview", "Commit", "Audit"];
 
-    /// <summary>Visual hex color swatch</summary>
+    /// Visual hex color swatch
     [Color]
     public string UIHighlightColor { get; set; } = "#3B82F6";
 
-    /// <summary>+/- Buttons for precise numeric control</summary>
+    /// +/- Buttons for precise numeric control
     [Stepper]
     public int Iterations { get; set; } = 10;
     #endregion
 
     // -----------------------------------------------------
     #region 03. File & Folder IO
-    /// <summary>Opens native 'Open File' dialog (filters by .csv, .xlsx)</summary>
+    /// Opens native 'Open File' dialog (filters by .csv, .xlsx)
     [InputFile("csv, xlsx")]
     public string DataSource { get; set; }
 
-    /// <summary>Opens native 'Save File' dialog</summary>
+    /// Opens native 'Save File' dialog
     [OutputFile("xlsx")]
     public string ExportPath { get; set; }
 
-    /// <summary>Opens native 'Folder Browser' dialog</summary>
+    /// Opens native 'Folder Browser' dialog
     [FolderPath]
     public string ProjectBackupFolder { get; set; }
     #endregion
 
     // -----------------------------------------------------
     #region 04. Professional Filtering
-    /// <summary>Pick a specific wall instance</summary>
+    /// Pick a specific wall instance
     [Select(SelectionType.Element)]
     public Wall FavoriteWall { get; set; }
 
-    /// <summary>Filtered: Only Generic Wall Types</summary>
+    /// Filtered: Only Generic Wall Types
     public WallType CustomWallType { get; set; }
     public List<WallType> CustomWallType_Options => new FilteredElementCollector(Doc)
             .OfClass(typeof(WallType))
@@ -77,21 +77,21 @@ public class Params
 
     // -----------------------------------------------------
     #region 05. Conditional UI
-    /// <summary>Toggle visibility for advanced settings</summary>
+    /// Toggle visibility for advanced settings
     public bool ShowAdvanced { get; set; } = false;
 
-    /// <summary>Disabled unless ShowAdvanced is true</summary>
+    /// Disabled unless ShowAdvanced is true
     [EnabledWhen(nameof(ShowAdvanced), "true")]
     public string ConfigKey { get; set; } = "Default-Key";
 
-    /// <summary>Hidden unless ShowAdvanced is true</summary>
+    /// Hidden unless ShowAdvanced is true
     public bool UnlockExperimental { get; set; } = false;
     public bool UnlockExperimental_Visible => ShowAdvanced;
     #endregion
 
     // -----------------------------------------------------
     #region 06. Units
-    /// <summary>Auto-converted to Internal Units (Feet)</summary>
+    /// Auto-converted to Internal Units (Feet)
     [Unit("mm")]
     public double WallOffset { get; set; } = 250;
     #endregion

@@ -26,10 +26,10 @@ This works for both native Revit types (Hydration) and standard types (Strings).
 ```csharp
 public class Params
 {
-    /// <summary>Advanced Filtered Hydration</summary>
+    /// Advanced Filtered Hydration
     public WallType MyWallType { get; set; }
 
-    /// <summary>The Ultimate Filter</summary>
+    /// The Ultimate Filter
     // We only want Wall Types that contain the word "Generic"
     public List<WallType> MyWallType_Options => new FilteredElementCollector(Doc)
         .OfClass(typeof(WallType))
@@ -115,10 +115,10 @@ While "Magic" attribute-driven string extraction is gone, **Custom Reactive Opti
 ```csharp
 public class Params
 {
-    /// <summary>Step 1: Define a standard string</summary>
+    /// Step 1: Define a standard string
     public string WallName { get; set; }
 
-    /// <summary>Step 2: Provide a custom string list</summary>
+    /// Step 2: Provide a custom string list
     public List<string> WallName_Options => new FilteredElementCollector(Doc)
                 .OfClass(typeof(Wall))
                 .Cast<Wall>()

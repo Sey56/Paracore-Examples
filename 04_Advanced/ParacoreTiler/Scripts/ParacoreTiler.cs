@@ -250,18 +250,18 @@ else
 public class Params
 {
     #region 01. General Settings
-    /// <summary>Select the target room where the floor tiles will be generated.</summary>
+    /// Select the target room where the floor tiles will be generated.
     public Room SelectedRoom { get; set; }
 
-    /// <summary>Choose the tiling pattern layout.</summary>
+    /// Choose the tiling pattern layout.
     public string PatternType { get; set; } = "Checkered";
     public List<string> PatternType_Options => ["Checkered", "Alternating Rows", "Random", "Single Tile"];
 
-    /// <summary>Rotate the entire grid by a specific angle (in degrees).</summary>
+    /// Rotate the entire grid by a specific angle (in degrees).
     [Range(0, 360, 15)]
     public double RotationAngle { get; set; } = 0;
 
-    /// <summary>Define the spacing between tiles (grout lines). Set to 0 for no gaps.</summary>
+    /// Define the spacing between tiles (grout lines). Set to 0 for no gaps.
     [Unit("mm")]
     [Range(0, 50)]
     public double GroutWidth { get; set; } = 0;
@@ -269,35 +269,35 @@ public class Params
     #endregion
 
     #region 02. Primary Tile (Tile 1)
-    /// <summary>The Floor Type used for the primary tile.</summary>
+    /// The Floor Type used for the primary tile.
     public FloorType Tile1_Type { get; set; }
 
-    /// <summary>Width of the primary tile.</summary>
+    /// Width of the primary tile.
     [Unit("m")]
     public double Tile1_Width { get; set; } = 0.6;
 
-    /// <summary>Height of the primary tile.</summary>
+    /// Height of the primary tile.
     [Unit("m")]
     public double Tile1_Height { get; set; } = 0.6;
 
-    /// <summary>Cost per square meter for Tile 1 (used for estimation).</summary>
+    /// Cost per square meter for Tile 1 (used for estimation).
     public double Tile1_Cost { get; set; } = 0;
 
     #endregion
 
     #region 03. Secondary Tile (Tile 2)
-    /// <summary>The Floor Type used for the secondary tile (if pattern requires it).</summary>
+    /// The Floor Type used for the secondary tile (if pattern requires it).
     public FloorType Tile2_Type { get; set; }
 
-    /// <summary>Width of the secondary tile.</summary>
+    /// Width of the secondary tile.
     [Unit("m")]
     public double Tile2_Width { get; set; } = 0.6;
 
-    /// <summary>Height of the secondary tile.</summary>
+    /// Height of the secondary tile.
     [Unit("m")]
     public double Tile2_Height { get; set; } = 0.6;
 
-    /// <summary>Cost per square meter for Tile 2.</summary>
+    /// Cost per square meter for Tile 2.
     public double Tile2_Cost { get; set; } = 0;
 
     public bool Tile2_Type_Visible => PatternType != "Single Tile";
@@ -308,13 +308,13 @@ public class Params
     #endregion
 
     #region 04. Gap Filler (Tile 3)
-    /// <summary>Automatically detect and fill empty spaces caused by unequal tile sizes or offsets.</summary>
+    /// Automatically detect and fill empty spaces caused by unequal tile sizes or offsets.
     public bool FillEmptySpaces { get; set; } = false;
 
-    /// <summary>The Floor Type used to fill the detected gaps.</summary>
+    /// The Floor Type used to fill the detected gaps.
     public FloorType Tile3_Type { get; set; }
     
-    /// <summary>Cost per square meter for the filler tile.</summary>
+    /// Cost per square meter for the filler tile.
     public double Tile3_Cost { get; set; } = 0;
 
     public bool Tile3_Type_Visible => FillEmptySpaces;
@@ -322,7 +322,7 @@ public class Params
     #endregion
 
     #region 05. Randomization
-    /// <summary>Adjust the probability of Tile 1 appearing in the Random pattern (0-100%).</summary>
+    /// Adjust the probability of Tile 1 appearing in the Random pattern (0-100%).
     [Range(0, 100)]
     public int RandomBias { get; set; } = 50;
 

@@ -66,20 +66,20 @@ if (p.RunExport)
 public class Params
 {
     #region Settings
-    /// <summary>Toggle: Export EVERYTHING or just selection below</summary>
+    /// Toggle: Export EVERYTHING or just selection below
     public bool ExportAllLevels { get; set; } = true;
 
-    /// <summary>V3 MAGIC: Pick specific levels to export</summary>
+    /// V3 MAGIC: Pick specific levels to export
     [EnabledWhen(nameof(ExportAllLevels), "false")]
     public List<Level> LevelsToExport { get; set; }
     #endregion
 
     #region Output
-    /// <summary>Select path for the Excel report</summary>
+    /// Select path for the Excel report
     [OutputFile("xlsx")]
     public string TargetFile { get; set; }
 
-    /// <summary>Ready to export?</summary>
+    /// Ready to export?
     public bool RunExport { get; set; } = true;
     #endregion
 }

@@ -161,7 +161,7 @@ public class Params
     [Range(0.0, 1.0, 0.05)]
     public double Offset { get; set; } = 0.5;
 
-    /// <summary>Select the Profile</summary>
+    /// Select the Profile
     [RevitElements(Category = "Profiles")]
     public FamilySymbol ProfileName { get; set; }
     #endregion

@@ -29,9 +29,9 @@ Println($"{p.TargetLevel.Name}: stamped {walls.Count} wall(s) with \"{p.Stamp}\"
 
 public class Params
 {
-    /// <summary>Level whose walls get stamped</summary>
+    /// Level whose walls get stamped
     public Level? TargetLevel { get; set; }
 
-    /// <summary>Text written into Comments</summary>
+    /// Text written into Comments
     public string Stamp { get; set; } = "Checked";
 }

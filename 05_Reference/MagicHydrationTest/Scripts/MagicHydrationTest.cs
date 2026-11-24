@@ -43,45 +43,45 @@ Println($"Threshold: {p.AreaThreshold} internal units");
 
 public class Params {
     #region Spatial & MEP
-    /// <summary>Tests SpatialElement resilience</summary>
+    /// Tests SpatialElement resilience
     public Room TargetRoom { get; set; }
 
-    /// <summary>Tests Area scheme hydration</summary>
+    /// Tests Area scheme hydration
     public Area TargetArea { get; set; }
 
-    /// <summary>Tests MEP instances (No flagging in VSCode!)</summary>
+    /// Tests MEP instances (No flagging in VSCode!)
     public Duct TargetDuct { get; set; }
     #endregion
 
     #region Components (Category Filtering)
-    /// <summary>Should list ONLY Doors</summary>
+    /// Should list ONLY Doors
     [RevitElements(Category = "Doors")]
     public FamilyInstance TargetDoor { get; set; }
 
-    /// <summary>Should list ONLY Door Types (Symbols)</summary>
+    /// Should list ONLY Door Types (Symbols)
     [RevitElements(Category = "Doors")]
     public FamilySymbol DoorType { get; set; }
 
-    /// <summary>Tests CurveElement discovery</summary>
+    /// Tests CurveElement discovery
     public CurveElement ModelLine { get; set; }
     #endregion
 
     #region Types & Instances
-    /// <summary>Should list actual Wall instances</summary>
+    /// Should list actual Wall instances
     public Wall WallInstance { get; set; }
 
-    /// <summary>Should list Wall types</summary>
+    /// Should list Wall types
     public WallType WallType { get; set; }
 
-    /// <summary>Select a Sheet directly</summary>
+    /// Select a Sheet directly
     public ViewSheet MySheet { get; set; }
     #endregion
 
     #region Advanced & Filtered
-    /// <summary>Multi-select hydration test</summary>
+    /// Multi-select hydration test
     public List<Material> Materials { get; set; }
     
-    /// <summary>Filtered Room Picker (Only shows rooms with Area < Threshold)</summary>
+    /// Filtered Room Picker (Only shows rooms with Area < Threshold)
     public Room SmallRoom { get; set; }
     // V3 Professional Filtered Provider
     public List<Room> SmallRoom_Options =>
@@ -94,7 +94,7 @@ public class Params {
     #endregion
 
     #region Units
-    /// <summary>Tests unit conversion logic</summary>
+    /// Tests unit conversion logic
     [Unit("m2")]
     public double AreaThreshold { get; set; } = 10.0;
     #endregion

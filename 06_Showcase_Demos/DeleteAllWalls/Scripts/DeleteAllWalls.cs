@@ -56,19 +56,19 @@ Println($"✅ Successfully deleted {wallCount} wall(s).");
 public class Params
 {
     #region Configuration
-    /// <summary>Check this to authorize the deletion</summary>
+    /// Check this to authorize the deletion
     public bool ConfirmDeletion { get; set; } = false;
 
-    /// <summary>Type 'DELETE' to confirm destructive action</summary>
+    /// Type 'DELETE' to confirm destructive action
     [Confirm("DELETE"), Required]
     public string ConfirmText { get; set; }
     #endregion
 
     #region Targets
-    /// <summary>Toggle: Delete ONLY selected walls below, or ALL walls in project</summary>
+    /// Toggle: Delete ONLY selected walls below, or ALL walls in project
     public bool DeleteSelectionOnly { get; set; } = false;
 
-    /// <summary>V3 MAGIC: Select multiple walls to delete</summary>
+    /// V3 MAGIC: Select multiple walls to delete
     [EnabledWhen(nameof(DeleteSelectionOnly), "true")]
     public List<Wall> WallsToDelete { get; set; }
     #endregion

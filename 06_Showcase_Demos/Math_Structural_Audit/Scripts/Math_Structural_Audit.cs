@@ -66,16 +66,16 @@ else
 public class Params
 {
     #region Audit Scope
-    /// <summary>Toggle: Audit ONLY selection or ALL walls in project</summary>
+    /// Toggle: Audit ONLY selection or ALL walls in project
     public bool AuditSelectedOnly { get; set; } = false;
 
-    /// <summary>V3 MAGIC: Select specific walls to audit</summary>
+    /// V3 MAGIC: Select specific walls to audit
     [EnabledWhen(nameof(AuditSelectedOnly), "true")]
     public List<Wall> SelectedWalls { get; set; }
     #endregion
 
     #region Thresholds
-    /// <summary>Variation threshold in meters</summary>
+    /// Variation threshold in meters
     [Unit("m")]
     public double Tolerance_m { get; set; } = 2.0;
     #endregion

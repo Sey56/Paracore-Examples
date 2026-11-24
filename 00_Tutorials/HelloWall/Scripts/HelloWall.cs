@@ -31,17 +31,17 @@ Transact("Create Wall", () =>
 
 public class Params
 {
-    /// <summary>Select the base level</summary>
+    /// Select the base level
     public Level? TargetLevel { get; set; }
 
-    /// <summary>Select the wall type</summary>
+    /// Select the wall type
     public WallType? WallType { get; set; }
 
-    /// <summary>Length in metres</summary>
+    /// Length in metres
     [Unit("m")]
     public double WallLength { get; set; } = 5.0;
 
-    /// <summary>Height in metres</summary>
+    /// Height in metres
     [Unit("m")]
     public double WallHeight { get; set; } = 3.0;
 }

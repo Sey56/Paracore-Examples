@@ -99,23 +99,23 @@ public class Params
 {
     #region Input
 
-    /// <summary>CSV file with columns: RoomName,FloorFinish</summary>
+    /// CSV file with columns: RoomName,FloorFinish
     [InputFile("csv")]
     [Required]
     public string InputCsvPath { get; set; } = "";
 
-    /// <summary>Skip the first row (header)</summary>
+    /// Skip the first row (header)
     public bool HasHeaderRow { get; set; } = true;
 
     #endregion
 
     #region Output
 
-    /// <summary>Optional: export a summary of changes</summary>
+    /// Optional: export a summary of changes
     [OutputFile("csv")]
     public string OutputCsvPath { get; set; } = "";
 
-    /// <summary>Optional: folder to copy the input CSV into before applying it</summary>
+    /// Optional: folder to copy the input CSV into before applying it
     [FolderPath]
     public string BackupFolder { get; set; } = "";
 

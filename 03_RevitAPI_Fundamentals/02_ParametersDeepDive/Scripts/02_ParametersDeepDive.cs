@@ -47,7 +47,7 @@ Table(paramData.OrderBy(x => x.GetType().GetProperty("Name").GetValue(x)).ToList
 public class Params
 {
     #region Targets
-    /// <summary>Pick a wall instance to dive into its parameters</summary>
+    /// Pick a wall instance to dive into its parameters
     public Wall? TargetWall { get; set; }
     #endregion
 }

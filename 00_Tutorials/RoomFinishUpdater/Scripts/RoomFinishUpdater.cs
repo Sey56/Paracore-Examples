@@ -64,10 +64,10 @@ public class Params
 {
     #region Scope
 
-    /// <summary>Update only specific rooms instead of all</summary>
+    /// Update only specific rooms instead of all
     public bool UseCustomScope { get; set; } = false;
 
-    /// <summary>Pick rooms to include (enable the toggle first)</summary>
+    /// Pick rooms to include (enable the toggle first)
     [EnabledWhen(nameof(UseCustomScope), "true")]
     public List<Room>? CustomRooms { get; set; }
 
@@ -75,10 +75,10 @@ public class Params
 
     #region Filter
 
-    /// <summary>Only update rooms under a certain area</summary>
+    /// Only update rooms under a certain area
     public bool FilterByArea { get; set; } = false;
 
-    /// <summary>Maximum area in square metres</summary>
+    /// Maximum area in square metres
     [Unit("m2")]
     public double MaxArea { get; set; } = 15.0;
 
@@ -88,14 +88,14 @@ public class Params
 
     #region Value
 
-    /// <summary>The floor finish to apply (e.g. "Tile", "Carpet", "Polished Concrete")</summary>
+    /// The floor finish to apply (e.g. "Tile", "Carpet", "Polished Concrete")
     public string FloorFinish { get; set; } = "Tile";
 
     #endregion
 
     #region Confirmation
 
-    /// <summary>Type UPDATE to confirm — this overwrites existing values</summary>
+    /// Type UPDATE to confirm — this overwrites existing values
     [Confirm("UPDATE")]
     public string? Confirm { get; set; }
 

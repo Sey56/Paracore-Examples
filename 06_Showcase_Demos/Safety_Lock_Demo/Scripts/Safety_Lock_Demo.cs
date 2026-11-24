@@ -53,7 +53,7 @@ public class Params
 {
     #region 1. Target
 
-    /// <summary>Search term for elements to be deleted.</summary>
+    /// Search term for elements to be deleted.
     [Mandatory]
     public string SearchTerm { get; set; }
 

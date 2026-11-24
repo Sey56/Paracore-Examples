@@ -49,19 +49,19 @@ Transact("Create Floor", () =>
 public class Params
 {
     #region Standard Revit Selections
-    /// <summary>Base level for the floor</summary>
+    /// Base level for the floor
     public Level? TargetLevel { get; set; }
 
-    /// <summary>Blueprint for the floor</summary>
+    /// Blueprint for the floor
     public FloorType? FloorType { get; set; }
     #endregion
 
     #region Dimensions
-    /// <summary>Width in meters</summary>
+    /// Width in meters
     [Unit("m")]
     public double Width { get; set; } = 3.0;
 
-    /// <summary>Depth in meters</summary>
+    /// Depth in meters
     [Unit("m")]
     public double Depth { get; set; } = 5.0;
     #endregion

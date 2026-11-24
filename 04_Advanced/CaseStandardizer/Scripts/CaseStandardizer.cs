@@ -92,12 +92,12 @@ else
 public class Params
 {
     #region Settings
-    /// <summary>Choose the text case format</summary>
+    /// Choose the text case format
     [Segmented]
     public string CaseType { get; set; } = "UPPERCASE";
     public List<string> CaseType_Options => ["UPPERCASE", "lowercase", "Title Case"];
 
-    /// <summary>Select categories to process</summary>
+    /// Select categories to process
     public List<string> SelectedCategories { get; set; } = ["Rooms", "Views", "Sheets"];
     public List<string> SelectedCategories_Options => ["Rooms", "Views", "Sheets", "Text Notes", "Levels"];
 

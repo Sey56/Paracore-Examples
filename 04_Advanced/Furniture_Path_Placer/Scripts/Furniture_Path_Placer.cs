@@ -131,32 +131,32 @@ Transact("Place Furniture on Path", () =>
 public class Params
 {
     #region 01. Placement Path
-    /// <summary>Click a Model Line or Detail Line to use as the path</summary>
+    /// Click a Model Line or Detail Line to use as the path
     [Select(SelectionType.Element), Required]
     public CurveElement PathLine { get; set; }
 
-    /// <summary>Choose the furniture type to place</summary>
+    /// Choose the furniture type to place
     [RevitElements(Category = "Furniture"), Required]
     public FamilySymbol FurnitureName { get; set; }
     #endregion
 
     #region 02. Distribution Logic
-    /// <summary>Choose how items are spaced along the path</summary>
+    /// Choose how items are spaced along the path
     public string DistributionMode { get; set; } = "Fixed Spacing";
     public List<string> DistributionMode_Options => ["Fixed Spacing", "Divide by Number", "Centered"];
 
-    /// <summary>Distance between instances (feet)</summary>
+    /// Distance between instances (feet)
     [Range(0.5, 100.0)]
     [Unit("ft")]
     public double Spacing { get; set; } = 5.0;
     public bool Spacing_Visible => DistributionMode != "Divide by Number";
 
-    /// <summary>Total number of items to distribute from start to end</summary>
+    /// Total number of items to distribute from start to end
     [Range(2, 200)]
     public int ItemCount { get; set; } = 5;
     public bool ItemCount_Visible => DistributionMode == "Divide by Number";
 
-    /// <summary>Toggle to start placement from the opposite end of the curve</summary>
+    /// Toggle to start placement from the opposite end of the curve
     public bool FlipDirection { get; set; } = false;
     #endregion
 }

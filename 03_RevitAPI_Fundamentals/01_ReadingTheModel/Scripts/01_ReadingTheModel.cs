@@ -49,7 +49,7 @@ else
 public class Params
 {
     #region Settings
-    /// <summary>Choose a category to analyze</summary>
+    /// Choose a category to analyze
     [Segmented]
     public BuiltInCategory TargetCategory { get; set; } = BuiltInCategory.OST_Walls;
     public List<BuiltInCategory> TargetCategory_Options =>

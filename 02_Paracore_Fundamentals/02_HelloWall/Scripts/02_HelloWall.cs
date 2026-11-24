@@ -37,17 +37,17 @@ Transact("Create Tutorial Wall", () =>
 
 public class Params
 {
-    /// <summary>Select the base level</summary>
+    /// Select the base level
     public Level? TargetLevel { get; set; }
 
-    /// <summary>Select the wall type</summary>
+    /// Select the wall type
     public WallType? WallType { get; set; }
 
-    /// <summary>Length in meters</summary>
+    /// Length in meters
     [Unit("m")]
     public double WallLength { get; set; } = 5.0;
 
-    /// <summary>Height in meters</summary>
+    /// Height in meters
     [Unit("m")]
     public double WallHeight { get; set; } = 3.0;
 }

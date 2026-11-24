@@ -56,14 +56,14 @@ public class Params
 {
     #region Selection
 
-    /// <summary>Select the wall type to modify</summary>
+    /// Select the wall type to modify
     public WallType? TargetWallType { get; set; }
 
     #endregion
 
     #region Operation
 
-    /// <summary>Choose what to adjust</summary>
+    /// Choose what to adjust
     [Segmented]
     public string Mode { get; set; } = "Offset";
     public List<string> Mode_Options => ["Offset", "Set Height"];
@@ -72,12 +72,12 @@ public class Params
 
     #region Values
 
-    /// <summary>Base offset in millimetres</summary>
+    /// Base offset in millimetres
     [Unit("mm")]
     [Range(-3000, 3000, 50)]
     public double OffsetMm { get; set; } = 0;
 
-    /// <summary>Wall height in metres</summary>
+    /// Wall height in metres
     [Unit("m")]
     public double TargetHeightM { get; set; } = 3.0;
 
