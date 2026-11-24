@@ -1,0 +1,919 @@
+{
+  "Author": "Paracore",
+  "Bindings": [],
+  "Connectors": [
+    {
+      "Start": "9cc586384bc64430b052fba243e48c59",
+      "End": "ee89ac9a2fdc48dd9700de956e3123dd",
+      "Id": "555d016dcd70420d80a9f79223d39514",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7fd7898b6fcc452e94e04a338fcab635",
+      "End": "a09f420ef1f24aedba96f3d2922753a9",
+      "Id": "65d44cc8e015411aa87003e7e718bf6b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "46d9a27402eb4fd08b1265a00be2c81f",
+      "End": "385c813f7cf548fcb2345631cc3c623a",
+      "Id": "6fcc0c25f5294638958f621cb1972010",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "24c4f0a6c34c4237aa75220eb5c960f9",
+      "End": "f9a267e0a0914ea1a4aa5723d5a2ea80",
+      "Id": "015c1e4563bb47fcbb65024a914e25b7",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ce887103f4e244e9aff1b66b1d8cb73b",
+      "End": "9b335309acd144619fa51bf12b4376fe",
+      "Id": "92141666042a44c998a0212bf61ad373",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "27ec12f1abaf4071b585a68bf1027332",
+      "End": "a924bbbad5e64cea92b772674b9dd701",
+      "Id": "b7b4883389a74069940de074dc596666",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "1ae0efb68a0548b19efc3b44dcacd027",
+      "End": "a4a0c24a696a4be9814e4f3bdc126b68",
+      "Id": "75caf067ecf341d684a2f6adf0367a7a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2a6dbfe884474e2892131b87043b3e78",
+      "End": "7db3afe374f04a2b9676d89196f8be70",
+      "Id": "5233d61821b0437abcd524b25d216c5b",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "bbbce0b91f8e44a1bb832ce7b44965b9",
+      "End": "2a73763292824f4e840b00a858bcd0ff",
+      "Id": "7b66d56965c94469a68af4df44f8cefd",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "4b898b99dd114364992cc244fe0df28a",
+      "End": "39cc916c29134202bf9438cb8bf3ab53",
+      "Id": "119dac1ab36746a995458af162c93aa4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d930e3f75cba471c8ce983408a5e86d2",
+      "End": "2195f68185324ef2b6937c2935eb07a9",
+      "Id": "d8f4aee5964944b49fa6c11be94b95a8",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "b8ed7b163d00468191dec64baa8c5a75",
+      "End": "4be780e67bec4540b8186058130202c7",
+      "Id": "eda7c91d2ae644c1865ded49db34dec1",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "467b4af0689d44f7ad70f15c287b35ed",
+      "End": "8e8b69d2c9a341d5972625a6852b2228",
+      "Id": "b0e264afc179488aaa2b2738c2b43394",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "d930e3f75cba471c8ce983408a5e86d2",
+      "End": "aa44ef34cea7448d819eb46b7e71c033",
+      "Id": "dece1b3c7ebf407990b6566a62e858e9",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "ee09d91155b7445b8456d17af5efa3c7",
+      "End": "942a6c559ab54eef92f2d798835175fc",
+      "Id": "47184a9128c545619f5237ab010e122e",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "2a6dbfe884474e2892131b87043b3e78",
+      "End": "683bf33be9494b35b80ec93469f79e4f",
+      "Id": "1dae75bf224940588d98c53923a61334",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "Description": "Paracore-authored Paracore_DynamoDoorMark — generated from DynamoDoorMark.cs. Native nodes only; pinned to Dynamo 3.3.",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "3.1",
+      "Data": {}
+    }
+  ],
+  "GraphDocumentationURL": null,
+  "Inputs": [
+    {
+      "Id": "e3231187a7644a64b178a03362930a21",
+      "Name": "Suffix letter for the door, e.g. A.",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "A",
+      "Description": "Suffix letter for the door, e.g. A.",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "5376c3142e144647b3fa71c6906857b7",
+      "Name": "Text placed between the level and room parts.",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "-",
+      "Description": "Text placed between the level and room parts.",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "af5595443eba4fd1b234bedc3ae6ac2e",
+      "Name": "Room number as text, e.g. 105.",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "105",
+      "Description": "Room number as text, e.g. 105.",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "bd89f156e4dc4d038e376c9bf56bca0d",
+      "Name": "Prefix for the room part, e.g. R.",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "R",
+      "Description": "Prefix for the room part, e.g. R.",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "5290ca7399d84cbfa557a7f536fcaab7",
+      "Name": "Level number as text, e.g. 02.",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "02",
+      "Description": "Level number as text, e.g. 02.",
+      "SelectedIndex": 0
+    },
+    {
+      "Id": "c13457458830473c9b3d0699c5f5ded0",
+      "Name": "Prefix for the level part, e.g. L.",
+      "Type": "string",
+      "Type2": "string",
+      "Value": "L",
+      "Description": "Prefix for the level part, e.g. L.",
+      "SelectedIndex": 0
+    }
+  ],
+  "IsCustomNode": false,
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Name": "Paracore_DynamoDoorMark_Revit",
+  "NodeLibraryDependencies": [],
+  "Nodes": [
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "A",
+      "Id": "e3231187a7644a64b178a03362930a21",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ce887103f4e244e9aff1b66b1d8cb73b",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Suffix letter for the door, e.g. A."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "-",
+      "Id": "5376c3142e144647b3fa71c6906857b7",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "24c4f0a6c34c4237aa75220eb5c960f9",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Text placed between the level and room parts."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "105",
+      "Id": "af5595443eba4fd1b234bedc3ae6ac2e",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "d5c91d7c6ce64918b060ff562d256645",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Room number as text, e.g. 105."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "R",
+      "Id": "bd89f156e4dc4d038e376c9bf56bca0d",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "46d9a27402eb4fd08b1265a00be2c81f",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Prefix for the room part, e.g. R."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "02",
+      "Id": "5290ca7399d84cbfa557a7f536fcaab7",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7fd7898b6fcc452e94e04a338fcab635",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Level number as text, e.g. 02."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "L",
+      "Id": "c13457458830473c9b3d0699c5f5ded0",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "9cc586384bc64430b052fba243e48c59",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Prefix for the level part, e.g. L."
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "3fe8f01985384543a7b032f0f843285d",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "ee89ac9a2fdc48dd9700de956e3123dd",
+          "Name": "LevelPrefix",
+          "Description": "LevelPrefix",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a09f420ef1f24aedba96f3d2922753a9",
+          "Name": "LevelNumber",
+          "Description": "LevelNumber",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "385c813f7cf548fcb2345631cc3c623a",
+          "Name": "RoomPrefix",
+          "Description": "RoomPrefix",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "8e8b69d2c9a341d5972625a6852b2228",
+          "Name": "RoomNumber",
+          "Description": "RoomNumber",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "f9a267e0a0914ea1a4aa5723d5a2ea80",
+          "Name": "Separator",
+          "Description": "Separator",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "9b335309acd144619fa51bf12b4376fe",
+          "Name": "DoorSuffix",
+          "Description": "DoorSuffix",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "27ec12f1abaf4071b585a68bf1027332",
+          "Name": "",
+          "Description": "Value of expression at line 1",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "1ae0efb68a0548b19efc3b44dcacd027",
+          "Name": "",
+          "Description": "Value of expression at line 2",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2a6dbfe884474e2892131b87043b3e78",
+          "Name": "",
+          "Description": "Value of expression at line 3",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Runs DynamoDoorMark.",
+      "Code": "levelCode = LevelPrefix + LevelNumber;\nroomCode = RoomPrefix + RoomNumber;\ndoorMark = levelCode + Separator + roomCode + Separator + DoorSuffix;"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 220.0,
+      "WatchHeight": 64.0,
+      "Id": "185757a657b74b958fb207da62fc6d0c",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "a924bbbad5e64cea92b772674b9dd701",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "2ddb0bc6b873486bbc1f11cad5638e69",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "levelCode"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 220.0,
+      "WatchHeight": 64.0,
+      "Id": "930dab9df7f5420bae1009bbe64f7641",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "a4a0c24a696a4be9814e4f3bdc126b68",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "7b6f99927d9546e381da584739327108",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "roomCode"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Watch, CoreNodeModels",
+      "WatchWidth": 220.0,
+      "WatchHeight": 64.0,
+      "Id": "4e5b2f1ccc664052a794771af6145bf3",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "7db3afe374f04a2b9676d89196f8be70",
+          "Name": "",
+          "Description": "Node to show output from",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cf416df177c64e3db379d89506af7e14",
+          "Name": "",
+          "Description": "Node output",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "doorMark"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "Doors",
+      "Id": "8f3255ce0a7a405bb0f5130cc295fc3e",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "bbbce0b91f8e44a1bb832ce7b44965b9",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Built-in category name"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "b381d36ddd9d4f40b9b9f54849ca9593",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2a73763292824f4e840b00a858bcd0ff",
+          "Name": "name",
+          "Description": "The built in category name.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "4b898b99dd114364992cc244fe0df28a",
+          "Name": "Category",
+          "Description": "Category",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Revit.Elements.Category.ByName@string",
+      "Replication": "Auto",
+      "Description": "Gets a Revit category by the built-in category name."
+    },
+    {
+      "ConcreteType": "DSRevitNodesUI.ElementsOfCategory, DSRevitNodesUI",
+      "Id": "2c9ad3b8c91249c0b0523d1626fd4ff3",
+      "NodeType": "ExtensionNode",
+      "Inputs": [
+        {
+          "Id": "39cc916c29134202bf9438cb8bf3ab53",
+          "Name": "Category",
+          "Description": "The Category",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "d930e3f75cba471c8ce983408a5e86d2",
+          "Name": "Elements",
+          "Description": "An element class.",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Get all elements of the specified category from the model."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "Room Number",
+      "Id": "7dbc88ad0fcb47a4b1c7f7c185cb344d",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "b8ed7b163d00468191dec64baa8c5a75",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Parameter to read from the model"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "57d48b03a9db4798b3642ba366f97604",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "2195f68185324ef2b6937c2935eb07a9",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "4be780e67bec4540b8186058130202c7",
+          "Name": "parameterName",
+          "Description": "The name of the parameter whose value you want to obtain.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "467b4af0689d44f7ad70f15c287b35ed",
+          "Name": "var[]..[]",
+          "Description": "var[]..[]",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Revit.Elements.Element.GetParameterValueByName@string",
+      "Replication": "Auto",
+      "Description": "Get the value of one of the element's parameters."
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "InputValue": "Mark",
+      "Id": "6129153c857b4504a231f1c40156872b",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "ee09d91155b7445b8456d17af5efa3c7",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Parameter to write in the model"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "b73364c1f5284f8e85776740adb0f6f4",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "aa44ef34cea7448d819eb46b7e71c033",
+          "Name": "element",
+          "Description": "Revit.Elements.Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "942a6c559ab54eef92f2d798835175fc",
+          "Name": "parameterName",
+          "Description": "The name of the parameter to set.\n\nstring",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "683bf33be9494b35b80ec93469f79e4f",
+          "Name": "value",
+          "Description": "The value.\n\nvar",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "fa2a26b2f969459e93311a15096a2614",
+          "Name": "Element",
+          "Description": "Element",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Revit.Elements.Element.SetParameterByName@string,var",
+      "Replication": "Auto",
+      "Description": "Set one of the element's parameters."
+    }
+  ],
+  "Outputs": [
+    {
+      "Id": "185757a657b74b958fb207da62fc6d0c",
+      "Name": "levelCode",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "levelCode"
+    },
+    {
+      "Id": "930dab9df7f5420bae1009bbe64f7641",
+      "Name": "roomCode",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "roomCode"
+    },
+    {
+      "Id": "4e5b2f1ccc664052a794771af6145bf3",
+      "Name": "doorMark",
+      "Type": "unknown",
+      "InitialValue": "",
+      "Description": "doorMark"
+    }
+  ],
+  "Thumbnail": "",
+  "Uuid": "2258074b-f706-4343-9ccc-adb7d0241d54",
+  "View": {
+    "Annotations": [],
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -11.702650547027588,
+      "EyeY": 20.44056510925293,
+      "EyeZ": -24.49430274963379,
+      "LookX": 12.377099990844727,
+      "LookY": -14.715733528137207,
+      "LookZ": 6.1681365966796875,
+      "UpX": 0.50565505027771,
+      "UpY": 0.8251136541366577,
+      "UpZ": 0.25199323892593384
+    },
+    "ConnectorPins": [],
+    "Dynamo": {
+      "ScaleFactor": 1.0,
+      "HasRunWithoutCrash": false,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "3.3.0.6316",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "NodeViews": [
+      {
+        "Id": "e3231187a7644a64b178a03362930a21",
+        "Name": "Suffix letter for the door, e.g. A.",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 80
+      },
+      {
+        "Id": "5376c3142e144647b3fa71c6906857b7",
+        "Name": "Text placed between the level and room parts.",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 230
+      },
+      {
+        "Id": "af5595443eba4fd1b234bedc3ae6ac2e",
+        "Name": "Room number as text, e.g. 105.",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 380
+      },
+      {
+        "Id": "bd89f156e4dc4d038e376c9bf56bca0d",
+        "Name": "Prefix for the room part, e.g. R.",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 530
+      },
+      {
+        "Id": "5290ca7399d84cbfa557a7f536fcaab7",
+        "Name": "Level number as text, e.g. 02.",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 680
+      },
+      {
+        "Id": "c13457458830473c9b3d0699c5f5ded0",
+        "Name": "Prefix for the level part, e.g. L.",
+        "IsSetAsInput": true,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 830
+      },
+      {
+        "Id": "3fe8f01985384543a7b032f0f843285d",
+        "Name": "body",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 420,
+        "Y": 260
+      },
+      {
+        "Id": "185757a657b74b958fb207da62fc6d0c",
+        "Name": "levelCode",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1440,
+        "Y": 180
+      },
+      {
+        "Id": "930dab9df7f5420bae1009bbe64f7641",
+        "Name": "roomCode",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1440,
+        "Y": 340
+      },
+      {
+        "Id": "4e5b2f1ccc664052a794771af6145bf3",
+        "Name": "doorMark",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": true,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1440,
+        "Y": 500
+      },
+      {
+        "Id": "8f3255ce0a7a405bb0f5130cc295fc3e",
+        "Name": "Category: Doors",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 80,
+        "Y": 900
+      },
+      {
+        "Id": "b381d36ddd9d4f40b9b9f54849ca9593",
+        "Name": "Category.ByName",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 300,
+        "Y": 900
+      },
+      {
+        "Id": "2c9ad3b8c91249c0b0523d1626fd4ff3",
+        "Name": "All Doors",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 520,
+        "Y": 900
+      },
+      {
+        "Id": "7dbc88ad0fcb47a4b1c7f7c185cb344d",
+        "Name": "Read: Room Number",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 520,
+        "Y": 1070
+      },
+      {
+        "Id": "57d48b03a9db4798b3642ba366f97604",
+        "Name": "Read Room Number",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 780,
+        "Y": 900
+      },
+      {
+        "Id": "6129153c857b4504a231f1c40156872b",
+        "Name": "Write: Mark",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1150,
+        "Y": 1070
+      },
+      {
+        "Id": "b73364c1f5284f8e85776740adb0f6f4",
+        "Name": "Set Mark",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1400,
+        "Y": 900
+      }
+    ],
+    "X": -481.5735569711957,
+    "Y": -502.61166017684116,
+    "Zoom": 0.79079942412653
+  }
+}
