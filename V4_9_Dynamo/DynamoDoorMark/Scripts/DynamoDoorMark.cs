@@ -29,21 +29,21 @@ string doorMark = levelCode + Separator + roomCode + Separator + DoorSuffix;
 
 public class Params
 {
-    /// Suffix letter for the door, e.g. A.
+    /// Door suffix text. Wire a Revit parameter read here if your model has one.
     public string DoorSuffix { get; set; } = "A";
 
-    /// Text placed between the level and room parts.
+    /// Separator text. This can stay constant.
     public string Separator { get; set; } = "-";
 
-    /// Room number as text, e.g. 105.
+    /// Room number text. Wire Element.GetParameterValueByName here.
     public string RoomNumber { get; set; } = "105";
 
-    /// Prefix for the room part, e.g. R.
+    /// Room prefix text. This can stay constant.
     public string RoomPrefix { get; set; } = "R";
 
-    /// Level number as text, e.g. 02.
+    /// Level number text. Wire a Revit parameter read here.
     public string LevelNumber { get; set; } = "02";
 
-    /// Prefix for the level part, e.g. L.
+    /// Level prefix text. This can stay constant.
     public string LevelPrefix { get; set; } = "L";
 }

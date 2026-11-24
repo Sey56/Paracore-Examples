@@ -28,15 +28,15 @@ string label = needsReview ? ReviewLabel : StandardLabel;
 
 public class Params
 {
-    /// Label used when the room does not need review.
+    /// Label used when the room does not need review. Wire a text value or keep constant.
     public string StandardLabel { get; set; } = "Standard room";
 
-    /// Label used when the room is below the review threshold.
+    /// Label used when the room is below the review threshold. Wire a text value or keep constant.
     public string ReviewLabel { get; set; } = "Too small - check";
 
-    /// Area in square metres below which the room is flagged.
+    /// Area in square metres below which the room is flagged. Wire a Revit value or keep constant.
     public double ReviewThreshold { get; set; } = 5.0;
 
-    /// Room area in square metres.
+    /// Room area in square metres. Wire Element.GetParameterValueByName (Area) here.
     public double Area { get; set; } = 18.5;
 }

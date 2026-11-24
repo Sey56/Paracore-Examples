@@ -38,25 +38,34 @@ The source is pure .NET top-level statements plus a `public class Params`. A gra
 Revit or Paracore helpers; those scripts stay in Paracore. If a script cannot be exported, the
 error names the exact token and what to change.
 
-## 3. `DynamoDoorMark` — string composition (Graph + native Revit write-back)
+:::note
+**Export Dynamo** writes only Dynamo nodes today: Method nodes or a `.dyn` with input nodes,
+one CodeBlock and Watch nodes. There are no Revit nodes in the export and no Paracore runtime
+inside Dynamo. The exported input nodes carry short hints about which Revit parameter read to
+wire into them. More tutorials are coming that show how to use exported Paracore graphs and
+Method nodes to automate in Revit.
+:::
 
-Composes a door mark `L02-R105-A` from a level number, room number, and suffix letter. Shows C#
-string formatting rules (zero-padding, truncation, defaults) that Dynamo CodeBlocks cannot
-express in one expression. Export as Graph, then wire the output into Dynamo's
-**Element.SetParameterByName** to write each door's `Mark` parameter.
+## 3. `DynamoDoorMark` — string composition (Graph)
 
-## 4. `DynamoFacadeLayout` — multi-output calculation (Graph + native Revit write-back)
+Joins six text inputs into a door mark `L02-R105-A`: level prefix, level number, room prefix,
+room number, separator and suffix. Each piece of text is an ordinary StringInput node, so the
+CodeBlock only concatenates values. Export as Graph, then add native Revit nodes yourself to
+read door parameters into the inputs and write `doorMark` to each door's `Mark` parameter.
 
-Computes a panel layout grid from wall dimensions and a target module. Six outputs: panel count,
-columns, rows, actual panel width, actual panel height, and waste percentage. Shows one Paracore
-block driving several Revit writes. Export as Graph, read wall `Length` and `Unconnected Height`
-with native Dynamo nodes, and write the summary to `Comments`.
+## 4. `DynamoFacadeLayout` — multi-output calculation (Graph)
 
-## 5. `DynamoRoomClassifier` — conditional branching (Graph + native Revit write-back)
+Computes a simple panel grid from wall dimensions and a target module. Four outputs: columns,
+rows, panel count and actual panel width. Shows one Paracore block producing several values.
+Export as Graph, read wall `Length` and `Unconnected Height` with native Dynamo nodes, and build
+a short summary for `Comments` with a Dynamo String Concat node.
 
-Classifies a room from its area and name into a label and a boolean flag. Shows multi-branch `if/else`
-logic with `Contains` checks — exactly what Dynamo CodeBlocks cannot do. Export as Graph, write the
-label to `Comments`, and use the flag to select rooms that need further review.
+## 5. `DynamoRoomClassifier` — conditional branching (Graph)
+
+Compares a room area with a threshold and produces a label and a boolean flag. The threshold
+and both labels are input nodes, so the CodeBlock contains only one comparison and one inline
+conditional. Export as Graph, write `label` to `Comments`, and use `needsReview` to filter rooms
+that need further review.
 
 ## Try the 4.9.0 IntelliSense in the REPL playground
 

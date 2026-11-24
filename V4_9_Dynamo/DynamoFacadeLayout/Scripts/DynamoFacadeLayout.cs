@@ -32,15 +32,15 @@ double panelW = WallLength / cols;
 
 public class Params
 {
-    /// Target panel height in mm.
+    /// Target panel height in mm. Wire a Revit value here or keep it constant.
     public double TargetPanelH { get; set; } = 900;
 
-    /// Wall height in mm.
+    /// Wall height in mm. Wire Element.GetParameterValueByName (Unconnected Height) here.
     public double WallHeight { get; set; } = 3600;
 
-    /// Target panel width in mm.
+    /// Target panel width in mm. Wire a Revit value here or keep it constant.
     public double TargetPanelW { get; set; } = 1200;
 
-    /// Wall length in mm.
+    /// Wall length in mm. Wire Element.GetParameterValueByName (Length) here.
     public double WallLength { get; set; } = 8000;
 }
