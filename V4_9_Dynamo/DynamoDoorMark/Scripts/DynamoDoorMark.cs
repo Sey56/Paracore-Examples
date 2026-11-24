@@ -6,47 +6,44 @@ Dependencies: .NET only (no Revit, no Paracore DSL) - export requires Paracore 4
 
 Description:
 Tutorial 1 - Door mark generator. Pure .NET: no Revit API, no Paracore DSL.
-Composes a standard door mark from a level number, room number, and suffix letter.
-Shows multi-step string composition that stays inside the Dynamo CodeBlock subset.
+Builds a mark by joining plain text inputs: L + 02 + - + R + 105 + - + A.
+The text pieces are ordinary StringInput nodes in the exported graph, so the
+CodeBlock only concatenates values - no formatting rules and no string methods.
 
-The mark format is: {level}-{room}-{suffix}
-  level   = "L" + zero-padded 2-digit level number
-  room    = "R" + zero-padded 3-digit room number
-  suffix  = single uppercase letter, or "X" if empty/invalid
-
-Examples:
-  Level 2, Room 105, suffix "A"  ->  "L02-R105-A"
-  Level 1, Room 3,   suffix ""   ->  "L01-R003-X"
+With the declared defaults the result is:
+  LevelPrefix "L", LevelNumber "02", RoomPrefix "R", RoomNumber "105",
+  Separator "-", DoorSuffix "A"  ->  L02-R105-A
 
 Exportable because:
-- public class Params with public auto-properties (int, int, string)
-- logic in top-level statements, pure .NET
-- CodeBlock-safe syntax: no if statements, no casts, no bare declarations
+- public class Params with public auto-properties (all string)
+- logic in top-level statements, pure .NET string concatenation
+- CodeBlock-safe syntax: no if statements, no casts, no method calls
 
 The released 4.9.0 exporter copies these statements into a Dynamo CodeBlock.
-DesignScript accepts assignments, inline conditionals, string concat and simple
-string methods - but not C# 'if', '(int)' casts or bare 'string x;' declarations.
+Keep the statements as plain assignments that read each input once.
 */
 
-Params p = new();
-
-string levelCode = p.LevelNumber < 10 ? "L0" + p.LevelNumber : "L" + p.LevelNumber;
-string roomCode = p.RoomNumber < 10 ? "R00" + p.RoomNumber : (p.RoomNumber < 100 ? "R0" + p.RoomNumber : "R" + p.RoomNumber);
-
-string suffix = p.DoorSuffix.Trim().ToUpper();
-string suffixOne = suffix.Length > 1 ? suffix.Substring(0, 1) : suffix;
-string suffixFinal = suffixOne.Length == 0 ? "X" : suffixOne;
-
-string doorMark = levelCode + "-" + roomCode + "-" + suffixFinal;
+string levelCode = LevelPrefix + LevelNumber;
+string roomCode = RoomPrefix + RoomNumber;
+string doorMark = levelCode + Separator + roomCode + Separator + DoorSuffix;
 
 public class Params
 {
-    /// Level number (1 = ground floor, 2 = first floor, etc.).
-    public int LevelNumber { get; set; } = 2;
-
-    /// Room number as an integer (e.g. 105).
-    public int RoomNumber { get; set; } = 105;
-
-    /// Door suffix letter — A, B, C ... Use empty for the only door in a room.
+    /// Suffix letter for the door, e.g. A.
     public string DoorSuffix { get; set; } = "A";
+
+    /// Text placed between the level and room parts.
+    public string Separator { get; set; } = "-";
+
+    /// Room number as text, e.g. 105.
+    public string RoomNumber { get; set; } = "105";
+
+    /// Prefix for the room part, e.g. R.
+    public string RoomPrefix { get; set; } = "R";
+
+    /// Level number as text, e.g. 02.
+    public string LevelNumber { get; set; } = "02";
+
+    /// Prefix for the level part, e.g. L.
+    public string LevelPrefix { get; set; } = "L";
 }

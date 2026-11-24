@@ -6,44 +6,37 @@ Dependencies: .NET only (no Revit, no Paracore DSL) - export requires Paracore 4
 
 Description:
 Tutorial 3 - Room review classifier. Pure .NET: no Revit API, no Paracore DSL.
-A multi-branch rule that produces a label and a boolean flag from a room's
-area and name. Shows conditional logic built from inline conditionals and
-Contains checks — the form a Dynamo CodeBlock can actually run.
+One area threshold and two plain text labels produce a boolean flag and a
+label. Both labels are StringInput nodes in the exported graph, so the
+CodeBlock contains only a comparison and one inline conditional.
 
-Use the gallery's Export Dynamo button, choose Graph, and get a standalone .dyn
-whose two outputs appear on Watch nodes. In Dynamo, feed the outputs into native
-Revit nodes: write the label to the room's Comments parameter, and use the flag
-to drive a second action (e.g. highlight rooms that need review).
+Outputs:
+  needsReview - true when Area is below ReviewThreshold
+  label       - ReviewLabel or StandardLabel
 
 Exportable because:
-- public class Params with public auto-properties (double Area, string RoomName)
+- public class Params with public auto-properties (double Area, double threshold, two strings)
 - logic in top-level statements, pure .NET
-- CodeBlock-safe syntax: no if statements, no casts, no bare declarations
+- CodeBlock-safe syntax: no if statements, no casts, no string literals
 
 The released 4.9.0 exporter copies these statements into a Dynamo CodeBlock.
-DesignScript accepts assignments, inline conditionals and string methods, but
-rejects C# 'if' statements and bare 'string label;' declarations. Each branch is
-therefore one chained inline conditional, and every name gets its value at
-declaration.
+Keep the statements as plain assignments that read each input once.
 */
 
-Params p = new();
-
-string name = p.RoomName.Trim().ToUpper();
-double area = p.Area;
-
-bool wet = name.Contains("BATH") || name.Contains("WC") || name.Contains("TOILET");
-bool circ = name.Contains("CORRIDOR") || name.Contains("HALL") || name.Contains("PASSAGE");
-bool vert = name.Contains("STAIR") || name.Contains("LIFT") || name.Contains("SHAFT");
-
-string label = area < 5.0 ? "Too small - check" : wet ? "Wet area" : circ ? "Circulation" : vert ? "Vertical circulation" : area > 200.0 ? "Large space - verify fire code" : "Standard room";
-bool needsReview = area < 5.0 ? true : wet ? area > 12.0 : circ ? area > 50.0 : vert ? true : area > 200.0 ? true : false;
+bool needsReview = Area < ReviewThreshold;
+string label = needsReview ? ReviewLabel : StandardLabel;
 
 public class Params
 {
+    /// Label used when the room does not need review.
+    public string StandardLabel { get; set; } = "Standard room";
+
+    /// Label used when the room is below the review threshold.
+    public string ReviewLabel { get; set; } = "Too small - check";
+
+    /// Area in square metres below which the room is flagged.
+    public double ReviewThreshold { get; set; } = 5.0;
+
     /// Room area in square metres.
     public double Area { get; set; } = 18.5;
-
-    /// Room name as it appears in the Revit model (e.g. "Office", "Corridor 01").
-    public string RoomName { get; set; } = "Office";
 }
