@@ -4,16 +4,18 @@
 > earlier versions. Folder names in this repository carry a `V4_9_` prefix from this release
 > onward, so you can tell at a glance which examples need a newer Paracore.
 
-This is a **Paracore script source**: two small scripts that show the two Dynamo export kinds.
-The exported logic is pure .NET, so the node or graph runs in Dynamo without Paracore installed.
-`DynamoMethod` uses `Println` only when you Run it in Paracore; that call is not part of the
-exported node. `DynamoGraph` uses no Revit API or Paracore helpers at all.
+This is a **Paracore script source**: five scripts that show the two Dynamo export kinds and
+three integration patterns. The exported logic is pure .NET, so the node or graph runs in Dynamo
+without Paracore installed. `DynamoMethod` uses `Println` only when you Run it in Paracore; that
+call is not part of the exported node. The other four scripts use no Revit API or Paracore helpers
+at all.
 
 ## Load it
 
 1. In the desktop app, open **hamburger menu → Sidebar → Local Sources → Load or Initialize Source**.
 2. Select the **`V4_9_Dynamo`** folder (the one containing `.paracore`), not the repository root.
-3. Open **Gallery**. You will see `DynamoMethod` and `DynamoGraph`.
+3. Open **Gallery**. You will see `DynamoMethod`, `DynamoGraph`, `DynamoDoorMark`,
+   `DynamoFacadeLayout` and `DynamoRoomClassifier`.
 
 ## 1. `DynamoMethod` — export a Method node
 
@@ -35,6 +37,26 @@ The source has a `public static` class (`ParacoreMath`) with a static method tha
 The source is pure .NET top-level statements plus a `public class Params`. A graph cannot call
 Revit or Paracore helpers; those scripts stay in Paracore. If a script cannot be exported, the
 error names the exact token and what to change.
+
+## 3. `DynamoDoorMark` — string composition (Graph + native Revit write-back)
+
+Composes a door mark `L02-R105-A` from a level number, room number, and suffix letter. Shows C#
+string formatting rules (zero-padding, truncation, defaults) that Dynamo CodeBlocks cannot
+express in one expression. Export as Graph, then wire the output into Dynamo's
+**Element.SetParameterByName** to write each door's `Mark` parameter.
+
+## 4. `DynamoFacadeLayout` — multi-output calculation (Graph + native Revit write-back)
+
+Computes a panel layout grid from wall dimensions and a target module. Six outputs: panel count,
+columns, rows, actual panel width, actual panel height, and waste percentage. Shows one Paracore
+block driving several Revit writes. Export as Graph, read wall `Length` and `Unconnected Height`
+with native Dynamo nodes, and write the summary to `Comments`.
+
+## 5. `DynamoRoomClassifier` — conditional branching (Graph + native Revit write-back)
+
+Classifies a room from its area and name into a label and a boolean flag. Shows multi-branch `if/else`
+logic with `Contains` checks — exactly what Dynamo CodeBlocks cannot do. Export as Graph, write the
+label to `Comments`, and use the flag to select rooms that need further review.
 
 ## Try the 4.9.0 IntelliSense in the REPL playground
 
