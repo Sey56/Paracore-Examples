@@ -22,11 +22,11 @@ Exportable because:
 - CodeBlock-safe syntax: no if statements, no casts, no string literals
 
 The released 4.9.0 exporter copies these statements into a Dynamo CodeBlock.
-Math.Floor and Math.Max are native Dynamo functions, so no C# cast is needed.
+Math.Floor and the inline conditional are native DesignScript, so no C# cast is needed.
 */
 
-double cols = Math.Max(1, Math.Floor(WallLength / TargetPanelW));
-double rows = Math.Max(1, Math.Floor(WallHeight / TargetPanelH));
+double cols = WallLength / TargetPanelW < 1 ? 1 : Math.Floor(WallLength / TargetPanelW);
+double rows = WallHeight / TargetPanelH < 1 ? 1 : Math.Floor(WallHeight / TargetPanelH);
 double panelCount = cols * rows;
 double panelW = WallLength / cols;
 
