@@ -2,7 +2,7 @@
 DocumentType: Project
 Categories: Tutorial, Dynamo
 Author: Paracore Team
-Dependencies: .NET only (no Revit, no Paritacore DSL) - export requires Paracore 4.9.0+
+Dependencies: .NET only (no Revit, no Paracore DSL) - export requires Paracore 4.9.0+
 
 Description:
 Tutorial 2 - Facade panel layout. Pure .NET: no Revit API, no Paracore DSL.
@@ -18,14 +18,19 @@ Outputs (all appear on Watch nodes in the exported .dyn):
   panelH       - actual panel height after fitting (mm)
   wastePct     - percentage of wall area not covered by panels
 
-In Dynamo, wire wall.Length and wall.get_Parameter("Unconnected Height") into
-the length and height inputs. Write the summary to Comments with
+In Dynamo, wire wall.Length and the wall's "Unconnected Height" into the
+length and height inputs. Write the summary to Comments with
 Element.SetParameterByName.
 
 Exportable because:
 - public class Params with public auto-properties (all double)
 - logic in top-level statements, pure .NET arithmetic
-- no Revit tokens, no Paracore helpers
+- CodeBlock-safe syntax: no if statements, no casts, no bare declarations
+
+The released 4.9.0 exporter copies these statements into a Dynamo CodeBlock.
+DesignScript accepts assignments and Math.Floor, but rejects C# '(int)' casts
+and 'if' statements. Columns and rows are therefore kept as doubles (Dynamo's
+native number type); Math.Floor already produces a whole number.
 */
 
 Params p = new();
@@ -33,16 +38,14 @@ Params p = new();
 double usableLen = p.WallLength - 2 * p.EdgeOffset;
 double usableHt = p.WallHeight - p.BottomOffset - p.TopOffset;
 
-int cols = (int)Math.Floor(usableLen / p.TargetPanelW);
-int rows = (int)Math.Floor(usableHt / p.TargetPanelH);
-
-if (cols < 1) cols = 1;
-if (rows < 1) rows = 1;
+double colsRaw = Math.Floor(usableLen / p.TargetPanelW);
+double rowsRaw = Math.Floor(usableHt / p.TargetPanelH);
+double cols = colsRaw < 1 ? 1 : colsRaw;
+double rows = rowsRaw < 1 ? 1 : rowsRaw;
 
 double panelW = usableLen / cols;
 double panelH = usableHt / rows;
-
-int panelCount = cols * rows;
+double panelCount = cols * rows;
 
 double wallArea = p.WallLength * p.WallHeight;
 double panelArea = panelCount * panelW * panelH;
