@@ -6,7 +6,7 @@ Dependencies: RevitAPI 2025+, Paracore.Addin
 
 Description:
 Renumbers door marks on selected walls with a prefix and sequential numbers.
-Pick walls in the Revit viewport, choose a prefix, and run.
+Select walls from the parameters panel, choose a prefix, and run.
 */
 
 Params p = new();
@@ -50,8 +50,7 @@ public class Params
 {
     #region Selection
 
-    /// Pick walls in the Revit viewport
-    [Select(SelectionType.Element)]
+    /// Select walls from the parameters panel
     [Required]
     public List<Wall>? TargetWalls { get; set; }
 
